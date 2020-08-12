@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-33416628-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'UA-33416628-1');
+	</script>
+
+    <title>page.title | peterbloem.nl</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="/screen.pb.css">
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+    
+    {% if page.d3 %}
+		<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+	{% endif %}
+    {% if page.jquery %}
+	<script
+  		src="https://code.jquery.com/jquery-3.2.1.min.js"
+  		integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  		crossorigin="anonymous"></script>
+    {% endif %}	
+    
+    {% if page.code %} 
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/default.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();</script>
+	{% endif %}
+	
+    {% if page.math %}
+    <script type="text/x-mathjax-config">
+  	MathJax.Hub.Config({
+    	extensions: ["tex2jax.js"],
+    	jax: ["input/TeX", "output/HTML-CSS"],
+    	tex2jax: {
+      		inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      		displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    		processEscapes: true
+	    },
+		"HTML-CSS": { 
+			availableFonts: [], preferredFont: null,
+			webFont: "Neo-Euler",
+			mtextFontInherit: true
+		}, 
+		TeX: {
+			extensions: ["color.js"],
+			Macros: {
+				lgc: ["{\\color{my-light-green} #1}", 1],
+				gc: ["{\\color{my-green} #1}", 1],
+				lrc: ["{\\color{my-light-red} #1}", 1],
+				rc: ["{\\color{my-red} #1}", 1],
+				lbc: ["{\\color{my-light-blue} #1}", 1],
+				bc: ["{\\color{my-blue} #1}", 1],
+				kc: ["{\\color{my-gray} #1}", 1],
+				loc: ["{\\color{my-light-orange} #1}", 1],
+				oc: ["{\\color{my-orange} #1}", 1],
+				
+				x: ["\\mathbf x"],
+				z: ["\\mathbf z"],
+				v: ["\\mathbf v"],
+				y: ["\\mathbf y"],
+				k: ["\\mathbf k"],
+				q: ["\\mathbf q"],
+				e: ["\\mathbf e"],
+				X: ["\\mathbf X"],
+				V: ["\\mathbf V"],
+				W: ["\\mathbf W"],
+				Y: ["\\mathbf Y"],
+				p: ["\\,\\text{.}"]
+				
+			}
+		}
+  	});
+  	
+  	MathJax.Hub.Register.StartupHook("TeX color Ready", function() {
+     	MathJax.Extension["TeX/color"].colors["my-green"] = '#677d00';
+     	MathJax.Extension["TeX/color"].colors["my-light-green"] = '#acd373';
+     	MathJax.Extension["TeX/color"].colors["my-red"] = '#b13e26';
+     	MathJax.Extension["TeX/color"].colors["my-light-red"] = '#d38473';
+     	MathJax.Extension["TeX/color"].colors["my-blue"] = '#306693';
+       	MathJax.Extension["TeX/color"].colors["my-light-blue"] = '#73a7d3';
+       	MathJax.Extension["TeX/color"].colors["my-gray"] = '#999';
+       	MathJax.Extension["TeX/color"].colors["my-orange"] = '#E69500';
+       	MathJax.Extension["TeX/color"].colors["my-light-orange"] = '#FFC353';
+
+
+	});
+	</script>
+	
+	<script type="text/javascript" async
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js">
+	</script>
+    {% endif %}    
+    
+    {% if page.gif %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/2.0.2/webcomponents-bundle.js"></script>
+    <script src="https://captaincodeman.github.io/gif-player/components/webcomponentsjs/webcomponents-hi-sd-ce.js"></script>
+    {% endif %}   
+
+    {% if page.script %}
+    <script src="/scripts/{{page.script}}.js"></script>
+    {% endif %}
+        
+    <script src="/scripts.js"></script>
+    
+    <link rel="icon" type="image/png" href="/images/favicon128.png" sizes="128" />
+    <link rel="icon" type="image/png" href="/images/favicon32.png" sizes="32,16" />
+    		
+  </head>
+  <body id="body" class="body {% if page.front %}home{% endif %} {{ page.classes | join(' ')}}">
+  
+	{% if page.article %}
+	   <article>
+		 {{ content }}
+	   </article>
+	{% else %}
+		{{ content }}
+	{% endif %}
+
+	{% if page.front %}
+	  <nav>
+		<ul>
+		  <li><a href="publications/">publications</a></li>
+		  <li><a href="teaching/">teaching</a></li>
+		  <li><a href="blog/">blog</a></li>
+		</ul>
+	  </nav>
+	{% else %}
+		{% if page.article %}
+		  <nav class="title">
+			<a href="./">back</a>
+			<h1> {{page.title}} </h1>	
+		  </nav>
+		{% else %}
+		  <nav class="title">
+			<a href="..">back</a>
+			<h1> {{page.title}} </h1>	
+		  </nav>
+		{% endif %}
+	{% endif %}
+
+	</body>
+</html>
