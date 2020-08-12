@@ -602,23 +602,23 @@ figure {
     width: 100%;
 }
 
-#body figure.narrow img{ 
+figure.narrow img{ 
     width: 660px;
 }
 
-figure.wide img {
+#body figure.wide img {
    	width: 100%;
 	min-width: 200px; 
 }
 
-#body figure.right {
+figure.right {
 	max-width: 260px;
 	float: right;
 	margin-right: -220px;
 	margin-left: 1em;
 }
 
-#body figure.right img {
+figure.right img {
 	width: 100%;
 }
 
@@ -634,6 +634,21 @@ figure.wide img {
 
 #body figure .tile5 {
 	width: 20%;
+	min-width: 150px;
+}
+
+#body figure .own-size {
+	width: auto;
+	min-width: 150px;
+}
+
+figure img.right {
+	display: block;
+	margin: 0 0 0 auto;
+}
+
+#body figure .half {
+	width: 50%
 	min-width: 150px;
 }
 
