@@ -1,6 +1,6 @@
 ---
-Title: Introduction to Java
-Description: Description of my lectures on Java 
+title: Introduction to Java
+description: Description of my lectures on Java 
 ---
 
 # Introduction to Java
@@ -18,9 +18,9 @@ To this end, each lecture contained a number of quick quiz questions, which the 
 There are of course technological solutions for this sort of thing, but the fact that the students were answering physically, if not audibly, helped to breathe some life into the proceedings.
 </aside>
 
-I also wanted to convey _why_ Java is designed the way it is. I find that many students are frustrated by Java's strictness and verbosity, so I wanted to show that there was method behind this, and that the extra effort Java requires to writing is paid back in security, and early bug catching.
+I also wanted to convey _why_ Java is designed the way it is. I find that many students are frustrated by Java's strictness and verbosity, so I wanted to show that there was method behind this, and that the extra effort Java requires to write is paid back in security, and early bug catching.
 
-To make the lectures something more than just a sequential explanation of programming features, each lecture was build around a theme. Click the links to see annotated slides (Dutch only).
+To make the lectures something more than just a sequential explanation of programming features, each lecture was built around a theme. Click the links to see annotated slides (Dutch only).
 
 <ul>
 <li><a href="/files/java/College7.pdf">Lecture A</a> How to write <em>simple</em> code. We discuss principles like DRYness and modularity, and the features that Java adds to enable this. Specifically object oriented programming, inheritance and polymorphism. We look at Java Collections as an excellent example of object oriented design (and of course as an important feature in its own right).</li>
