@@ -250,7 +250,7 @@ body {
 }
 
 #body p.intro-text {
-	width: 26em;
+	max-width: 26em;
 	margin: 1em auto 1em auto;
 	
 	text-align: justify;
