@@ -4,7 +4,23 @@ description: A list of my peer-reviewed, scientific publications
 article: false 
 ---
 
+<h1>Publications</h1>
+
+
+<p class="note">These are some selected highlights. For an exhaustive list, please see <a href="https://scholar.google.com/citations?user=zVntAfQAAAAJ&hl=en">my Google Scholar profile</a>. They're 
+much better at this sort of thing.</p>
+
 <ul class="nav publications content">
+	<li><a href="compression-for-motifs">
+	  	<h2>Large-Scale Network Motif Learning with Compression</h2>
+	  	with
+  		<ul class="authors">
+	  		<li>S. de Rooij</li>
+	  	</ul>
+	  	<span class="venue">ECML-PKDD 2020</span>
+	  	<span class="year">2020</span>
+	  	</a>	  	
+  	</li>
 	<li><a href="three-tools">
 	  	<h2>Three tools for practical differential privacy</h2>
 	  	with  		
@@ -19,15 +35,6 @@ article: false
   	</li>
 	<li><a href="learning-sparse-transformations">
 	  	<h2>Learning Sparse Transformations through Backpropagation</h2>
-	  	<span class="venue">preprint available</span>
-	  	</a>	  	
-  	</li>
-  	<li><a href="compression-for-motifs">
-	  	<h2>Large-Scale Network Motif Learning with Compression</h2>
-	  	with
-  		<ul class="authors">
-	  		<li>S. de Rooij</li>
-	  	</ul>
 	  	<span class="venue">preprint available</span>
 	  	</a>	  	
   	</li>

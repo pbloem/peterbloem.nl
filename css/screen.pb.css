@@ -68,6 +68,7 @@ article {
 	#body a {
 		background-size: 397px 20px;
 	}
+
 	
 	html, body {
 		font-size: 3.5vw;
@@ -110,6 +111,10 @@ article {
 	html, body {
 		font-size: 22px;
 		line-height: 33px;
+	}
+	
+	#body p.note {
+		margin: 0 auto 0 auto;
 	}
 	
 	article {
@@ -190,6 +195,7 @@ h1 {
 	text-align: center;	
 }
 
+
 .subh1 {
 
 	font-family: GillSansMTStd-Medium, "Gill Sans", sans-serif;
@@ -242,6 +248,19 @@ body {
 	font-size: 0.9em;
 	color: #677d00;
 }
+
+#body p.intro-text {
+	margin: 1em 0 3em 0;
+}
+
+#body p.intro-text strong {
+
+}
+
+p.note {
+	margin: 0 0.5em 0 0.5em;
+}
+
 
 .contact {
 	width: 60%;
@@ -348,6 +367,7 @@ nav a {
 	font-family: GillSansMTStd-Medium, "Gill Sans", sans-serif;
 	
 	border: none;
+	background: none;
 }
 
 nav a:hover {
@@ -534,8 +554,8 @@ ul.links {
 	margin-bottom: 0;
 }
 
-ul.links.homepage {
-	margin: -3em 0 0 0;
+#body ul.links.homepage {
+	margin: 0em auto 0 auto;
 	padding: 0;
 	font-size: 0.8em;
 }
