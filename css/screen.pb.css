@@ -498,6 +498,7 @@ body.blog .content
 	align-items: center;
 	
 	margin-top: auto;
+	position: relative;
 } 
 
 nav.title a {
@@ -512,7 +513,7 @@ nav.title a {
 	margin-right: 0.8em;
 	
 	position: absolute;
-	top: 0;
+	bottom: 0;
 	left: 0;
 }
 
