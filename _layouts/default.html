@@ -11,12 +11,12 @@
 	  gtag('config', 'UA-33416628-1');
 	</script>
 
-    <title>page.title | peterbloem.nl</title>
+    <title> {{page.title}}| peterbloem.nl</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="/screen.pb.css">
+    <link rel="stylesheet" href="/css/screen.pb.css">
     <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
     <![endif]-->
@@ -112,14 +112,14 @@
     <script src="/scripts/{{page.script}}.js"></script>
     {% endif %}
         
-    <script src="/scripts.js"></script>
+    <script src="/scripts/scripts.js"></script>
     
     <link rel="icon" type="image/png" href="/images/favicon128.png" sizes="128" />
     <link rel="icon" type="image/png" href="/images/favicon32.png" sizes="32,16" />
     		
   </head>
-  <body id="body" class="body {% if page.front %}home{% endif %} {{ page.classes | join(' ')}}">
-  
+  <body id="body" class="body {% if page.front %}home{% endif %} ">
+    
 	{% if page.article %}
 	   <article>
 		 {{ content }}
