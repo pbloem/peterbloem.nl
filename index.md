@@ -16,7 +16,9 @@ front: true
 </div>
 
 <p class="intro-text">I'm a postdoctoral researcher at the VU University in Amsterdam. I specialize in 
-the combination of <strong>Machine Learning</strong> and <strong>Knowledge Representation</strong>. Get in touch 
-at <a href="mailto:site@peterbloem.nl">p@peterbloem.nl</a>.
+the combination of <strong>Machine Learning</strong> and <strong>Knowledge Representation</strong>.
+</p>
+<p class="intro-text">
+Get in touch  at <a href="mailto:site@peterbloem.nl">p@peterbloem.nl</a>.
 </p>
 

@@ -250,12 +250,21 @@ body {
 }
 
 #body p.intro-text {
-	margin: 1em 0 3em 0;
+	width: 26em;
+	margin: 1em auto 1em auto;
+	
+	text-align: justify;
 }
 
 #body p.intro-text strong {
-
+	font-weight: normal;
+	color: #677d00;
 }
+
+#body p.intro-text + p.intro-text {
+	text-align: center;
+}
+
 
 p.note {
 	margin: 0 0.5em 0 0.5em;
@@ -597,7 +606,6 @@ figure {
 }
 
 #body figure.wide {
-    
     margin: 1em 0 1em 0;
     width: 100%;
 }
