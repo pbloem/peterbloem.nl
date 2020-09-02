@@ -4,7 +4,7 @@
  * #00327d blue
  *
  */
-
+ 
 html, body {
 	margin: 0;
 	
@@ -606,6 +606,11 @@ figure {
 	padding: 0;
 }
 
+figure.centering img {
+	display: block;
+	margin : 0 auto;
+}
+
 #body figure.wide {
     margin: 1em 0 1em 0;
     width: 100%;
@@ -646,6 +651,11 @@ figure.right img {
 	min-width: 150px;
 }
 
+#body figure .tile2 {
+	width: 50%;
+	min-width: 150px;
+}
+
 #body figure .own-size {
 	width: auto;
 	min-width: 150px;
@@ -657,7 +667,12 @@ figure img.right {
 }
 
 #body figure .half {
-	width: 50%
+	width: 50%;
+	min-width: 150px;
+}
+
+#body figure .three-quarters {
+	width: 75%;
 	min-width: 150px;
 }
 
@@ -826,6 +841,11 @@ div#footer #timestamp {
 .lbc { color: #73a7d3 }
  .kc { color: #999 }
 
+
+#body div.gc { 
+	display: block;
+}
+
 #body code {
 	font-size:0.8em;
 	
@@ -845,16 +865,38 @@ article ul li::before {
 	left: 1em;
 }
 
+article ul li {
+	position: relative;
+	padding-left: 2em;
+}
+
+article ol {
+	list-style: none;
+	padding: 0;
+	counter-reset: ol-counter;
+}
+
+article ol li {
+	position: relative;
+	padding-left: 2em;
+
+	counter-increment:ol-counter;
+}
+
+article ol li::before {
+	content: counter(ol-counter) '.';
+	color: #677d00;
+	position: absolute;
+	left: 1em;
+}
+
 article ul.links li::before,
 article ul.authors li::before  {
 	content: none;
 	position: static;
 }
 
-article ul li {
-	position: relative;
-	padding-left: 2em;
-}
+
 
 /* code highlighting */
 
