@@ -123,24 +123,26 @@ To be more precise, this doesn't leave a unique solution, but two solutions, ass
 
 The second simplification is that we can get rid of \\(\rc{\v}\\). We will imagine that we have  some fixed \\(\rc{\w}\\) (that is, the <span>dotted line</span> is fixed). And work out which choice of \\(\x_\gc{i}\\) on the line will minimize the <span class="bc">reconstruction error</span>? We will go into a bit of detail here, since it helps to set up some intuitions that will be important in the later sections.
 
-</p>If you remember your linear algebra, you'll know that this happens when the line of the reconstruction error is orthogonal to the dotted line. In more fancy language, the optimal \(x_\gc{i}\) is the _orthogonal projection_ of \(x_\gc{i}\) onto the dotted line. If you look at the image it's not too difficult to convince yourself that this it true. You can imagine the reconstruction error as a kind of rubber band pulling on $\x_\gc{i}$, and the point where it's orthogonal is where it comes to rest.<p>
+<p>If you remember your linear algebra, you'll know that this happens when the line of the reconstruction error is orthogonal to the dotted line. In more fancy language, the optimal \(x_\gc{i}\) is the _orthogonal projection_ of \(x_\gc{i}\) onto the dotted line. If you look at the image it's not too difficult to convince yourself that this it true. You can imagine the reconstruction error as a kind of rubber band pulling on $\x_\gc{i}$, and the point where it's orthogonal is where it comes to rest.</p>
 
 In higher dimensions, however, such physical intuitions will not always save us. Since the relation between orthogonality and least squares is key to understanding PCA, we will take some time to prove this properly.
 
-<p><strong>Best approximation theorem (1D) </strong> Let $\rc{\w}, \x \in \mathbb{R}^n$,  let $\rc{W}$ be the line of all multiples of \(\rc{\w}\), and let $\rc{\hat \w}$ be the orthogonal projection of $\x$ onto $\rc{W}$. Then, for any other $\rc{\bar \w}$ in $\rc{W}$, we have 
+<div class="theorem">
+<p><strong class="gc">Best approximation theorem (1D) </strong> Let $\rc{\w}, \x \in \mathbb{R}^n$,  let $\rc{W}$ be the line of all multiples of \(\rc{\w}\), and let $\rc{\hat \w}$ be the orthogonal projection of $\x$ onto $\rc{W}$. Then, for any other $\rc{\bar \w}$ in $\rc{W}$, we have 
 $$
 \text{dist}(\x, \rc{\hat \w}) < \text{dist}(\x, \rc{\bar \w})
 $$
 where $\text{dist}(\a, \b)$ denotes the Euclidean distance $||\a - \b||$
 </p>
+</div>
 
-<p><em>Proof (Adapted from [2, Ch. 7 Thm. 9]).</em> Note that $\a - \b$ is the vector that points from the tip of $\a$ to the bottom of $\b$. We can draw three vectors $\gc{\bar \w - \x}$, $\bc{\hat\w -\x}$ and $\rc{\bar \w - \hat \w}$ as follows:</p>
+<div class="proof"><p><em>Proof (Adapted from [2, Ch. 7 Thm. 9]).</em> Note that $\a - \b$ is the vector that points from the tip of $\a$ to the bottom of $\b$. We can draw three vectors $\gc{\bar \w - \x}$, $\bc{\hat\w -\x}$ and $\rc{\bar \w - \hat \w}$ as follows:</p>
 
 <figure class="narrow centering">
 <img src="/images/pca/pythagoras.svg" class="three-quarters"/>
 </figure>
 
-By basic vector addition, we know that 
+<p>By basic vector addition, we know that </p>
 
 $$
 \gc{\bar \w - \x} = \bc{\hat\w -\x} + \rc{\bar \w - \hat \w} \text{,}
@@ -158,41 +160,64 @@ $$
 
 <p>Since $\rc{\text{dist}(\bar \w, \hat \w)} > 0$ (since they are not the same point), we know that $\gc{\text{dist}(\x, \bar \w)}$ must be strictly larger than $\bc{\text{dist}(\hat \w, \x)}$.
 <span class="qed" /></p>
+</div>
 
+<p>So, the best reconstruction $\x'_\gc{i}$ of the point $\x_\gc{i}$ on the line defined by $z \cdot \rc{\w}$ (however we choose it $\rc{\w}$) is the orthogonal projection of $\x_\gc{i}$ onto $\rc{\w}$. So how do we compute an orthogonal projection? Let's look at what we have:</p>
 
+<figure class="narrow centering">
+<img src="/images/pca/projection2.svg" class="three-quarters"/>
+</figure>
 
+<p>
+We've projected $\x_\gc{i}$ down onto $\rc{\w}$ and we've given the vector from the projection to the original the name $\bc{\r}$. By vector addition we know that $z\rc{\w} + \bc{\r} = \x_\gc{i}$, so $\bc{\r} = \x_\gc{i} - z\rc{\w}$.
+</p>
 
+<p>Two vectors are orthogonal if their dot product is zero, zo we're looking for a $z$ such that $z\rc{\w}^T\bc{\r} = 0$, or equivalently, $\rc{\w}^T\bc{\r} = 0$. We rewrite</p>
 
+$$
+0 = \rc{\w}^T\bc{\r} = \rc{\w}^T\left(\x_\gc{i} - z\rc{\w}\right) = \rc{\w}^T\x_\gc{i} - z\rc{\w}^T\rc{\w} \p
+$$
 
+<p>This gives us $z = \rc{\w}^T\x_\gc{i} / \rc{\w}^T\rc{\w}$. And, since we'd already defined $\rc{\w}$ to be a unit vector (so $\rc{\w}^T\rc{\w} = 1$), we get $z = \rc{\w}^T\x_\gc{i}$.</p>
 
+<p>Let's retrace our steps. We had two weight vectors: $\rc{\v}$ to encode $\x_\gc{i}$ into the single number $z_\gc{i}$, and $\rc{\w}$ to reconstruct $x_\gc{i}$ as $z_\gc{i}\rc{\w}$. We've now seen that for any given $\rc{\w}$, the best choice of $z_\gc{i}$ is $\rc{\w}^T\x_\gc{i}$. In other words, <strong>we can set $\rc{\v}$ equal to $\rc{\w}$ and use it to encode and to decode.</strong>
+</p>
 
----
+<aside>
+Note that an important requirement for this result (and its generalizations coming up) is  that $\rc{\w}$ is a unit vector.
+</aside>
 
-To minimize the reconstruction error, we can just state that we're looking for the \\(\rc{\w)\\) and \\(\rc{\v}\\) for which the distance between \\(\x_\gc{i}\\) \\(\x'_\gc{i}\\), summed over all instance \\(\gc{i}\\), is minimal.
+<p>So, after all that, we can finally state precisely what we're looking for. Given $\rc{\w}$ our reconstruction is $\x'_\gc{i} = \z_\gc{i} \cdot \rc{\w} = \oc{\w^T\x_i \cdot \w}$ . This means we can state our goal as the following constrained optimiziation problem:</p>
 
-<p>$$
+$$
 \begin{align*}
-  &\argmin{\rc{\w}, \rc{\v}} \sum_\gc{i} \text{distance}(\x'_\gc{i}, \x_\gc{i}) \\
-= \;\;&\argmin{\rc{\w}, \rc{\v}} \sum_\gc{i}|| \x'_\gc{i} - \x_\gc{i} || 
+&\argmin{\rc{\w}} \sum_\gc{i}|| \oc{\w^T\x_i \cdot \w}  - \x_\gc{i} || \\
+&\;\;\;\;\text{such that } \rc{\w}^T\rc{\w} = 1 \p
 \end{align*}
-$$</p>
-
-If we fill in the definition of \\( \x'_\gc{i} \\), we get
-
-$$
-\argmin{\rc{\w}, \rc{\v}} \sum_\gc{i}||\;  \rc{\v} \cdot z_\gc{i} - \x_\gc{i} || 
 $$
 
-and if we fill in the definition of \\(z_\gc{i}\\) we get
+How do we solve this? This is a simple problem and there are fast ways to solve it exactly. But we've done a lot of math already, and it's time to show you some results, so we'll just solve this by gradient descent. Basic gradient descent doesn't include constraints, but in simple cases like these, we  can use _projected_ gradient descent: after each gradient upate, we project the parameters back to the subset of parameter space that satisfies the constraint (in this case simply by dividing $\rc{\w}$ by its length).
 
-$$
-\argmin{\rc{\w}, \rc{\v}} \sum_\gc{i} ||\; \rc{\v} \cdot \left ({\x_\gc{i} }^T \rc{\w}\right)  - \x_\gc{i} || \p
-$$
+<aside>If you don't know <a href="https://youtu.be/1lqaD0AsMfY">how gradient descent works</a>, you can just imagine a procedure that starts with a random $\rc{\w}$ and takes small steps in the direction that the function above decreases the most.
+</aside>
 
-The euclidean norm is a square root of a sum. We can get rid of the square-root without changing the maximum
+First, we\'ll mean-center our data.
 
+<figure class="narrow">
+<img src="/images/pca/mean-centered.svg" />
+</figure>
 
+Here's what the projections look like for some arbitrary $\rc{\w}$.
 
+<figure class="narrow">
+<img src="/images/pca/random-w.svg" />
+</figure>
+
+The sum of the <span class="bc">blue lines</span> is what we want to minimize. Clearly, there are better options. After a few iterations of gradient descent, this is what we end up with.
+
+<figure class="narrow">
+<img src="/images/pca/sol-w.svg" />
+</figure>
 
 #### alternative perspective 1: variance maximization
 
