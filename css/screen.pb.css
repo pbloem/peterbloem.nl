@@ -1,8 +1,7 @@
-/**
+/*
  * #677d00 green
  * #acd373 light green
  * #00327d blue
- *
  */
  
 html, body {
@@ -134,7 +133,10 @@ article {
 	#body figure, 
 	#body h2, #body h3, #body h4, #body h5,
 	#body blockquote,
-	#body div.sample {
+	#body div.sample,
+	#body .theorem,
+	#body .proof
+	{
 		margin: 0 auto 1em auto;
 		width: 660px;
 	}
@@ -241,8 +243,7 @@ body {
 	font-size: 1.6rem;
 }
 
-/* frontpage subtitle */
-.subtitle {
+frontpage subtitle.subtitle {
 	text-align: center;
 	margin: 0 auto;
 	font-size: 0.9em;
@@ -584,10 +585,12 @@ ul.links {
 }
 
 aside {
-	padding-left: 1em;
+	padding-left: 4em;
 	font-style: italic;
 	line-height: inherit;
-	font-size: 1em;
+	
+	font-size: 0.92em;
+	line-height: 1.875em;
 	
 	margin-bottom: 1em;
 }
@@ -616,11 +619,22 @@ figure.centering img {
     width: 100%;
 }
 
+#body figure.tight {
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+
+#body figure.wide-margin {
+    margin: 0 auto 1em;
+    width: 90%
+}
+
 figure.narrow img{ 
     width: 660px;
 }
 
-#body figure.wide img {
+#body figure.wide img,
+#body figure.wide-margin img {
    	width: 100%;
 	min-width: 200px; 
 }
@@ -643,6 +657,11 @@ figure.right img {
 
 #body figure .tile4 {
 	width: 25%;
+	min-width: 200px;
+}
+
+#body figure img.tile3 {
+	width: 32%;
 	min-width: 200px;
 }
 
@@ -807,8 +826,7 @@ table.expandable.open .close-link {
  }
  
 div#footer {
-	/*border-bottom: solid 1px black;*/
-	width: 660px;
+	border-bottom: solid 1px black;	width: 660px;
 	margin: 0 auto 2em auto;
 } 
 
@@ -833,14 +851,16 @@ div#footer #timestamp {
 }
 
 /* colors */
-
  .gc { color: #677d00 }
 .lgc { color: #acd373 }
  .rc { color: #b13e26 }
 .lrc { color: #d38473 }
  .bc { color: #306693 }
 .lbc { color: #73a7d3 }
- .kc { color: #999 }
+ .kc { color: #999 } 
+ .oc { color: #E69500}
+
+/* .loc { color:  } */
 
 
 #body div.gc { 
@@ -863,12 +883,15 @@ article ul li::before {
 	content: "\2022";
 	color: #677d00;
 	position: absolute;
-	left: 1em;
+	width: 2em;
+	left: 0em;
+	text-align: right;
 }
 
 article ul li {
+	list-style: none;
 	position: relative;
-	padding-left: 2em;
+	padding-left: 3em;
 }
 
 article ol {
@@ -878,8 +901,9 @@ article ol {
 }
 
 article ol li {
+	list-style: none;
 	position: relative;
-	padding-left: 2em;
+	padding-left: 3em;
 
 	counter-increment:ol-counter;
 }
@@ -888,7 +912,9 @@ article ol li::before {
 	content: counter(ol-counter) '.';
 	color: #677d00;
 	position: absolute;
-	left: 1em;
+	width: 2em;
+	left: 0em;
+	text-align: right;
 }
 
 article ul.links li::before,
@@ -899,8 +925,7 @@ article ul.authors li::before  {
 
 
 
-/* code highlighting */
-
+code highlighting
 #body .hljs {
 	background: white;
 	padding: 0;
@@ -924,17 +949,26 @@ div.sample
 
 }
 
-.theorem {
-	margin: 0 0 0 -1em;
-	padding-left: 1em;
+#body div.theorem 
+{
+	position: relative;
+	left: -4px;
 	
-	border-left: solid 4px #677d00;
+	margin: 0 auto 0 auto;
+	padding: 0 1em;
+	
 	border-bottom: solid 1px transparent;
+	border-left: solid 4px #677d00;
+
 }
 
-.proof {
-	margin: -1px 0 0 -1em;
-	padding-left: 1em;
+#body div.proof 
+{
+	position: relative;
+	left: -4px;
+
+	margin: -1px auto 0 auto;
+	padding: 0 1em;
 	
 	border-left: solid 4px #bbb;
 }
