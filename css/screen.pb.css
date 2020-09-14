@@ -243,11 +243,9 @@ body {
 	font-size: 1.6rem;
 }
 
-frontpage subtitle.subtitle {
+.home .subtitle {
 	text-align: center;
 	margin: 0 auto;
-	font-size: 0.9em;
-	color: #677d00;
 }
 
 #body p.intro-text {
