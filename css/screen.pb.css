@@ -7,7 +7,7 @@
 html, body {
 	margin: 0;
 	
-	adding: 1px 0 0 0;
+	padding: 1px 0 0 0;
 	
 	font-size: 5vw;
 	line-height: 7vw;
@@ -38,6 +38,8 @@ p {
 article {
 	 margin: 2.5vw 20px;
 	 flex: 1 1 auto; 
+	 
+	 padding: 0 0 6vw 0;
 }
 
 .home img.photo {
@@ -118,8 +120,8 @@ article {
 	
 	article {
 		margin: 0 auto;
-		padding: 0;
-	}
+	 	padding: 0 0 6vw 0;	
+	 }
 	
 	#body .content li,
 	#body p, 
@@ -220,7 +222,7 @@ h1 {
 	
 	font-weight: normal;
 	 
-	margin: 3vw auto 2vw auto;
+	margin: 6vw auto 2vw auto;
 	
 	text-align: center;	
 }
@@ -299,6 +301,10 @@ a {
 	background-position: bottom left;
 	
 	background-size: 200px 10px;
+}
+
+#body .MathJax a {
+	padding-bottom: 0.4em;
 }
 
 abbr {
@@ -713,8 +719,10 @@ figure img.right {
 
 
 figcaption {
-	font-size: 0.8em;
-	margin: 0 3em 0 3em;
+	font-size: 0.92em;
+	line-height: 1.875em;
+	
+	padding-left: 2em;
 }
 
 .center {
@@ -789,7 +797,7 @@ th {
 }
 
 blockquote {
-	padding: 0 0 0 2em;
+	padding: 0 0 0 4em;
 	font-family: GillSansMTStd-Medium, Helvetica, sans-serif;	font-family: GillSansMTStd-Medium, Helvetica, sans-serif;
 
 }
@@ -959,6 +967,12 @@ div.sample
 	border-left: solid 4px #677d00;
 
 }
+
+#body div.theorem.proof-omitted
+{
+	border-bottom: none;
+}
+
 
 #body div.proof 
 {

@@ -12,10 +12,11 @@ code: true
 </header>
 
 <ul class="links">
-	<li>31 Jan 2020</li>
-	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca.ipynb">notebook on github</a></li>
+	<li>26 Sep 2020</li>
+	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca.ipynb">notebook</a></li>
 		<li><a href="/blog/pca-2">part 2</a></li>
-		<li><a href="/blog/pca-3">part 3</a></li>
+		<li>3</li>
+		<li>4</li>
 </ul>
 
 <aside>
@@ -27,6 +28,8 @@ We will work from the outside in: we will view PCA first as a way of finding a s
 Most of the technical stuff only becomes necessary when we want to understand why PCA works so well: this is where the **spectral theorem**, the **eigenvalues and -vectors**, and the come in to the story, they make PCA feasible, and give us a deeper understanding of what we're doing. We'll look at these subjects in <a href="/blog/pca-2">part two</a>.
 
 Finally, in <a href="/blog/pca-3">part 3</a> we'll look at the the **singular value decomposition**. This matrix decomposition is not only the most popular method for computing the solutions to PCA, it is also the go-to method for computing many related problems, like least squares fits, and matrix ranks.
+
+I'll assume some basic linear algebra knowledge, but Where possible, I'll try to explain the preliminaries, even if they are fundamental to linear algebra. There is a small list of identities and properties in [the appendix](#helpful-linear-algebra-properties), which you may want to consult to refresh your memory. 
 
 ## The basics
 
@@ -104,7 +107,7 @@ We can simplify this picture in two ways.
 <p>First, note that many different vectors $\rc{\w}$ define the same <span class="rc">dotted line</span> in the image above. So long as the vector points in the same direction, any length of vector defines the same line, and if we rescale \(z_\gc{i}\) properly, the reconstructed points \(\x'_\gc{i}\) will also be the same. To make our solution unique, we will <em>constrain</em> \(\rc{\w}\) to be a unit vector. That is, a vector with length one: \(\rc{\w}^T\rc{\w} = 1\).</p>
 
 <aside>
-To be more precise, this doesn't leave a unique solution, but two solutions, assuming that a single direction is optimal, since the unit vector can point top right, or bottom left. 
+To be more precise, this doesn't leave a unique solution, but two solutions, assuming that a single direction is optimal, since the unit vector can point top right, or bottom left. In other words, if $\rc{\w}$ is a solution, then so is $-\rc{\w}$.
 </aside>
 
 The second simplification is that we can get rid of \\(\rc{\v}\\). Imagine that we have  some fixed \\(\rc{\w}\\) (that is, the <span>dotted line</span> is fixed). Can we work out which choice of \\(\x_\gc{i}\\) on the line will minimize the <span class="bc">reconstruction error</span>? We will go into a bit of detail here, since it helps to set up some intuitions that will be important in the later sections.
@@ -464,6 +467,28 @@ What we haven't discussed fully, is where this magical property comes from. We'v
 [4] <a href="https://zenodo.org/record/1430636#.X1yfx9axXOQ">On Lines and Planes of Closest Fit to Systems of Points in Space.</a> K. Pearson. 1901   doi:10.1080/14786440109462720.<br/>
 
 ## Appendix
+
+### Helpful linear algebra properties 
+
+The following properties may be good to reference when following the proofs and more technical parts in this series. Anything that holds for matrix multiplication holds fort vector/matrix multiplication and for vector/vector multiplication as a special case.
+
+<aside>If you want an exercise to test yourself, see which of the following properties you need to show that: for a dataset $\x_1, \ldots, \x_\gc{n}$ the dot product of the mean of the data  with a vector $\rc{\w}$ is the same as the mean the dot products of the individual instances with $\rc{\w}$.
+</aside>
+
+* Matrix multiplication does not commute: $\A\B \neq \B\A$ in general. Matrix multiplication _does_ distribute $\A\B\C = \A(\B\C) = (\A\B)\C$.
+* Any scalar in a matrix multiplication can be moved around freely: $s\A\B\C =\A s\B\C = \A\B s\C = \A\B\C s = \sqrt{s}\A\B\C\sqrt{s}$ (matrix multiplication is homogeneous).
+* Matrix multiplication is additive $\A(\B + \C) = A\B + A\C$.
+* To take a transposition operator inside a multiplication, flip the order of the multiplication and transpose each element individually: $(\A\B\C)^T = \C^T\B^T\A^T$.
+* An invertible matrix $\A$ is a square matrix for which a matrix $\A^{-1}$ exists (the inverse) such that $\A\A^{-1} = \I$.
+* To move a matrix multiplication "to the other side," multiply (on the same side as the original multiplication) by the inverse: $$\A\B = \C \kc{\Rightarrow \A^{-1}\A\B = \A^{-1}\C \Rightarrow \I\B = \A^{-1}\C } \Rightarrow \B = \A^{-1}\C$$. This requires an invertible matrix.
+* Invertable matrices are fine when used in derivations, but in practice, the operation can be numerically unstable, so it's usually avoided by rewriting to a more stable form.
+* The **dot product** of two vectors $\x$ and $\y$ is $\x^T\y = \sum_i x_iy_i$. $\x$ and $\y$ are orthogonal if $\x ^T\y = 0$. This implies that the angle between them (in their shared plane) is 90&deg;.
+* When we multiply two matrices, $\C = \A\B$ we are essentially computing all dot products of a _row_ of $\A$ and a _column_ of $\B$, and arranging the result in a matrix. $C_{ij}$ is the dot product of row $i$ of $\A$ and column $j$ of $\B$. 
+* The length of a vector is the square root of its dot product with itself.
+* A **unit vector** is a vector of length 1. Since $\sqrt{1} = 1$, we can characterize unit vectors by $\x^T\x = 1$.
+* All vectors are column vectors unless otherwise noted. To save whitespace, we may write these inline as $\x = (0, 1, 0)$, but they should still be considered column vectors. The transpose of a column vector is a row vector.
+
+### General best approximation theorem
 
 We proved earlier that the orthogonal projection of a point $\x$ onto a line $\rc{W}$ is the closest point in $\rc{W}$ to $\x$. To generalize that result, we'll take at _a set of vectors_  $\rc{\w_1}, \ldots, \rc{\w_k}$ and look at the _subspace_ of points defined by all sums of all multiples of one or more of the vectors. This subspace is called the <em>space spanned by the vectors</em>, which we write as $\text{Span } \\{ \rc{\w_1}, \ldots, \rc{\w_k} \\}$. Any point that we can define by summing one or more multiples of vectors in $\\{ \rc{\w_1}, \ldots, \rc{\w_k} \\}$ is in the set $\text{Span } \\{ \rc{\w_1}, \ldots, \rc{\w_k} \\}$.
 
