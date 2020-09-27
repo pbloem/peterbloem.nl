@@ -12,7 +12,7 @@ code: true
 </header>
 
 <ul class="links">
-	<li>26 Sep 2020</li>
+	<li>27 Sep 2020</li>
 	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca.ipynb">notebook</a></li>
 		<li><a href="/blog/pca">part 1</a></li>
 		<li>3</li>
@@ -734,7 +734,9 @@ $$</p>
 
 <p>If we take $\Z\Z^T$, the squared and summed <em>rows</em> end up along the diagonal. Extend $\Z$ with orthogonal unit vectors until it is square and orthogonal. Then $\Z\Z^T = \I$. Each $1$ on the diagonal of $\I$ is the result of a sum of squared values. Some come from the original $\Z$, some from the columns we added, but all are squares, so it's a sum of nonnegative terms. Therefore, the terms contributed by the original vectors cannot sum to more than 1.</p>
 
-[]
+<figure class="narrow">
+<img src="/images/pca/zbounds.svg" class="three-quarters" />
+</figure>
 
 <p>So, we have a "weighted" sum where the total weight allowed is $\rc{k}$, and the maximum weight per element is $1$. The optimal solution is to give a maximum weight of $1$ to each of the largest $\rc{k}$ elements, that is the first $\rc{k}$ eigenvalues, and zero weight to everything else.</p>
 
@@ -752,19 +754,19 @@ We have finally proved our Venn diagram correct, and we have illustrated what th
 
 ### Characterizing the PCA solution
 
-Since the eigenvectors are the ones that provide maximal variance and minimal reconstruction error, you may be forgiven for thinking of eigenvectors in these terms. This would something of a misconception.
+Since the eigenvectors are the solution to the PCA problem, you may be forgiven for thinking of the eigenvectors  themselves in terms error minimization or variance maximization. In that case, we should guard against a misconception.
 
-Look at the ellipse we drew above. The first eigenvector was the major axis of the ellipse, the direction in which the data bulged out the most. However, the other eigenvector is the minor axis of the ellipse. The direction in which the data bulges <em>the least</em>, this makes it the direction in which the variance is _minimized_.
+Look back at the ellipse we drew above. The first eigenvector was the major axis of the ellipse, the direction in which the data bulged out the most. However, the other eigenvector is the _minor_ axis of the ellipse. The direction in which the data bulges <em>the least</em>, this makes it the direction in which the variance is _minimized_.
 
 To study this a bit ore formally, we take the first two proofs of the previous section and turn them around. If we start with the _last_ eigenvector and work backward, we are choosing the directions that minimize the variance (and hence maximize the reconstruction error).
 
 <div class="theorem"><p><strong class="gc">Last eigenvector.</strong> The direction in which the variance is minimized, is the eigenvector with the smallest eigenvalue
 </p></div>
-<div class="proof"><p><em>Proof.</em> Follow the previous proof until the sum</p>
+<div class="proof"><p><em>Proof.</em> Follow the proof of the <strong class="gc">first eigenvector</strong> theorem until the sum</p>
 <p>$$
 \z^T\bc{\D}\z = {z_1}^2 \bc{d}_{11} + \ldots + {z_\bc{m}}^2\bc{d}_\bc{mm} \p
 $$</p>
-<p>A weighted sum is minimized when all the weight is given to the smallest term. Followin the same logic as before, this leads to a one-hot vector that selects the last eigenvector.<span class="qed"/>
+<p>A weighted sum is minimized when all the weight is given to the smallest term. Followin the same logic as before, this leads to a one-hot vector $\hat \z = (0, \ldots, 0, 1)$ that selects the last column of $\rc{\P}$, which is the last eigenvector.<span class="qed"/>
 </p></div>
 
 Did we make a mistake somewhere? We defined the principal components as directions for which variance is maximized. Then we showed that all principal components are eigenvectors. Now we learn that at least one eigenvector actually _minimizes_ the variance. What gives?
@@ -777,7 +779,7 @@ $$</p>
 
 Since $z_\text{total}$ is fixed, maximizing the first $\bc{m} - 1$ terms is equivalent to minimizing the last. 
 
-We can define a kind of _reverse iterative problem _where we define the last principal component as the direction that minimizes the variance, the last-but-one principal component as the direction orthogonal to the last principal component, the last-but-two principal component as the direction orthogonal to the last two that minimizes the variance and so on. 
+We can define a kind of _reverse iterative problem_ where we define the last principal component as the direction that minimizes the variance, the last-but-one principal component as the direction orthogonal to the last principal component, the last-but-two principal component as the direction orthogonal to the last two that minimizes the variance and so on. 
 
 We can show that optimizing for this problem gives us exactly the same vectors as optimizing for the original iterative problem which maximized the variance.
 
@@ -788,7 +790,7 @@ The proof is the same as that of the <strong class="gc">PCs as eigenvectors</str
 
 This shows us that it's not quite right to think of the eigenvectors as maximizing or minimizing some quantity like variance or reconstruction error (even though we've defined the principal components that way). The eigenvectors of $\bc{\S}$ simply form a very natural orthonormal basis for the data, from which we can derive natural solutions to optimization objectives in both directions.
 
-There is one question that we haven't answered yet. How do we refine the combined problem so that it coincides with the iterative problem. The one property that we use in our derivations above that is not stated in the combined problem, is that in the new basis, the data are _decorrelated_. If we add this requirement to the optimization objective, we get:
+There is one question that we haven't answered yet. How do we refine the combined problem so that it coincides with the iterative problem? The one property that we use in our derivations above that is not stated in the combined problem, is that in the new basis, the data are _decorrelated_. If we add this requirement to the optimization objective, we get:
 
 $$\begin{align*}
 \argmax{\rc{\W}} & \sum_\gc{i} \left( \x_\gc{i}^T\rc{W} \right )^ 2 \\
@@ -804,24 +806,24 @@ We have come home from a long walk. Let's settle by the fireplace and talk about
 
 We started with a broad idea of PCA as a method that iteratively minimizes the reconstruction error, while projecting into a lower dimensional space. For some reason, we saw last time, this works amazingly well and exposes many meaningful latent dimensions in our data. In this part, we showed first that minimizing reconstruction error is equivalent to maximizing variance.
 
-We then looked at eigenvectors, and we show that the eigenvectors of the data covariance $\bc{\S}$ arise naturally when we imagine that our data was originally decorrelated with unit variance in all directions. To me, this provides some intuition for why PCA works so well when it does. We assumed for purposes of illustration that our data was constructed by samping independent latent variables $\z$ and then mixing them up linearly. What if that's true? In our income dataset, in the first part, there was one important latent variable: each person's salary, from this, we derived the monthly salary, and the majority of their quarterly income. The other latent variable captured random noise: whether people had some extra income, bonuses, etc.
+We then looked at eigenvectors, and we show that the eigenvectors of the data covariance $\bc{\S}$ arise naturally when we imagine that our data was originally decorrelated with unit variance in all directions. To me, this provides some intuition for why PCA works so well when it does. We can imagine that our data was constructed by sampling independent latent variables $\z$ and then mixing them up linearly. In our income dataset, in the first part, there was one important latent variable: each person's salary. From this, we derived the monthly salary, and the majority of their quarterly income. The other latent variable captured random noise: whether people had some extra income, bonuses, etc.
 
 <figure class="narrow">
 <img src="/images/pca/sol-w2.svg" />
 </figure>
 
-We can imagine the same approach with the Olivetti faces. We get $\bc{4096 \text{ features}}$, but under water, most of the work is done by a few _latent_ dimensions which are largely independent of each other: the subject's age, the direction of the light source, their gender and so on. All of these can be chosen independently from each other, and are likely mostly decorrelated in the data. That is, we don't light all women from the left, or only chose old men and young women.
+We can imagine the same approach with the Olivetti faces. We get $\bc{4096 \text{ features}}$, but under water, most of the work is done by a few _latent_ dimensions which are largely independent of each other: the subject's age, the direction of the light source, their apparent gender and so on. All of these can be chosen independently from each other, and are likely mostly decorrelated in the data. That is, if we don't light all women from the left, or only chose old men and young women.
 
 <aside>If these assumptions are violated, it may point to undesirable biases in our data. A very relevant topic at the moment. This shows that bias can be defined in terms of the assumed latent variables. Unfortunately, once the data is biased, it reduces our ability to extract the latent features, which makes it more difficult to counteract the bias.
 </aside>
 
 Since the assumptions behind our transformation from decorrelated data to the observed data are mostly correct, finding this transformation, and inverting it retrieves the latent dimensions. The greater the variance along a latent dimension, the more variance that particular "choice" added to the the data. The choice of the subject's age adds more variance than the lighting, and the lighting adds more variance than the gender.
 
-The heart of the method is the spectral theorem. Without the decomposition $\bc{\S} = \rc{\P}\bc{\D}\rc{\P}^T$, none of this would work. Proving that such a decomposition always exists for a square matrix, and that every matrix for which the decomposition exists is square, is not too difficult, but it takes a lot more background than we had room for here: they include matrix determinants, the characteristic polynomial and complex numbers. In the next part, we will go over all these subjects carefully, building our intuition for them, and finish by thoroughly proving the spectral theorem.
+The heart of the method is the spectral theorem. Without the decomposition $\bc{\S} = \rc{\P}\bc{\D}\rc{\P}^T$, none of this would work. Proving that such a decomposition always exists for a symmetric matrix, and that every matrix for which the decomposition exists is symmetric, is not very difficult, but it takes a lot more background than we had room for here: they include matrix determinants, the characteristic polynomial and complex numbers. In the next part, we will go over all these subjects carefully, building our intuition for them, and finish by thoroughly proving the spectral theorem.
 
-Finally, you may wonder if any of these new insights help us in computing the principal component analysis. The answer is yes, the eigendecomposition $\bc{\S} = \rc{\P}\bc{\D}\rc{\P}^T$ can be computed efficiently, and any linear algebra package allows you to do so. From there, you have your principal components $\P$, and the rest is just basic matrix multiplication.
+Finally, you may wonder if any of these new insights help us in computing the principal component analysis. The answer is yes, the eigendecomposition $\bc{\S} = \rc{\P}\bc{\D}\rc{\P}^T$ can be computed efficiently, and any linear algebra package allows you to do so. This gives you the principal components $\rc{\P}$, and the rest is just matrix multiplication.
 
-However, the eigendecomposition, while certainly faster and more reliable than the projected gradient descent we've used so far, is still a little numerically unstable. In practice, PCA is almost always computed by **singular value decomposition** (SVD). The SVD is such a massively useful method that it's worth looking at in more detail. It's inspired very much by everything we've set out above, but its practical applications reach far beyond just the computation of principal components. We'll develop the SVD in the last part of the series, finishing up with a complete view of PCA, down to the theorem at its heart and the standard way of implementing it.
+The eigendecomposition is certainly faster and more reliable than the projected gradient descent we've used so far, but is can still be a little numerically unstable. In practice, PCA is almost always computed by **singular value decomposition** (SVD). The SVD is such a massively useful method that it's worth looking at in more detail. It's inspired very much by everything we've set out above, but its practical applications reach far beyond just the computation of principal components. We'll develop the SVD in the last part of the series, finishing up with a complete view of PCA, down to the theorem at its heart and the standard way of implementing it.
 
 ## Appendix
 
