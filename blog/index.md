@@ -5,6 +5,18 @@ article: false
 ---
 <!-- {% raw %} -->
 <ul class="nav publications content">
+
+	<li><a href="pca-2">
+	  	<h2>A friendly introduction to PCA, part 2
+	  	</h2>
+	  	<span class="year">2020</span>
+	  	</a>	  	
+	</li>
+	<li><a href="pca">
+	  	<h2>A friendly introduction to PCA, part 1
+	  	</h2>
+	  	</a>	  	
+	</li>
 	<li><a href="transformers">
 	  	<h2>Transformers from scratch
 	  	</h2>
