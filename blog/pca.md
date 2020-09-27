@@ -12,8 +12,8 @@ code: true
 </header>
 
 <ul class="links">
-	<li>26 Sep 2020</li>
-	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca.ipynb">notebook</a></li>
+	<li>27 Sep 2020</li>
+	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca/pca-1.ipynb">notebook</a></li>
 		<li><a href="/blog/pca-2">part 2</a></li>
 		<li>3</li>
 		<li>4</li>

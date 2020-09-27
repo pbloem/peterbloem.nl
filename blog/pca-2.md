@@ -13,7 +13,7 @@ code: true
 
 <ul class="links">
 	<li>27 Sep 2020</li>
-	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca.ipynb">notebook</a></li>
+	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca/pca-2.ipynb">notebook</a></li>
 		<li><a href="/blog/pca">part 1</a></li>
 		<li>3</li>
 		<li>4</li>
@@ -795,7 +795,7 @@ There is one question that we haven't answered yet. How do we refine the combine
 $$\begin{align*}
 \argmax{\rc{\W}} & \sum_\gc{i} \left( \x_\gc{i}^T\rc{W} \right )^ 2 \\
 \text{such that } & \rc{W}^T\rc{W} = \I \\
-\text{and } & \kc{\frac{1}{N}}\rc{W}^T\X^T\X\rc{W} = \I \p
+\text{and } & \kc{\frac{1}{N}}\rc{W}^T\X^T\X\rc{W} \text{ is diagonal.}
 \end{align*}$$
 
 For this problem, there is only one solution (up to negations of the principal components): the PCA solution. With this, we can finally let go of our iterative view of PCA, and embrace methods that compute all principal components in a single operation.
