@@ -793,7 +793,7 @@ This shows us that it's not quite right to think of the eigenvectors as maximizi
 There is one question that we haven't answered yet. How do we refine the combined problem so that it coincides with the iterative problem? The one property that we use in our derivations above that is not stated in the combined problem, is that in the new basis, the data are _decorrelated_. If we add this requirement to the optimization objective, we get:
 
 $$\begin{align*}
-\argmax{\rc{\W}} & \sum_\gc{i} \left( \x_\gc{i}^T\rc{W} \right )^ 2 \\
+\argmax{\rc{\W}} & \sum_\gc{i} \left( \x_\gc{i}^T\rc{\W} \right )^ 2 \\
 \text{such that } & \rc{W}^T\rc{W} = \I \\
 \text{and } & \kc{\frac{1}{N}}\rc{W}^T\X^T\X\rc{W} \text{ is diagonal.}
 \end{align*}$$
