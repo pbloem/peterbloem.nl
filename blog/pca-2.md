@@ -21,7 +21,9 @@ code: true
 
 In <a href="/blog/pca">part 1</a> of this series, we took what I think is the most intuitive route to defining PCA: framing the method in terms of reconstruction error. The solution method we used wasn't very efficient or stable, and some parts of the "why" question were left unresolved, but we answered the "how" question well enough to show the method in action and hopefully convince you that it's worth digging a little deeper.
 
-We'll start by tying up one of the loose ends from the last part. We defined PCA in terms of reconstruction error, but most other explanations instead  define it in terms of variance maximization. I started with the reconstruction error, since it requires fewer assumptions, and the required assumptions feel more intuitive. However, to explain the details fo what happens under the hood, the variance perspective is more helpful, so we'll start by adding that to our toolbelt.
+We'll start by tying up one of the loose ends from the last part. We defined PCA in terms of reconstruction error, but most other explanations instead  define it in terms of **variance maximization**. 
+
+I started with the reconstruction error, since it requires fewer assumptions, and the required assumptions feel more intuitive. However, to explain the details of what happens under the hood, the variance perspective is more helpful, so we'll start by adding that to our toolbelt.
 
 ## Minimal reconstruction error is maximal variance
 
@@ -58,7 +60,7 @@ Why is this the same as minimizing the reconstruction error? It's easy to see th
 <p>By Pythagoras, we have $\|\x_\gc{i}\|^2 = \|\bc{\r}\|^2 + {z_\gc{i}}^2$. The vector $\x_\gc{i}$ remains constant, since that is given by the data. The only thing we change is the direction of the vector $\rc{\w}$. If we change that to make the reconstruction error $\|\bc{\r}\|$ smaller, the distance $z_\gc{i}$ must get larger. The sum of the squares of all $\z_\gc{i}$'s is the variance of the data.</p>
 
 <aside>
-I first learned about the equivalence between variance maximization and reconstruction error minimization from <a href="http://alexhwilliams.info/itsneuronalblog/2016/03/27/pca/">this blog post</a> by <a href="">Alex Williams</a>, which uses a similar diagram.
+I first learned about the equivalence between variance maximization and reconstruction error minimization from <a href="http://alexhwilliams.info/itsneuronalblog/2016/03/27/pca/">this blog post</a> by <a href="http://alexhwilliams.info/">Alex Williams</a>, which uses a similar diagram.
 </aside>
 
 Thus, the first principal component is the vector $\rc{\w}$ for which the data has maximum variance when projected onto $\rc{\w}$. For the sake of completeness let's work this into a proper proof. There's some technical stuff coming up, so we had better get into a more formal mind set.
@@ -120,7 +122,7 @@ $$
 
 In the previous part, we also defined a <strong>combined problem</strong>, which combined all the vectors together in one optimization objective. We can work out an equivalent for the variance perspective (the proof is in the appendix). 
 
-<p><div class="theorem"><strong class="gc">Equivalence of combined optimization</strong> The combined problem for reconstruction error minimization<br />
+<p><div class="theorem"><strong class="gc">Equivalence of combined optimization.</strong> The combined problem for reconstruction error minimization<br />
 $$\begin{align*}
 &\argmin{\rc{\W}} \sum_\gc{i} \|\x_\gc{i} - \x'_\gc{i}\|\\
 &\;\;\;\text{such that } \rc{\W}^T\rc{\W} = \I\\
@@ -135,11 +137,11 @@ $$\begin{align*}
 
 If we want to optimize a matrix $\rc{\W}$ with mutually orthogonal unit vectors for columns in one go, then maximizing the sum of the variances in all <span class="rc">latent directions</span> is equivalent to minimizing the reconstruction loss defined in the combined approach  
 
-One consequence is that since $\rc{W} = \I$ was a solution of the error minimization problem (with $\rc{k} = \bc{m}$)m it must be a solution for the variance maximization problem as well. 
+One consequence is that since $\rc{\W} = \I$ was a solution of the error minimization problem (with $\rc{k} = \bc{m}$) it must be a solution for the variance maximization problem as well. 
 
-<p>This tells us something interesting. If we set $\rc{\W} = \I$, then $\sum_{\gc{i}, \rc{r}} {z_{\gc{i}\rc{r}}}^2$ is just the sum of all the variances of all the features in our data. For all solutions at $\rc{k} = \bc{m}$, this must be the total variance among the latent features. For solutions to the problem at some $\rc{k} < \bc{m}$ the variance is less than or equal than this value. Each principal component adds a little variance ot the total sum of variance, and when we have enough principal components to reconstruct the data perfectly, the sum of the variances along the principal components equals the sum total variance in the data.</p>
+<p>This tells us something interesting. If we set $\rc{\W} = \I$, then $\sum_{\gc{i}, \rc{r}} {z_{\gc{i}\rc{r}}}^2$ is just the sum of all the variances of all the features in our data. For all solutions at $\rc{k} = \bc{m}$, this must be the total variance among the latent features. For solutions to the problem at some $\rc{k} < \bc{m}$ the variance is less than or equal to this value. Each principal component adds a little variance ot the total sum of variance, and when we have enough principal components to reconstruct the data perfectly, the sum of the variances along the principal components equals the sum total variance in the data.</p>
 
-Here's what that looks like for the Olivetti faces. 
+Here's what that looks like for the Olivetti faces data. 
 
 <figure class="narrow">
 <img src="/images/pca/sum-variance.svg" />
@@ -167,9 +169,9 @@ Let's return to this image.
 </figure>
 
 These solutions are the same for both perspectives: variance maximization and reconstruction error minimization. We have two unresolved questions about this image:
-First, how is it that the solution to the iterative approach reaches the same optimum as the solutions to the combined approach? Take a second to consider how strange this is. Solving the iterative problem is a greedy search: once we have chosen $\rc{\w_1}$ we can't ever go back. The process for the combined approach solves all the vectors in sync. How is it that this ability to tune the vectors in concert doesn't give us any advantage in the optimum we find?
+First, how is it that the solution to the iterative problem (the PCA solution) reaches the same optimum as the solutions to the combined approach? Take a second to consider how strange this is. Solving the iterative problem is a greedy search: once we have chosen $\rc{\w_1}$ we can't ever go back. The process for the combined approach solves all the vectors in sync. How is it that this ability to tune the vectors in concert doesn't give us any advantage in the optimum we find?
 
-The second question, and the question we will answer first, is what is the meaning of PCA solution among the combined solutions? Can we _characterize_ it, perhaps by adding an additional constraint to the combined problem?
+The second question, and the question we will answer first, is what is the meaning of the PCA solution among the combined solutions? How can we _characterize_ this solution?
 
 The answer to the second question can be summarized in one phrase:
 <blockquote>
@@ -182,7 +184,7 @@ Depending on your background, this will raise one of two questions. <em>The eige
 
 The most common, and probably the most intuitive way to think about matrices is _as transformations of points in space_. If we have some vector $\x$ in space and we multiply it by a matrix $\bc{\A}$, we get a new point $\y = \bc{\A}\x$. If $\bc{\A}$ is square, then $\x$ and $\y$ are in the same space. 
 
-A good way to visualize this in the plane is by _domain coloring_. We take a large number of points, arranged in a grid, and we color them by some image. This could be a simple color gradient, but we can also choose a photograph of a painting. Following [Wikipedia's example](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors#Overview), we'll use a picture of the Mona Lisa.
+A good way to visualize this in the plane is by _domain coloring_. We take a large number of points, arranged in a grid, and we color them by some image. This could be a simple color gradient, but we can also choose a photograph or some other image. Following [Wikipedia's example](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors#Overview), we'll use a picture of the Mona Lisa.
 
 <figure class="narrow">
 <img src="/images/pca/domain-coloring.svg" />
@@ -197,12 +199,12 @@ If we apply the transformation $\bc{\A}$ to each of these points, we can tell wh
 
 All the points are mapped to a new position by $\bc{\A}$ and poor Lisa ends up squished and stretched in various directions. Transformations expressible in a matrix are linear transformations. These are the transformations for which a line in the original image is still a line in the transformed image. This means that we can rotate, stretch, squish and flip the image in any direction we like, but we can't warp, bend or tear it.
 
-In this language of transformation, we can very naturally define what eigenvectors are. The <strong>eigenvectors of a square matrix $\bc{\A}$</strong> are defined as those vectors (i.e. points) for which the <em>direction</em> doesn't change under transformation  by $\bc{A}$.
+In this language of transformation, we can very naturally define what eigenvectors are. The <strong>eigenvectors of a square matrix $\bc{\A}$</strong> are defined as those vectors (i.e. points in the image) for which the <em>direction</em> doesn't change under transformation  by $\bc{\A}$.
 
-It's simplest to see what this looks like for a diagonal matrix. For instance in the transformation
+It's simplest to see what this looks like for a _diagonal matrix_. For instance in the transformation
 
 $$
-\y = \bc{\begin{pmatrix}2 & 0 \\ 0 & \tfrac{1}{2}\\\end{pmatrix}}\x\p
+\y = \bc{\begin{pmatrix}2 & 0 \\ 0 & \tfrac{1}{2}\\\end{pmatrix}}\x
 $$
 
 the matrix acts independently on the first and second dimensions, squishing one, and stretching the other.
@@ -306,12 +308,12 @@ This property makes orthogonal matrices especially nice to work with, since we c
 
 We can now state the spectral theorem.
 
-<div class="theorem proof-omitted"><p><strong class="gc">The spectral theorem</strong> Call a matrix $\bc{\A}$ <em>orthogonally diagonalizable</em> if it is diagonalizable  with the additional constraint that $\rc{\P}$ is orthogonal: $\bc{\A} = \rc{\P}\bc{\D}\rc{\P}^T$.</p>
+<div class="theorem proof-omitted"><p><strong class="gc">The spectral theorem.</strong> Call a matrix $\bc{\A}$ <em>orthogonally diagonalizable</em> if it is diagonalizable  with the additional constraint that $\rc{\P}$ is orthogonal: $\bc{\A} = \rc{\P}\bc{\D}\rc{\P}^T$.</p>
 
 <p>A matrix $\bc{\A}$ is orthogonally diagonalizable if and only if $\bc{\A}$ is symmetric.
 </p></div>
 
-Proving this now would require us to discuss too many extra concepts that aren't relevent for this part of the story. On the other hand, this theorem is very much the heart of PCA: everthing it is and can do follows from this result. We'll take it at face value for now, and answer the rest of our questions. Part 3 of this series will be entirely dedicated to proving the spectral theorem.
+Proving this now would require us to discuss too many extra concepts that aren't relevant for this part of the story. On the other hand, this theorem is very much the heart of PCA: everything it is and can do follows from this result. We'll take it at face value for now, and answer the rest of our questions. Part 3 of this series will be entirely dedicated to proving the spectral theorem.
 
 For now, just remember that if we have a square, symmetric matrix, we can diagonalize it with an orthogonal matrix $\rc{\P}$ and a diagonal matrix $\bc{\D}$. The diagonal elements of $\bc{\D}$ will be the eigenvalues and the columns of $\rc{\P}$ will be the corresponding eigenvectors. 
 
@@ -331,7 +333,7 @@ The principal components are the eigenvectors <span class="bc">of the covariance
 
 Let's start by reviewing what a covariance matrix is. When we talk about one-dimensional data, we often discuss the variance: a measure for how spread out the numbers are. We can think of this as a measure of _predictability_. The more spread out the points are the more difficult it is to predict where a randomly sampled point might be. If the variance is very small, we know any point is very likely to be near 0. If it's very large, we are less sure.
 
-The analogue for $\bc{m}$-dimensional data, like our data matrix $\X$ is the covariance matrix. It tells us not just how spread out the points are along the axes (the variance of each feature) but also how spread out the points of one feature are, given the value of another feature. Consider the following 2D dataset:
+The covariance matrix is the analogue for $\bc{m}$-dimensional data, like our data $\X$. It tells us not just how spread out the points are along the axes (the variance of each feature) but also how spread out the points of one feature are, given the value of another feature. Consider the following 2D dataset:
 
 <figure class="narrow centering">
 <img src="/images/pca/covariance.svg" class="three-quarters"/>
@@ -374,7 +376,7 @@ For mean-centered data, these simplify to
 $$</p>
 
 Note two things about these equations:
-* The variance is just the covariance of a feature _with itself_: $\text{Var}(\bc{j}) = \text{Cov}(\bc{j}, \bc{j})$.
+* The variance is just the covariance of a feature _with itself_: $\text{Var}_\X(\bc{j}) = \text{Cov}_\X(\bc{j}, \bc{j})$.
 * If we ignore the multiplier $\kc{\tfrac{1}{n}}$, the covariance is the dot product of one column of $\X$ with another.
 
 This means that if we make a <span class="bc">big matrix</span> with all covariances between features $\bc{j}$ and $\bc{k}$, we can compute that matrix by a simple matrix multiplication:
@@ -393,15 +395,15 @@ This matrix is symmetric, since $\text{Cov}(\bc{j}, \bc{k}) = \text{Cov}(\bc{k},
 For any matrix, $\X$ of any size, $\bc{\M} = \X^T\X$ is square and symmetric: $\bc{M}_{ij} = \bc{M}_{ij}$ because they are both the dot product of columns $i$ and $j$ in the data.
 </aside>
 
-<p>We'll denite the covariance matrix of our dataset $\X$ by $\bc{\S}$ . This is the matrix that we're interested in. The eigenvectors of $\bc{\S}$, coincide with the principal components of $\X$.</p>
+<p>We'll denote the covariance matrix of our dataset $\X$ by $\bc{\S}$ . This is the matrix that we're interested in: yhe eigenvectors of $\bc{\S}$ coincide with the principal components of $\X$.</p>
 
-I expect that that doesn't immediately make a lot of intuitive sense. We've developed eigenvectors in terms of matrices that transform points in space. We don't usually think of $\bc{\S}$ as transforming space. It's not common to see a vector multiplied by $\bc{\S}$. Yet, we can easily diagonalize $\bc{\S}$. In fact, since it's symmetric, <span class="gc">the spectral theorem</span> tells us that we can diagonalize it with an orthogonal matrix, and we can be sure that it has $\gc{n}$ eigenvalues.
+I expect that that doesn't immediately make a lot of intuitive sense. We've developed eigenvectors in terms of matrices that transform points in space. We don't usually think of $\bc{\S}$ as transforming space. It's not common to see a vector multiplied by $\bc{\S}$. Yet, we can easily diagonalize $\bc{\S}$. In fact, since it's symmetric, <strong class="gc">the spectral theorem</strong> tells us that we can diagonalize it with an orthogonal matrix, and we can be sure that it has $\gc{n}$ eigenvalues.
 
 To develop some intuition for what these eigenvalues _mean_ we can have a look at the common practice of **data normalization**.
 
 ## Data normalization and basis transformations
 
-Data normalization is a very common data preprocessing step in many data science processes. For many applications we don't much care about the natural scale of the data, and we instead want the data to lie in a predictable range. For one-dimensional data, one way to do this is to rescale the data so that its mean equals $0$, and its variance equals 1. We achieve this easily by first shifting the data so that the mean is at $0$, and then scaling uniformly until the variance is $1$.
+Data normalization is a very common data pre-processing step in many data science processes. For many applications we don't much care about the natural scale of the data, and we instead want the data to lie in a predictable range. For one-dimensional data, one way to do this is to rescale the data so that its mean equals $0$, and its variance equals 1. We achieve this easily by first shifting the data so that the mean is at $0$, and then scaling uniformly until the variance is $1$.
 
 To work out how to make this transformation, we can imagine that our data _originally_ had mean $0$, and variance $1$, and was then transformed by scaling and then adding some constant value. That is, every point $x$ we observed was derived from an unseen point $z$ by two parameters $\bc{s}$ and $\oc{t}$ as 
 
@@ -433,7 +435,7 @@ $$
 This may seem like an overly elaborate way to derive a pretty intuitive normalization, but we will generalize this approach to higher dimensions later, so it pays to understand the steps. 
 </aside>
 
-Instead of thinking of this operation as moving the data around, we can also think about it as keeping the data where it is, but just expressing it on a different <em>axis</em>. We move the origin to coincide with the data mean, and then scale <em>the unit</em>  (the length of the arrow from $0$ to $1$) so that its tip lies at the point $\oc{\bar x} + \bc{\sigma}^2$. On this new axis, the data is normalized.
+Instead of thinking of this operation as moving the data around, we can also think about it as keeping the data where it is, but just expressing it on a different <em>axis</em>. We move the origin to coincide with the data mean, and then scale <em>the unit</em>  (the length of the arrow from $0$ to $1$) so that its tip lies at the point $\oc{\bar x} + \bc{\sigma}$. On this new axis, the data is normalized.
 
 <figure class="narrow">
 <img src="/images/pca/onedbasis.svg"/>
@@ -553,7 +555,7 @@ $$
 
 So, to map our data to a zero-mean, unit-variance, decorrelated form, we map to the basis formed by the eigenvectors of $\bc{\S}$ and then divide along each axis  by the square root of the eigenvalues. We can see here that the eigenvalues of the covariance matrix are the variances of the data, _along the eigenvectors_ (remember that we divided by the square of the variance before).
 
-Taking the alternative perspective we took above, we can also keep the data where it is and change our basis. We scale the standard basis along the axes by   $\bc{\D}^{-\frac{1}{2}}$ rotate by $\rc{\P}$ and translate by $\oc{\bar \x}$. In the resulting axes, our data has mean $\mathbf 0$, and covariance $\I$.
+Taking the alternative perspective we took above, we can also keep the data where it is and change our basis. We scale the standard basis along the axes by   $\bc{\D}^{\frac{1}{2}}$ rotate by $\rc{\P}$ and translate by $\oc{\bar \x}$. In the resulting axes, our data has mean $\mathbf 0$, and covariance $\I$.
 
 <figure class="narrow">
 <img src="/images/pca/covariance-2.svg" />
@@ -562,7 +564,7 @@ Taking the alternative perspective we took above, we can also keep the data wher
 ## Quadratic forms
 
 
-Have we fully married our first intuition about eigenvectors in transformation matrices with the role eigenvectors play in PCA, as the eigenvectors of $\bc{\S}$? Not quite. We've shown that $\bc{\S}$ is in some sense composed of a very important transformation $\bc{\A}$, sometimes called the precision matrix, which transforms decorrelated data with unit variance to have covariance $\bc{\S}$, but the eigenvectors we're using are not the eigenvectors of $\bc{\A}$. Rather,  $\bc{\A}$ is _made up_ of our eigenvectors and may itself have different eigenvectors, or no (real) eigenvectors at all.
+Have we fully married our first intuition about eigenvectors in transformation matrices with the role eigenvectors play in PCA, as the eigenvectors of $\bc{\S}$? Not quite. We've shown that $\bc{\S}$ is in some sense composed of a very important transformation $\bc{\A}$, which transforms decorrelated data with unit variance to have covariance $\bc{\S}$, but the eigenvectors we're using are not the eigenvectors of $\bc{\A}$. Rather,  $\bc{\A}$ is _made up_ of our eigenvectors and may itself have different eigenvectors, or no (real) eigenvectors at all.
 
 To develop an intuition for how $\bc{\S}$ operates on space, it's more helpful not to look at the linear form
 
@@ -597,11 +599,11 @@ The quadratic form $\z\bc{\D}\z$ is particularly simple, because $\bc{\D}$ is di
 $$</p>
 
 <p>This sum is very important. Note that all the factors $z_\rc{r}z_\rc{r}$ are not only positive (because they're squares), but they also sum to one, since $\|
-\z\|^2  = {z_1}^2 + \ldots + {\z_\bc{m}}^2$ is the length of vector, which we constrained to 1.</p>
+\z\|^2  = {z_1}^2 + \ldots + {\z_\bc{m}}^2$ is the squared length of vector $\z$, which we constrained to 1.</p>
 
-We'll call this a <strong class="gc">weighted sum</strong>: a sum over some set of numbers where each term is mulitplied by a positive weight, so that the weights sum to 1.
+We'll call this a <strong>weighted sum</strong>: a sum over some set of numbers where each term is multiplied by a positive weight, so that the weights sum to 1.
 
-In the next section, we will use this sum it to prove just about every open question we have left. For now, just notice what happens when $\x$ is an eigenvector. In that case, $\z$ is a one-hot vector, and only one of the terms in the sum is non-zero.
+In the next section, we will use this sum it to prove just about every open question we have left. For now, just notice what happens when $\x$ is an eigenvector. In that case, $\z$ is a one-hot vector, because $\rc{\P}\z = \x$, and only one of the terms in the sum is non-zero.
 
 This is one way to think of the quadratic form of $\bc{\S}$: it defines $\bc{m}$ <span class="rc">orthogonal directions in space</span> (the eigenvectors), at which the quadratic takes some <span class="bc">arbitary value</span> (the eigenvalues). For all other directions $\x$, the quadratic is a weighted mixture  between the eigenvalues, with the weights determined by how much of $\x$ projects onto the corresponding eigenvectors.
 
@@ -610,7 +612,7 @@ This is one way to think of the quadratic form of $\bc{\S}$: it defines $\bc{m}$
 
 For another geometric interpretation of the  eigenvectors of $\bc{\S}$, think back to the one-dimensional example of normalizing data. In the normalized version of the data, the variance is equal to 1. This means that, for most distributions, we can be sure that the majority of the data lies in the interval $(-1, 1)$. This is called the bi-unit interval, since it is made up of two units around the origin. If our data is normally distributed, this interval captures about 68% of it. The transformation by $\oc{t}$ and $\bc{s}$ maps this interval to an interval that capture the same proportion of the unnormalized data.
 
-In higher dimensions, the analogue of the bi-unit interval is the bi-unit sphere, the set of all point that are at most 1 away from the origin. To follow the analogy, we can transform the bi-unit sphere, which captures the majority of $\Z$ by some $\A^{-1}$ so that we capture the majority of the observed data.
+In higher dimensions, the analogue of the bi-unit interval is the bi-unit sphere, the set of all point that are at most 1 away from the origin. To follow the analogy, we can transform the bi-unit sphere, which captures the majority of $\Z$ by some $\bc{A}^{-1}$ so that we capture the majority of the observed data.
 
 <figure class="narrow">
 <img src="/images/pca/covariance-ellipses.svg" />
@@ -618,7 +620,9 @@ In higher dimensions, the analogue of the bi-unit interval is the bi-unit sphere
 </figcaption>
 </figure>
 
-In two dimensions, the transformation by $\bc{\A}$ and $\oc{\t}$ that we derived above is the transformation that maps the bi-unit sphere to an ellipse which captures the majority of the data. In more than two dimensions, we're mapping a hypersphere to an _ellipsoid_.
+In two dimensions, the transformation by $\bc{\A}$ and $\oc{\t}$ that we derived above is the transformation that maps the bi-unit circle to an ellipse which captures the majority of the data. In more than two dimensions, we're mapping a hypersphere to an _ellipsoid_.
+
+Note that the standard basis vectors are mapped to the eigenvectors of $\bc{\S}$. We call this new basis, in which the data is normalized, the <strong>eigenbasis of $\bc{\S}$.
 
 <p>To work out the shape of the ellipsoid in quadratic form, we just start with the set of all unit vectors $C = \left \{ \x :\x^T\x = 1 \right\}$ and transform each by $\bc{\A}$ individually (much like we transformed the Mona Lisa earlier).</p>
 
@@ -631,10 +635,10 @@ In two dimensions, the transformation by $\bc{\A}$ and $\oc{\t}$ that we derived
 
 That is, to transform the bi-unit circle to an ellipsoid that covers the same proportion of $\X$ as the circle did of $\Z$, we turn the equation $\x^T\x = 1$ into the equation $\x\bc{\S}^{-1}\x = 1$. 
 
-<p>Why the inversion from $\bc{\S}$ to $\bc{\S}^{-1}$? Follow the transformation along the first eigenvector of $\bc{\S}$. In this direction, we are multiplying the input unit vector by the square of the first eigenvalue (remember $\bc{\A} = \rc{\P}\bc{\D}^\frac{1}{2}$). To keep the vector a unit vector, we should therefore <em>divide</em> by the square of the first eigenvector. In other words, where $\x^T\bc{\S}\x$ expands, we shrink, and where $\x^T\bc{\S}\x$ shrinks, we expand.
+<p>Why the inversion from $\bc{\S}$ to $\bc{\S}^{-1}$? Follow the transformation along the first eigenvector of $\bc{\S}$. In this direction, we are multiplying the input unit vector by the square of the first eigenvalue (remember $\bc{\A} = \rc{\P}\bc{\D}^\frac{1}{2}$). To keep the vector a unit vector, we should therefore <em>divide</em> by the square of the first eigenvector. In other words, if we want to define a quadratic form for which the arguments transformed by $\bc{\A}$ stay unit vectors, then the more the value of $\x^T\bc{\S}\x$ grows, the more our quadratic form should shrink and vice versa.
 </p>
 
-<aside>To make this precise, note that the inverse of a symmetric matrix has a particularly simple expression in terms of its orthogonal diagonalization: $\bc{\S}^{-1} = \left(\rc{\P}\bc{\D}\rc{\P}^T\right)^{-1} = \rc{\P}\bc{\D}^{-1}\rc{\P}^T$. That is, the eigenvectors stay the same, and we just take the reciprocals of the eigenvalues.
+<aside>Note that the inverse of a symmetric matrix has a particularly simple expression in terms of its orthogonal diagonalization: $\bc{\S}^{-1} = \left(\rc{\P}\bc{\D}\rc{\P}^T\right)^{-1} = \rc{\P}\bc{\D}^{-1}\rc{\P}^T$. That is, the eigenvectors stay the same, and we just take the reciprocals of the eigenvalues.
 </aside>
 
 ## Why is PCA optimal?
@@ -643,7 +647,7 @@ With the quadratic form added to our toolbox, we can finally start answering som
 
 Let's start simply, why does the first principal component coincide with an eigenvector. And, while we're at it, which eigenvector does it coincide with?
 
-Visually, this is easy to show. In the image above, we plotted the bi-unit circle, and its transformation into an ellipse that covers the same part of the observed data. The <span class="oc">standard basis vectors</span> are mapped to the eigenvectors. Note that these become the axes of <span>the ellipse</span class="rc">. One of the standard basis vectors is mapped to the ellipse's _major axis_, the direction in which it bulges the most.The direction in which the data bulges the most is also the direction of greatest variance, and therefore the first principal component.
+Visually, this is easy to show. In the image above, we plotted the bi-unit circle, and its transformation into an ellipse that covers the same part of the observed data. The <span class="oc">standard basis vectors</span> are mapped to the eigenvectors. Note that these become the axes of <span class="rc">the ellipse</span>. One of the standard basis vectors is mapped to the ellipse's _major axis_, the direction in which it bulges the most.The direction in which the data bulges the most is also the direction of greatest variance, and therefore the first principal component.
 
 The proof of this fact is not very complex.
 
@@ -690,7 +694,7 @@ $$</p>
 
 We can extend this proof to show that all the other PCs are eigenvectors as well.
 
-<div class="theorem"><p><strong class="gc">PCs as eigenvectors</strong> The $\rc{k}$-th principal component of $\X$ is the $\rc{k}$-th eigenvector of $\bc{\S} = \kc{\frac{1}{N}}\X^T\X$</p></div>
+<div class="theorem"><p><strong class="gc">PCs as eigenvectors.</strong> The $\rc{k}$-th principal component of $\X$ is the $\rc{k}$-th eigenvector of $\bc{\S} = \kc{\frac{1}{N}}\X^T\X$</p></div>
 
 <div class="proof"><p><em>Proof.</em> For the first principal component $\rc{\w}_1$, the previous theorem provides a proof. For $\rc{\w}_2$, follow the previous proof until the  weighted sum</p>
 
@@ -706,7 +710,7 @@ $$</p>
 
 <p>Thus, the second eigenvector is orthogonal to the first (as required) if and only if their projections by $\rc{\P}^T$ are orthogonal as well (and similarly for higher eigenvectors).</p>
 
-<p>Recall that the first principal component has $\z$ vector $(1, 0, \ldots, 0)$, so to be orthogonal, the $\z$ vector corresponding to the second principal component must have $z_1 = 0$. Since the $\bc{D}_jj$ are arranged in decreasing order, we maximize the sum under this constraint with the one-hot vector $\hat \z = (0, 1, 0, \ldots, 0)$. $\rc{\P}^T \hat\z$ selects the second column in $\rc{\P}$, so the second principal component coincides with the second eigenvector.</p>
+<p>Recall that the first principal component has $\z$ vector $(1, 0, \ldots, 0)$, so to be orthogonal, the $\z$ vector corresponding to the second principal component must have $0$ at its first element. Since the $\bc{D}_{jj}$ are arranged in decreasing order, we maximize the sum under this constraint with the one-hot vector $\hat \z = (0, 1, 0, \ldots, 0)$. $\rc{\P}^T \hat\z$ selects the second column in $\rc{\P}$, so the second principal component coincides with the second eigenvector.</p>
 
 <p>The same logic holds for the other principal components. For each component $\rc{r}$, we must set all weights ${z_i}^2$ with $i < \rc{r}$ to zero in order for the $\z$ vector to be orthogonal to all principal components already chosen. In the remainder of the sum, we maximize the weight with the one-hot vector for $\rc{r}$, which selects the $\rc{r}$-th eigenvector.<span class="qed" />
 </p></div>
@@ -758,7 +762,7 @@ Since the eigenvectors are the solution to the PCA problem, you may be forgiven 
 
 Look back at the ellipse we drew above. The first eigenvector was the major axis of the ellipse, the direction in which the data bulged out the most. However, the other eigenvector is the _minor_ axis of the ellipse. The direction in which the data bulges <em>the least</em>, this makes it the direction in which the variance is _minimized_.
 
-To study this a bit ore formally, we take the first two proofs of the previous section and turn them around. If we start with the _last_ eigenvector and work backward, we are choosing the directions that minimize the variance (and hence maximize the reconstruction error).
+To study this a bit more formally, we take the first two proofs of the previous section and turn them around. If we start with the _last_ eigenvector and work backward, we are choosing the directions that minimize the variance (and hence maximize the reconstruction error).
 
 <div class="theorem"><p><strong class="gc">Last eigenvector.</strong> The direction in which the variance is minimized, is the eigenvector with the smallest eigenvalue
 </p></div>
@@ -766,12 +770,12 @@ To study this a bit ore formally, we take the first two proofs of the previous s
 <p>$$
 \z^T\bc{\D}\z = {z_1}^2 \bc{d}_{11} + \ldots + {z_\bc{m}}^2\bc{d}_\bc{mm} \p
 $$</p>
-<p>A weighted sum is minimized when all the weight is given to the smallest term. Followin the same logic as before, this leads to a one-hot vector $\hat \z = (0, \ldots, 0, 1)$ that selects the last column of $\rc{\P}$, which is the last eigenvector.<span class="qed"/>
+<p>A weighted sum is minimized when all the weight is given to the smallest term. Following the same logic as before, this leads to a one-hot vector $\hat \z = (0, \ldots, 0, 1)$ that selects the last column of $\rc{\P}$, which is the last eigenvector.<span class="qed"/>
 </p></div>
 
 Did we make a mistake somewhere? We defined the principal components as directions for which variance is maximized. Then we showed that all principal components are eigenvectors. Now we learn that at least one eigenvector actually _minimizes_ the variance. What gives?
 
-<p>The solution lies in the fact that the sum of all variances is fixed to the sum of the variances of the data, $z_\text{total}$. Imagine solving the combined problem for $\rc{k} = \bc{m} - 1$. The resulting variances along the columns of the solution $\rc{\W}$ should be as high as possible. However since all these columns are orthogonal, there is only one direction $\rc{v}$ left which is orthogonal to all of them. The variance along this direction, $z_\rc{\v}$, is whatever variance we haven't captured in our solution:</p>
+<p>The solution lies in the fact that the sum of all variances is fixed to the sum of the variances of the data, $z_\text{total}$. Imagine solving the combined problem for $\rc{k} = \bc{m} - 1$. The resulting variances along the columns of the solution $\rc{\W}$ should be as high as possible. However since all these columns are orthogonal, there is only one direction $\rc{\v}$ left which is orthogonal to all of them. The variance along this direction, $z_\rc{\v}$, is whatever variance we haven't captured in our solution:</p>
 
 <p>$$
 z_\rc{1} + \ldots + z_{\bc{m} - 1} + z_\rc{\v} = z_\text{total}
@@ -819,11 +823,11 @@ We can imagine the same approach with the Olivetti faces. We get $\bc{4096 \text
 
 Since the assumptions behind our transformation from decorrelated data to the observed data are mostly correct, finding this transformation, and inverting it retrieves the latent dimensions. The greater the variance along a latent dimension, the more variance that particular "choice" added to the the data. The choice of the subject's age adds more variance than the lighting, and the lighting adds more variance than the gender.
 
-The heart of the method is the spectral theorem. Without the decomposition $\bc{\S} = \rc{\P}\bc{\D}\rc{\P}^T$, none of this would work. Proving that such a decomposition always exists for a symmetric matrix, and that every matrix for which the decomposition exists is symmetric, is not very difficult, but it takes a lot more background than we had room for here: they include matrix determinants, the characteristic polynomial and complex numbers. In the next part, we will go over all these subjects carefully, building our intuition for them, and finish by thoroughly proving the spectral theorem.
+The heart of the method is the spectral theorem. Without the decomposition $\bc{\S} = \rc{\P}\bc{\D}\rc{\P}^T$, none of this would work. Proving that such a decomposition always exists for a symmetric matrix, and that every matrix for which the decomposition exists is symmetric, is not very difficult, but it takes a lot more background than we had room for here: this includes matrix determinants, the characteristic polynomial and complex numbers. In the next part, we will go over all these subjects carefully, building our intuition for them, and finish by thoroughly proving the spectral theorem.
 
 Finally, you may wonder if any of these new insights help us in computing the principal component analysis. The answer is yes, the eigendecomposition $\bc{\S} = \rc{\P}\bc{\D}\rc{\P}^T$ can be computed efficiently, and any linear algebra package allows you to do so. This gives you the principal components $\rc{\P}$, and the rest is just matrix multiplication.
 
-The eigendecomposition is certainly faster and more reliable than the projected gradient descent we've used so far, but is can still be a little numerically unstable. In practice, PCA is almost always computed by **singular value decomposition** (SVD). The SVD is such a massively useful method that it's worth looking at in more detail. It's inspired very much by everything we've set out above, but its practical applications reach far beyond just the computation of principal components. We'll develop the SVD in the last part of the series, finishing up with a complete view of PCA, down to the theorem at its heart and the standard way of implementing it.
+The eigendecomposition is certainly faster and more reliable than the projected gradient descent we've used so far, but it can still be a little numerically unstable. In practice, PCA is almost always computed by **singular value decomposition** (SVD). The SVD is such a massively useful method that it's worth looking at in more detail. It's inspired very much by everything we've set out above, but its practical applications reach far beyond just the computation of principal components. We'll develop the SVD in the last part of the series, finishing up with a complete view of PCA, down to the theorem at its heart and the standard way of implementing it.
 
 ## Appendix
 
