@@ -27,7 +27,7 @@ We will work from the outside in: we will view PCA first as a way of finding a s
 
 Most of the technical stuff only becomes necessary when we want to understand why PCA works so well: this is where the **spectral theorem** and the **eigenvalues and -vectors**, come in to the story, they give us a deeper understanding of what we're doing. We'll look at these subjects in <a href="/blog/pca-2">part two</a>.
 
-The spectral theorem is the heart of the method, so it pays to discuss it in some detail. We'll state it anmd explain what it means in part 2, and leave the proof to part 3. 
+The spectral theorem is the heart of the method, so it pays to discuss it in some detail. We'll state it and explain what it means in part 2, and leave the proof to part 3. 
 
 Finally, in part 4 we'll look at the the **singular value decomposition**. This matrix decomposition is not only the most popular method for computing the solutions to PCA, it is also the go-to method for computing many related problems, like least squares fits, and matrix ranks.
 
@@ -255,14 +255,17 @@ The procedure we will use to find the first principal component for this data is
 <img src="/images/pca/face-reconstructions.png"/>
 </figure>
 
-You're disappointed, I can tell. Well, to be fair, we've compressed each image into a single number, we shouldn't be surprised that there isn't much left after we reconstruct it. But that doesn't mean that 1D PCA doesn't offer us anything useful. What we can do is look at the first principal component in data space. It's a vector with one element per pixel, so if we map its elements to colors, we can re-arrange it into an image. It looks like this:
+You're disappointed, I can tell. Well, to be fair, we've compressed each image into a single number, we shouldn't be surprised that there isn't much left after we reconstruct it. But that doesn't mean that 1D PCA doesn't offer us anything useful. 
+
+What we can do is look at the first principal component in data space: $\rc{\w}$ is a vector with one element per pixel, so we can re-arrange it into an image and see what each element in the vector tells us about the original pixels of the data. We'll color the positive elements of $\rc{\w}$ red and the negative values blue.
+
+It looks like this:
 
 <figure class="narrow centering tight">
 <img src="/images/pca/firstpc.svg" class="three-quarters"/>
 </figure>
 
-
-Positive values are mapped to red and negative values to blue. If we think of this as the encoding vector, we can see a heatmap of which parts of the image the encoding looks at: the darker the red, the more the value of that pixel is added to $z$. The darker the blue, the more it is subtracted. 
+If we think of this as the <em>encoding</em> vector, we can see a heatmap of which parts of the image the encoding looks at: the darker the red, the more the value of that pixel is added to $z$. The darker the blue, the more it is subtracted. 
 
 If we think of this as the <em>decoding</em> vector, we can see that the larger $z$ is, the more of the red areas gets added to the decoded image, but the more of the blue areas get _subtracted_. That is, two red pixels are positively correlated, and a red and a blue pixel are negatively correlated. A bright red pixel and a light red pixel have the same relation as our monthly salary and quarterly income: one is (approximately) a multiple of the other.
 
@@ -327,14 +330,13 @@ This decision is important, and has many useful consequences. We'll save those f
 
 <p>In general, each component $\rc{\w}_r$ we add should be orthogonal to all components before it: for $\rc{k} = 3$ we add another unit vector $\rc{\w_3}$, which should be orthogonal to both $\rc{\w_1}$ and $\rc{\w_3}$. </p>
 
-We can summarize these constraints neatly in one matrix equation: the matrix $\rc{\W}$
-, whose columns are our $\rc{\w}$ vectors, should satisfy:
+We can summarize these constraints neatly in one matrix equation: the matrix $\rc{\W}$, whose columns are our $\rc{\w}$ vectors, should satisfy:
 
 $$
 \rc{\W}^T\rc{\W} = \I
 $$
 
-where $\I$ is the $\rc{k} \times \rc{k}$ identity matrix. The diagonal tells us that each column $\rc{\w}$ of $\rc{\W}$ should have $\rc{\w}^T\rc{\w} = 1$ (that is, it is should be a unit vector) and every column $\rc{\w}$ and every _other_ column $\rc{\v}$ should have $\rc{\w}^T\rc{\v} = 0$ (that is, they should be orthogonal). 
+where $\I$ is the $\rc{k} \times \rc{k}$ identity matrix. This equation combines both of our constraints: unit vectors, and mutually orthogonal vectors. On the diagonal of $\rc{\W}^T\rc{\W}$, we get the dot product of every column of $\rc{\W}$ with itself (which should be $1$ so that it is a unit vector) and off the diagonal we get the dot product of every column of $\rc{\W}$ with every other column (which should be $0$, so that they are orthogonal).
 
 How do we find our $\rc{\W}$? The objective function remains the same: the sum of squared distances between the instances $\x$ and their reconstructions $\x'$. To satisfy the constraints, we can proceed in two different ways. We'll call these the _combined_ problem and the _iterative_ problem.
 
@@ -342,7 +344,7 @@ The **combined** problem is simply to add the matrix constraint above and stick 
 
 $$
 \begin{align*}
-&\argmax{\rc{\W}} \sum_\x ||\x^T\rc{\W}\rc{\W}^T - \x||^2 \\
+&\argmin{\rc{\W}} \sum_\x ||\x^T\rc{\W}\rc{\W}^T - \x||^2 \\
 &\;\;\text{such that } \rc{\W}^T\rc{\W} = I
 \end{align*}
 $$
@@ -353,7 +355,7 @@ To put it more formally, we choose each $\rc{\w_1}, \ldots, \rc{\w_k}$ in sequen
 
 $$
 \;\;\;\;\;\;\;\; \rc{\w_r} = \begin{cases} 
-	&\argmax{\rc{\w}} \sum_\x ||\x^T\rc{\w} \times \rc{\w} - \x||^2 \\
+	&\argmin{\rc{\w}} \sum_\x ||\x^T\rc{\w} \times \rc{\w} - \x||^2 \\
 	&\;\;\;\;\;\;\text{such that } \rc{\w}^T\rc{\w} = 1, \\
 	&\;\;\;\;\;\;\text{and } \rc{\w}\perp\rc{\w_i} \text{ for } \rc{i} \in [1 \ldots \rc{r}-1]
 \end{cases}
@@ -458,7 +460,7 @@ The authors applied PCA, and plotted the first two principal components. They co
 <figcaption>Reproduced from [5].</figcaption>
 </figure>
 
-The first principal component corresponds roughly to how far north the person lives (or their ancestors did) and the second principal component to how far south they live. This means that a scatter plot shows up as a fuzzy map of Europe. If we sent a thousand DNA samples off to aliens on the other side of the galaxy, they could work out a rough image of the geography of our planet.
+The first principal component corresponds roughly to how far north the person lives (or their ancestors did) and the second principal component to how far east they live. This means that a scatterplot shows up as a fuzzy map of Europe. If we sent a thousand DNA samples off to aliens on the other side of the galaxy, they could work out a rough image of the geography of our planet.
 
 ## Conclusion
 
