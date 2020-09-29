@@ -57,6 +57,9 @@ Why is this the same as minimizing the reconstruction error? It's easy to see th
 <img src="/images/pca/recvar-diagram.svg" />
 </figure>
 
+<p>Note that $\rc{\w}$ is a unit vector, so for the length of the bottom edge of the triangle we have  $\|\x_\gc{i}\|^2 = \|\rc{\w}z_\gc{i}\| = z_\gc{i}$.</p>
+
+
 <p>By Pythagoras, we have $\|\x_\gc{i}\|^2 = \|\bc{\r}\|^2 + {z_\gc{i}}^2$. The vector $\x_\gc{i}$ remains constant, since that is given by the data. The only thing we change is the direction of the vector $\rc{\w}$. If we change that to make the reconstruction error $\|\bc{\r}\|$ smaller, the distance $z_\gc{i}$ must get larger. The sum of the squares of all $\z_\gc{i}$'s is the variance of the data.</p>
 
 <aside>
@@ -85,7 +88,7 @@ $$
 
 $$
 \begin{align*}
-&\argmax{\rc{\w}} \sum_\gc{i} \rc{\w}^T\x_\gc{i}^2 \p
+&\argmax{\rc{\w}} \sum_\gc{i} {\z_\gc{i}}^2 \p
 \end{align*}
 $$
 
@@ -275,7 +278,7 @@ Now we can work backwards: For any given matrix $\bc{\A}$, _if_ we can decompose
  * The eigenvectors are also those vectors which to which axis-aligned vectors are transformed by $\rc{\P}$.
  * The eigen<em>values</em> of $\bc{\A}$ are the elements along the diagonal of $\bc{\D}$. Any change of magnitude introduced by $\rc{\P}^{-1}$ is undone by $\rc{\P}$, so only the changes made by $\bc{\D}$ remain. An eigenvector mapped to axis $i$ by $\rc{\P}$ is scaled by $\bc{D}_{ii}$, which is therefore the corresponding eigenvalue.
  
-So, given a diagonalization like $\eqref{eq:eigen}$, which are the eigenvectors? We use the first bullet point above: we will find the vectors which result from transforming axis-aligned vectors by $\rc{\P}^{-1}$. We have one eigenvalue per axis, so we'll look for one eigenvector for each. For the vectors to transform, we can just take axis-aligned unit vectors (also known as one-hot vectors). Each should transform to an eigenvector. We can do the transformation for all vectors in one go by concatenating the vectors as the columns of one matrix. For the unit vectors this simply results in the identity matrix, and for the eigenvectors, this results in a matrix we will call $\oc{\E}$. So we are looking the the matrix $\oc{\E}$ for which 
+So, given a diagonalization like $\eqref{eq:eigen}$, which are the eigenvectors? We use the first bullet point above: we will find the vectors which result from transforming axis-aligned vectors by $\rc{\P}^{-1}$. We have one eigenvalue per axis, so we'll look for one eigenvector for each. For the vectors to transform, we can just take axis-aligned unit vectors (also known as one-hot vectors). Each should transform to an eigenvector. We can do the transformation for all vectors in one go by concatenating the vectors as the columns of one matrix. For the unit vectors this simply results in the identity matrix, and for the eigenvectors, this results in a matrix we will call $\oc{\E}$. So we are looking the matrix $\oc{\E}$ for which 
 
 $$
 \rc{\P}\I = \oc{\E} \p
@@ -349,7 +352,7 @@ This is because the data has high <em>co</em>variance between the two features: 
 </figcaption>
 </figure>
 
-Pay particular attention to the middle example: perfectly _decorrelated_ data. In such data, the features are independent: knowing the value of one tells us nothing about the value of the other. This is an important property of good _latent features_. For instance, in the Olivetti data from the last part, many of the observed features (the pixel values) were highly correlated, but the latent features we extracted by PCA (the gender, the age, the lighting) we largely decorrelated. If the data is not biased, knowing the age of a subject doesn't tell you anything about the way they were lit or how feminine they appear.
+Pay particular attention to the middle example: perfectly _decorrelated_ data. In such data, the features are independent: knowing the value of one tells us nothing about the value of the other. This is an important property of good _latent features_. For instance, in the Olivetti data from the last part, many of the observed features (the pixel values) were highly correlated, but the latent features we extracted by PCA (the gender, the age, the lighting) were largely decorrelated. If the data is not biased, knowing the age of a subject doesn't tell you anything about the way they were lit or how feminine they appear.
 
 The formula for the variance of feature $\bc{j}$, as we've seen before, is 
 
@@ -376,8 +379,10 @@ For mean-centered data, these simplify to
 $$</p>
 
 Note two things about these equations:
-* The variance is just the covariance of a feature _with itself_: $\text{Var}_\X(\bc{j}) = \text{Cov}_\X(\bc{j}, \bc{j})$.
-* If we ignore the multiplier $\kc{\tfrac{1}{n}}$, the covariance is the dot product of one column of $\X$ with another.
+<ul>
+<li>The variance is just the covariance of a feature <em>with itself</em>: $\text{Var}_\X(\bc{j}) = \text{Cov}_\X(\bc{j}, \bc{j})$.</li>
+<li>If we ignore the multiplier $\kc{\tfrac{1}{n}}$, the covariance is the dot product of one column of $\X$ with another.</li>
+</ul>
 
 This means that if we make a <span class="bc">big matrix</span> with all covariances between features $\bc{j}$ and $\bc{k}$, we can compute that matrix by a simple matrix multiplication:
 
@@ -395,7 +400,7 @@ This matrix is symmetric, since $\text{Cov}(\bc{j}, \bc{k}) = \text{Cov}(\bc{k},
 For any matrix, $\X$ of any size, $\bc{\M} = \X^T\X$ is square and symmetric: $\bc{M}_{ij} = \bc{M}_{ij}$ because they are both the dot product of columns $i$ and $j$ in the data.
 </aside>
 
-<p>We'll denote the covariance matrix of our dataset $\X$ by $\bc{\S}$ . This is the matrix that we're interested in: yhe eigenvectors of $\bc{\S}$ coincide with the principal components of $\X$.</p>
+<p>We'll denote the covariance matrix of our dataset $\X$ by $\bc{\S}$ . This is the matrix that we're interested in: the eigenvectors of $\bc{\S}$ coincide with the principal components of $\X$.</p>
 
 I expect that that doesn't immediately make a lot of intuitive sense. We've developed eigenvectors in terms of matrices that transform points in space. We don't usually think of $\bc{\S}$ as transforming space. It's not common to see a vector multiplied by $\bc{\S}$. Yet, we can easily diagonalize $\bc{\S}$. In fact, since it's symmetric, <strong class="gc">the spectral theorem</strong> tells us that we can diagonalize it with an orthogonal matrix, and we can be sure that it has $\gc{n}$ eigenvalues.
 
@@ -512,15 +517,17 @@ $$
 
 As before, we will first figure out which $\bc{\A}$ and which $\oc{\t}$ will lead to our data, and then we will invert this transformation to find the transformation that normalizes our data.
 
-The logic for $\oc{\t}$ is the same as it was before, we move it to the left-hand side
+The logic for $\oc{\t}$ is the same as it was before: since $\Z$ has zero mean, it still has zero mean after being transformed by $\bc{\A}$. If we set $\oc{\t} = \bar\x$, we transport this to the mean of the observed data.
+
+We move it this term to the left-hand side
 
 $$
-\X^T - \oc{\t} = \bc{\A}\Z^T
+\X^T - \oc{\bar\x} = \bc{\A}\Z^T
 $$
 
-and note that multiplication by $\bc{\A}$ doesn't affect the mean of $\Z$, so we need to set $\oc{\t} = \bar \x$. 
+and observe that the mean-centered data on the left is equal to our $\bc{\A}$-transformed latent data.
 
-Now, we need to set $\A$ to achieve the right covariance. The covariance is unaffected by the additive term $- \oc{\bar \x}$, so we can ignore that. The covariance of the transformed data is:
+Now, we need to set $\bc{\A}$ to achieve the right covariance. The covariance is unaffected by the additive term $- \oc{\bar \x}$, so we can ignore that. The covariance of the transformed data is:
 
 $$
 \text{Cov}(\X) = \kc{\frac{1}{n}} \bc{\A}\Z^T(\bc{\A}\Z^T)^T = \kc{\frac{1}{n}} \bc{\A}\Z^T\Z\bc{\A}^T = \bc{\A}\kc{\text{Cov}(\Z)}\bc{\A}^T = \bc{\A}\bc{\A}^T \p
@@ -702,10 +709,10 @@ We can extend this proof to show that all the other PCs are eigenvectors as well
 \z^T\bc{\D}\z = {z_1}^2 \bc{D}_{11} + \ldots + {z_\bc{m}}^2\bc{D}_\bc{mm} \p
 $$</p>
 
-<p>First, note that any vector $\rc{\w}'$ that is orthogonal to $\rc{\w}_1$ must also be orthogonal after transformation by $P\rc{\P}^T$: </p>
+<p>First, note that any vector $\rc{\w}'$ that is orthogonal to $\rc{\w}_1$ must also be orthogonal after transformation by $\rc{\P}\rc{\P}^T$: </p>
 
 <p>$$
-0 = \rc{\w}_1^T\rc{\w}' = {\z_1}^T\rc{\P}\rc{\P}^T\z' = {\z_1}^T\z' \p
+0 = \rc{\w}_1^T\rc{\w}' = {\rc{\w}_1}^T\rc{\P}\rc{\P}^T\rc{\w}' = {\z_1}^T\z' \p
 $$</p> 
 
 <p>Thus, the second eigenvector is orthogonal to the first (as required) if and only if their projections by $\rc{\P}^T$ are orthogonal as well (and similarly for higher eigenvectors).</p>
