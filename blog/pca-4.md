@@ -72,6 +72,10 @@ What does any of this have to do with eigenvectors and PCA? The link becomes cle
 
 ### PCA in a Deep Learning World
 
+## Acknowledgements
+
+Thanks to <a href="https://emilevankrieken.com/">Emile van Krieken</a> for proof reading, and pointing out many mistakes and improvements.
+
  * PCA is a tradeoff between simplicity and power. This makes it much better for analysis than deep nonlinear methods.
  * PCA works on wide data.
 -- conclusion
