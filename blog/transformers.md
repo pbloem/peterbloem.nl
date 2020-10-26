@@ -31,7 +31,7 @@ The fundamental operation of any transformer architecture is the _self-attention
 We'll explain where the name "self-attention" comes from later. For now, don't read too much in to it.
 </aside>
 
-Self-attention is a sequence-to-sequence operation: a sequence of vectors goes in, and a sequence of vectors comes out. Let's call the input vectors \\(\x_1, \x_2, \ldots \x_t\\) and the corresponding output vectors \\(\y_1, \y_2, \ldots, \y_t\\). The vectors all have dimension \\(k\\).
+Self-attention is a sequence-to-sequence operation: a sequence of vectors goes in, and a sequence of vectors comes out. Let's call the input vectors \\(\x_1, \x_2, \ldots, \x_t\\) and the corresponding output vectors \\(\y_1, \y_2, \ldots, \y_t\\). The vectors all have dimension \\(k\\).
 
 To produce output vector \\(\y_\rc{i}\\), the self attention operation simply takes <em>a weighted average over all the input vectors</em>
 <p>$$
