@@ -25,11 +25,10 @@ How do we quantify _information_? How do we capture, and formalize the intuition
 One of the best ways we have of defining complexity relies on how concisely we can _describe_ an object. The more concisely we can describe something, the less information it contains, and the less information something contains, the less complex it is. This is called the _Kolmogorov complexity_. Consider the following paintings:
 
 <figure class="wide">
-	<img src="/files/two-problems/mondriaan.jpg" class="tile"/>
-	<img src="/files/two-problems/middle.jpg" class="tile"/>
-	<img src="/files/two-problems/pollock.jpg" class="tile"/>
-
-<figcaption>
+<img src="/files/two-problems/mondriaan.jpg" class="tile"
+/><img src="/files/two-problems/middle.jpg" class="tile"
+/><img src="/files/two-problems/pollock.jpg" class="tile"
+/><figcaption>
 Three paintings, in increasing information content. A Mondriaan, a Vermeer and a Pollock.
 </figcaption>
 </figure>

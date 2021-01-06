@@ -637,8 +637,8 @@ figure.narrow img{
     width: 660px;
 }
 
-#body figure.wide img,
-#body figure.wide-margin img {
+figure.wide img,
+figure.wide-margin img {
    	width: 100%;
 	min-width: 200px; 
 }
@@ -655,7 +655,7 @@ figure.right img {
 }
 
 #body figure .tile {
-	width: 33.333%;
+	width: 33%;
 	min-width: 200px;
 }
 
