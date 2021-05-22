@@ -20,7 +20,7 @@ code: true
 Transformers are a very exciting family of machine learning architectures. Many good tutorials exist (e.g. [1, 2]) but in the last few years, transformers have mostly become simpler, so that it is now much more straightforward to explain how modern architectures work. This post is an attempt to explain directly how modern transformers work, and why, without some of the historical baggage.
 </aside>
 
-I will assume a basic understanding of neural networks and backpropagation. If you'd like to brush up, [this lecture](https://youtu.be/1NVgspM98W0) will give you the basics of neural networks and [this one](https://youtu.be/DidHjsp_OV0) will explain how these principles are applied in modern deep learning systems.
+I will assume a basic understanding of neural networks and backpropagation. If you'd like to brush up, [this lecture](https://www.youtube.com/playlist?list=PLCof9EqayQgs-MP4aQQ-2teemZANWKBjh) will give you the basics of neural networks and [this one](https://www.youtube.com/playlist?list=PLCof9EqayQgvCGzTPoRXPEYUWvFl8Cj71) will explain how these principles are applied in modern deep learning systems.
 
 A [working knowledge of Pytorch](https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html) is required to understand the programming examples, but these can also be safely skipped.
 
@@ -203,11 +203,13 @@ In a single self-attention operation, all this information just gets summed toge
 <p>For input \(\x_\rc{i}\) each attention head produces a different output vector \(\y_\rc{i}^\bc{r}\). We concatenate these, and pass them through a linear transformation to reduce the dimension back to \(k\).
 </p>
 
-<p><strong>Narrow and wide self-attention</strong> There are two ways to apply multi-head self-attention. The standard option is to cut the embedding vector into chunks: if the embedding vector has 256 dimensions, and we have 8 attention heads, we cut it into 8 chunks of 32 dimensions. For each chunk, we generate keys, values and queries of 32 dimensions each. This means that the matrices \(\W_q^\bc{r}\), \(\W_k^\bc{r}\),\(\W_v^\bc{r}\) are all \(32 \times 32\).</p>
+<p><strong>Efficient multi-head self-attention.</strong> The simplest way to understand multi-head self-attention is to see it as a small number of copies of the self-attention mechanism applied in parallel, each with their own key, value and query transformation. This works well, but for \(R\) heads, the self-attention operation is \(R\) times as slow.</p>
 
-<p>We can also make the matrices \(256 \times 256\), and apply each head to the whole size 256 vector. The first is faster, and more memory efficient but all else being equal, the second does give better results (at the cost of more memory and time).  The <a href="https://github.com/pbloem/former">code on github</a> contains both methods (called <em>narrow</em> and <em>wide</em> self-attention respectively).</p>
+<p>It turns out we can have our cake and eat it too: there is a way to implement multi-head self-attention so that it is roughly as fast as the single-head version, but we still get the benefit of having different attention matrices in parallel. To accomplish this, we cut each incoming vector into chunks: if the input vector has 256 dimensions, and we have 8 attention heads, we cut it into 8 chunks of 32 dimensions. For each chunk, we generate keys, values and queries of 32 dimensions each. This means that the matrices \(\W_q^\bc{r}\), \(\W_k^\bc{r}\),\(\W_v^\bc{r}\) are all \(32 \times 32\).</p>
 
-For the sake of simplicity, we'll describe the implementation of the second option here.
+For the sake of simplicity, we'll describe the implementation of the first, more expensive multi-head self-attention below. 
+
+<aside>To understand in detail how the more efficient, sliced-up version is implemented, see the lecture linked at the top of the post.</aside>
 
 ### In Pytorch: complete self-attention
 
