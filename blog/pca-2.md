@@ -836,7 +836,7 @@ Finally, you may wonder if any of these new insights help us in computing the pr
 
 The eigendecomposition is certainly faster and more reliable than the projected gradient descent we've used so far, but it can still be a little numerically unstable. In practice, PCA is almost always computed by **singular value decomposition** (SVD). The SVD is such a massively useful method that it's worth looking at in more detail. It's inspired very much by everything we've set out above, but its practical applications reach far beyond just the computation of principal components. We'll develop the SVD in the last part of the series, finishing up with a complete view of PCA, down to the theorem at its heart and the standard way of implementing it.
 
-<strong>Acknowledgemnts.</strong> Many thanks to <a href="https://emilevankrieken.com/">Emile van Krieken</a> for corrections and suggestions.
+<strong>Acknowledgements.</strong> Many thanks to <a href="https://emilevankrieken.com/">Emile van Krieken</a> for corrections and suggestions.
 
 ## Appendix
 

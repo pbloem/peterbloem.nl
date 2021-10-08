@@ -469,7 +469,7 @@ Wrapping up, what have we learned so far? We've defined PCA as an iterative opti
 What we haven't discussed fully, is where this magical property comes from. We've shown that it isn't _just_ the compression objective, since optimizing just that in one single optimization doesn't lead to the PCA solution. Among the set of all solutions that minimize the reconstruction error, the PCA solution takes a special place. Why that's the case, and why it this should emerge form optimizing the principal components one by one, greedily if you will, instead of all together, we will discuss in the <a href="/blog/pca-2">next part</a>. To do so, we'll need to dig into the subject of _eigenvectors_, the underlying force behind almost everything that is magical about linear algebra.
 
 
-<strong>Acknowledgemnts.</strong> Many thanks to <a href="https://emilevankrieken.com/">Emile van Krieken</a> for corrections and suggestions.
+<strong>Acknowledgements.</strong> Many thanks to <a href="https://emilevankrieken.com/">Emile van Krieken</a> for corrections and suggestions.
 
 ## References
 
