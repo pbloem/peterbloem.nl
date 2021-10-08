@@ -1,5 +1,5 @@
 ---
-title: A friendly introduction to Principal Component Analysis
+title: Eigenvalues and eigenvectors
 date: 31-01-2020
 math: true
 code: true
@@ -7,15 +7,15 @@ code: true
 <!-- {% raw %} -->
 
 <header>
-<h1>A friendly introduction to PCA</h1>
-<div class="subh1">part 2: Eigenvectors and eigenvalues</div>
+<h1>Eigenvalues and eigenvectors</h1>
+<div class="subh1">part 2 in a series on principal component analysis </div>
 </header>
 
 <ul class="links">
 	<li>27 Sep 2020</li>
 	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca/pca-2.ipynb">notebook</a></li>
 		<li><a href="/blog/pca">part 1</a></li>
-		<li>3</li>
+		<li><a href="/blog/pca-3">3</a></li>
 		<li>4</li>
 </ul>
 
@@ -298,7 +298,7 @@ The set of eigenvalues of a matrix is sometimes called its spectrum, so methods 
 
 To state the theorem, we first need to define **orthogonal matrices**. These are square matrices in which all columns are mutually orthogonal unit vectors. 
 
-This should sound familiar, it's the contraint we placed on our principal components. In the combined problem, the constraint $\rc{\W}^T\rc{\W} = \I$ is simply a requirement that the matrix $\rc{\W}$ be orthogonal.
+This should sound familiar, it's the constraint we placed on our principal components. In the combined problem, the constraint $\rc{\W}^T\rc{\W} = \I$ is simply a requirement that the matrix $\rc{\W}$ be orthogonal.
 
 Why? Remember that matrix multiplication is just a collection of all dot products of rows on the left with columns on the right, so in this case all columns of $\rc{\W}$ with all other columns of $\rc{\W}$. On the diagonal of $\rc{\W}^T\rc{\W}$, we find all dot products of columns of $\rc{\W}$ with themselves, which are all $1$, because they are all unit vectors. Off the diagonal we find all dot products of all columns with other columns. These are all zero, because they are all mutually orthogonal.
 
@@ -835,6 +835,8 @@ The heart of the method is the spectral theorem. Without the decomposition $\bc{
 Finally, you may wonder if any of these new insights help us in computing the principal component analysis. The answer is yes, the eigendecomposition $\bc{\S} = \rc{\P}\bc{\D}\rc{\P}^T$ can be computed efficiently, and any linear algebra package allows you to do so. This gives you the principal components $\rc{\P}$, and the rest is just matrix multiplication.
 
 The eigendecomposition is certainly faster and more reliable than the projected gradient descent we've used so far, but it can still be a little numerically unstable. In practice, PCA is almost always computed by **singular value decomposition** (SVD). The SVD is such a massively useful method that it's worth looking at in more detail. It's inspired very much by everything we've set out above, but its practical applications reach far beyond just the computation of principal components. We'll develop the SVD in the last part of the series, finishing up with a complete view of PCA, down to the theorem at its heart and the standard way of implementing it.
+
+<strong>Acknowledgemnts.</strong> Many thanks to <a href="https://emilevankrieken.com/">Emile van Krieken</a> for corrections and suggestions.
 
 ## Appendix
 

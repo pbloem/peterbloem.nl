@@ -7,7 +7,7 @@ code: true
 <!-- {% raw %} -->
 
 <header>
-<h1>A friendly introduction to PCA</h1>
+<h1>A friendly introduction to Principal Component Analysis</h1>
 <div class="subh1">part 1: minimizing reconstruction error</div>
 </header>
 
@@ -15,7 +15,7 @@ code: true
 	<li>27 Sep 2020</li>
 	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca/pca-1.ipynb">notebook</a></li>
 		<li><a href="/blog/pca-2">part 2</a></li>
-		<li>3</li>
+		<li><a href="/blog/pca-3">3</a></li>
 		<li>4</li>
 </ul>
 
@@ -467,6 +467,9 @@ The first principal component corresponds roughly to how far north the person li
 Wrapping up, what have we learned so far? We've defined PCA as an iterative optimization problem designed to compress high dimensional data into fewer dimensions, and to minimize the resulting reconstruction loss. We've shown one simple way to find this solution, a laborious and inaccurate way, but enough to get the basic idea across. We then looked at various practical uses of PCA: analyzing human faces, human fossils, and human DNA. We showed that in many cases, PCA magically teases out quite high-level semantic features hidden in the data: the species of the fossil, the location of the subject in Europe, or the subject's age.
 
 What we haven't discussed fully, is where this magical property comes from. We've shown that it isn't _just_ the compression objective, since optimizing just that in one single optimization doesn't lead to the PCA solution. Among the set of all solutions that minimize the reconstruction error, the PCA solution takes a special place. Why that's the case, and why it this should emerge form optimizing the principal components one by one, greedily if you will, instead of all together, we will discuss in the <a href="/blog/pca-2">next part</a>. To do so, we'll need to dig into the subject of _eigenvectors_, the underlying force behind almost everything that is magical about linear algebra.
+
+
+<strong>Acknowledgemnts.</strong> Many thanks to <a href="https://emilevankrieken.com/">Emile van Krieken</a> for corrections and suggestions.
 
 ## References
 
