@@ -12,7 +12,7 @@ code: true
 </header>
 
 <ul class="links">
-	<li>Oct 2021</li>
+	<li>8 Oct 2021</li>
 		<li><a href="/blog/pca">part 1</a></li>
 		<li><a href="/blog/pca-2">part 2</a></li>
 		<li>part 4</li>
