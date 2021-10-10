@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+ <title>peterbloem.nl</title>
+ <description>The blog feed on peterbloem.nl. Mostly Machine Learning tutorials.</description>
+ <link>http://peterbloem.nl/blog</link>
+ <ttl>1800</ttl>
+
+	<item>
+		<title>Proving the spectral theorem (PCA 3)</title>
+		<link>http://peterbloem.nl/blog/pca-3</link>
+		<pubDate>8 Oct 2021 00:00:00 GMT</pubDate>
+	</item>
+	
+	<item>
+		<title>Eigenvalues and eigenvectors (PCA 2)</title>
+		<link>http://peterbloem.nl/blog/pca-2</link>
+		<pubDate>1 Oct 2020 00:00:00 GMT</pubDate>
+	</item>	
+	
+	<item>
+		<title>A friendly introduction to PCA</title>
+		<link>http://peterbloem.nl/blog/pca</link>
+		<pubDate>1 Sep 2020 00:00:00 GMT</pubDate>
+	</item>	
+	
+	<item>
+		<title>Transformers from scratch</title>
+		<link>http://peterbloem.nl/blog/transformers</link>
+		<pubDate>1 Sep 2019 00:00:00 GMT</pubDate>
+	</item>	
+
+	<item>
+		<title>Stable softmax for sparse matrices</title>
+		<link>http://peterbloem.nl/blog/stable-softmax</link>
+		<pubDate>1 Aug 2019 00:00:00 GMT</pubDate>
+	</item>	
+
+	<item>
+		<title>Sparse adaptive hypernetworks</title>
+		<link>http://peterbloem.nl/blog/ash</link>
+		<pubDate>1 Aug 2018 00:00:00 GMT</pubDate>
+	</item>	
+	
+	<item>
+		<title>What is the Voynich manuscript about?</title>
+		<link>http://peterbloem.nl/blog/what-is-the-vms-about</link>
+		<pubDate>1 Aug 2017 00:00:00 GMT</pubDate>
+	</item>	
+
+</channel>
+</rss>
