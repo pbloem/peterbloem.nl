@@ -535,13 +535,13 @@ But the authors did not dispense with all the complexity of contemporary sequenc
 <img src="/files/transformers/encoder-decoder.svg"/>
 </figure>
 
-The _encoder_ takes the input sequence and maps it to a single _latent_ vector representing the whole sequence. This vector is then passed to a _decoder_ which unpacks it to the desired target sequence (for instance, the same sentence in another language).
+The _encoder_ takes the input sequence and maps it to a _latent_ representation of the whole sequence. This can be either a sequence of latent vectors, or a single one as in the image above. This vector is then passed to a _decoder_ which unpacks it to the desired target sequence (for instance, the same sentence in another language).
 
-_Teacher forcing_ refers to the technique of also allowing the decoder access to the input sentence, but in an autoregressive fashion. That is, the decoder generates the output sentence word for word based both on the latent vector and the words it has already generated. This takes some of the pressure off the latent representation: the decoder can use word-for-word sampling to take care of the low-level structure like syntax and grammar and use the latent vector to capture more high-level semantic structure. Decoding twice with the same latent vector would, ideally, give you two different sentences with the same meaning.
+_Teacher forcing_ refers to the technique of also allowing the decoder access to the input sentence, but in an autoregressive fashion. That is, the decoder generates the output sentence word for word based both on the latent vector and the words it has already generated. This takes some of the pressure off the latent representation: the decoder can use word-for-word sampling to take care of the low-level structure like syntax and grammar and use the latent vector to capture more high-level semantic structure. Decoding twice with the same latent representation would, ideally, give you two different sentences with the same meaning.
 
 In later transformers, like BERT and GPT-2, the encoder/decoder configuration was entirely dispensed with. A simple stack of transformer blocks was found to be sufficient to achieve state of the art in many sequence based tasks. 
 
-<aside>This is sometimes called a decoder-only transformer (for an autoregressive model) or an encoder-only transformer (for a model without masking). </aside>
+<aside>This approach is sometimes called a decoder-only transformer (for an autoregressive model) or an encoder-only transformer (for a model without masking). </aside>
 
 ## Modern transformers
 
