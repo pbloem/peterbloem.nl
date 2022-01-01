@@ -57,7 +57,7 @@ Why is this the same as minimizing the reconstruction error? It's easy to see th
 <img src="/images/pca/recvar-diagram.svg" />
 </figure>
 
-<p>Note that $\rc{\w}$ is a unit vector, so for the length of the bottom edge of the triangle we have  $\|\x_\gc{i}\|^2 = \|\rc{\w}z_\gc{i}\| = z_\gc{i}$.</p>
+<p>Note that $\rc{\w}$ is a unit vector, so for the length of the bottom edge of the triangle we have  $\|\x'_\gc{i}\| = \|\rc{\w}z_\gc{i}\| = z_\gc{i}$.</p>
 
 
 <p>By Pythagoras, we have $\|\x_\gc{i}\|^2 = \|\bc{\r}\|^2 + {z_\gc{i}}^2$. The vector $\x_\gc{i}$ remains constant, since that is given by the data. The only thing we change is the direction of the vector $\rc{\w}$. If we change that to make the reconstruction error $\|\bc{\r}\|$ smaller, the distance $z_\gc{i}$ must get larger. The sum of the squares of all $\z_\gc{i}$'s is the variance of the data.</p>

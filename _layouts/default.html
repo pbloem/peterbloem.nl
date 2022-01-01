@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
   <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-33416628-1"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
-	
-	  gtag('config', 'UA-33416628-1');
-	</script>
+  
+    {% if jekyll.environment == "production" %}
+		<script data-goatcounter="https://peterbloem.goatcounter.com/count"
+        	async src="//gc.zgo.at/count.js"></script>
+	{% endif %}
 
 	{% if page.title %}
     <title> {{page.title}} | peterbloem.nl</title>
@@ -99,6 +95,7 @@
 				Q: ["\\mathbf Q"],				
 				r: ["\\mathbf r"],
 				R: ["\\mathbf R"],
+				Sig: ["\\mathbf \\Sigma"],
 				t: ["\\mathbf t"],				
 				T: ["\\mathbf T"],
 				e: ["\\mathbf e"],
