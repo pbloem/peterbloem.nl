@@ -20,7 +20,7 @@ code: true
 Transformers are a very exciting family of machine learning architectures. Many good tutorials exist (e.g. [1, 2]) but in the last few years, transformers have mostly become simpler, so that it is now much more straightforward to explain how modern architectures work. This post is an attempt to explain directly how modern transformers work, and why, without some of the historical baggage.
 </aside>
 
-I will assume a basic understanding of neural networks and backpropagation. If you'd like to brush up, [this lecture](https://www.youtube.com/playlist?list=PLCof9EqayQgs-MP4aQQ-2teemZANWKBjh) will give you the basics of neural networks and [this one](https://www.youtube.com/playlist?list=PLCof9EqayQgvCGzTPoRXPEYUWvFl8Cj71) will explain how these principles are applied in modern deep learning systems.
+I will assume a basic understanding of neural networks and backpropagation. If you'd like to brush up, [this lecture](https://mlvu.github.io/lecture06/) will give you the basics of neural networks and [this one](https://mlvu.github.io/lecture07/) will explain how these principles are applied in modern deep learning systems.
 
 A [working knowledge of Pytorch](https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html) is required to understand the programming examples, but these can also be safely skipped.
 
@@ -51,7 +51,7 @@ The dot product gives us a value anywhere between negative and positive infinity
 w_{\rc{i}\gc{j}} = \frac{\text{exp } w'_{\rc{i}\gc{j}}}{\sum_\gc{j} \text{exp }w'_{\rc{i}\gc{j}}} \p
 $$</p>
 
-And that's the basic operation of self attention. 
+And that's the basic operation of self attention.
 
 <figure class="narrow">
 <img src="/files/transformers/self-attention.svg">
@@ -65,7 +65,7 @@ A few other ingredients are needed for a complete transformer, which we'll discu
 
 Despite its simplicity, it's not immediately obvious why self-attention should work so well. To build up some intuition, let's look first at the standard approach to _movie recommendation_.
 
-Let's say you run a movie rental business and you have some movies, and some users, and you would like to recommend movies to your users that they are likely to enjoy. 
+Let's say you run a movie rental business and you have some movies, and some users, and you would like to recommend movies to your users that they are likely to enjoy.
 
 One way to go about this, is to create manual features for your movies, such as how much romance there is in the movie, and how much action, and then to design corresponding features for your users: how much they enjoy romantic movies and how much they enjoy action-based movies. If you did this, the dot product between the two feature vectors would give you a score for how well the attributes of the movie match what the user enjoys.
 
@@ -73,35 +73,35 @@ One way to go about this, is to create manual features for your movies, such as 
 <img src="/files/transformers/dot-product.svg">
 </figure>
 
-If the signs of a feature match for the user and the movie&mdash;the movie is romantic and the user loves romance or the movie is <em>unromantic</em> and the user hates romance&mdash;then the resulting dot product gets a positive term for that feature. If the signs don't match&mdash;the movie is romantic and the user hates romance or vice versa&mdash;the corresponding term is negative. 
+If the signs of a feature match for the user and the movie&mdash;the movie is romantic and the user loves romance or the movie is <em>unromantic</em> and the user hates romance&mdash;then the resulting dot product gets a positive term for that feature. If the signs don't match&mdash;the movie is romantic and the user hates romance or vice versa&mdash;the corresponding term is negative.
 
 Furthermore, the <em>magnitudes</em> of the features indicate how much the feature should contribute to the total score: a movie may be a little romantic, but not in a noticeable way, or a user may simply prefer no romance, but be largely ambivalent.
 
 Of course, gathering such features is not practical. Annotating a database of millions of movies is very costly, and annotating users with their likes and dislikes is pretty much impossible.
 
-What happens instead is that we make the movie features and user features <em>parameters</em> of the model. We then ask users for a small number of movies that they like and we optimize the user features and movie features so that their dot product matches the known likes. 
+What happens instead is that we make the movie features and user features <em>parameters</em> of the model. We then ask users for a small number of movies that they like and we optimize the user features and movie features so that their dot product matches the known likes.
 
 Even though we don't tell the model what any of the features should mean, in practice, it turns out that after training the features do actually reflect meaningful semantics about the movie content.
 
 <figure class="narrow">
 <img src="/files/transformers/movie-features.svg">
-<figcaption> The first two learned features from a basic matrix factorization model. The model had no access to any information about the content of the movies, only which users liked them. Note that movies are arranged from low-brow to high-brow horizontally, and from mainstream to quirky vertically. From [4]. 
+<figcaption> The first two learned features from a basic matrix factorization model. The model had no access to any information about the content of the movies, only which users liked them. Note that movies are arranged from low-brow to high-brow horizontally, and from mainstream to quirky vertically. From [4].
 </figcaption>
 </figure>
 
-<aside>See <a href="https://youtu.be/xy-4lLaIgZs">this video</a> for more details on recommender systems. For now, this suffices as an explanation of how the dot product helps us to represent objects and their relations.</aside>
+<aside>See <a href="https://mlvu.github.io/lecture12/">this lecture</a> for more details on recommender systems. For now, this suffices as an explanation of how the dot product helps us to represent objects and their relations.</aside>
 
-This is the basic principle at work in the self-attention. Let's say we are faced with a sequence of words. To apply self-attention, we simply assign each word \\(\bc{t}\\) in our vocabulary an _embedding vector_ \\(\v_\bc{t}\\) (the values of which we'll learn). This is what's known as an <em>embedding layer</em> in sequence modeling. It turns the word sequence 
+This is the basic principle at work in the self-attention. Let's say we are faced with a sequence of words. To apply self-attention, we simply assign each word \\(\bc{t}\\) in our vocabulary an _embedding vector_ \\(\v_\bc{t}\\) (the values of which we'll learn). This is what's known as an <em>embedding layer</em> in sequence modeling. It turns the word sequence
 $$\bc{\text{the}}, \bc{\text{cat}}, \bc{\text{walks}}, \bc{\text{on}}, \bc{\text{the}}, \bc{\text{street}}$$
 into the vector sequence
 
 <p>$$\v_\bc{\text{the}}, \v_\bc{\text{cat}}, \v_\bc{\text{walks}}, \v_\bc{\text{on}}, \v_\bc{\text{the}}, \v_\bc{\text{street}} \p
 $$</p>
 
-<p>If we feed this sequence into a self-attention layer, the output is another sequence of vectors 
+<p>If we feed this sequence into a self-attention layer, the output is another sequence of vectors
 $$\y_\bc{\text{the}}, \y_\bc{\text{cat}}, \y_\bc{\text{walks}}, \y_\bc{\text{on}}, \y_\bc{\text{the}}, \y_\bc{\text{street}}
 $$
-where \(\y_\bc{\text{cat}}\) is a weighted sum over all the embedding vectors in the first sequence, weighted by their (normalized) dot-product with \(\v_\bc{\text{cat}}\).</p> 
+where \(\y_\bc{\text{cat}}\) is a weighted sum over all the embedding vectors in the first sequence, weighted by their (normalized) dot-product with \(\v_\bc{\text{cat}}\).</p>
 
 <p>Since we are <em>learning</em> what the values in \(\v_\bc{t}\) should be, how "related" two words are is entirely determined by the task. In most cases, the definite article <span class="bc">the</span> is not very relevant to the interpretation of the other words in the sentence; therefore, we will likely end up with an embedding \(\v_\bc{\text{the}}\) that has a low or negative dot product with all other words. On the other hand, to interpret what <span class="bc">walks</span> means in this sentence, it's very helpful to work out <em>who</em> is doing the walking. This is likely expressed by a noun, so for nouns like <span class="bc">cat</span> and verbs like <span class="bc">walks</span>, we will likely learn embeddings \(\v_\bc{\text{cat}}\) and \(\v_\bc{\text{walks}}\) that have a high, positive dot product together.</p>
 
@@ -110,11 +110,11 @@ This is the basic intuition behind self-attention. The dot product expresses how
 Before we move on, it's worthwhile to note the following properties, which are unusual for a sequence-to-sequence operation:
 
 * There are no parameters (yet). What the basic self-attention actually does is entirely determined by whatever mechanism creates the input sequence. Upstream mechanisms, like an embedding layer, drive the self-attention by learning representations with particular dot products (although we'll add a few parameters later).
-* Self attention sees its input as a <em>set</em>, not a sequence. If we permute the input sequence, the output sequence will be exactly the same, except permuted also (i.e. self-attention is <em>permutation  equivariant</em>).  We will mitigate this somewhat when we build the full transformer, but the self-attention by itself actually <em>ignores</em> the sequential nature of the input. 
+* Self attention sees its input as a <em>set</em>, not a sequence. If we permute the input sequence, the output sequence will be exactly the same, except permuted also (i.e. self-attention is <em>permutation  equivariant</em>).  We will mitigate this somewhat when we build the full transformer, but the self-attention by itself actually <em>ignores</em> the sequential nature of the input.
 
 ### In Pytorch: basic self-attention
 
-What I cannot create, I do not understand, as Feynman said. So we'll build a simple transformer as we go along. We'll start by implementing this basic self-attention operation in Pytorch. 
+What I cannot create, I do not understand, as Feynman said. So we'll build a simple transformer as we go along. We'll start by implementing this basic self-attention operation in Pytorch.
 
 The first thing we should do is work out how to express the self attention in matrix multiplications. A naive implementation that loops over all vectors to compute the weights and outputs would be much too slow.
 
@@ -130,8 +130,8 @@ import torch.nn.functional as F
 x = ...
 
 raw_weights = torch.bmm(x, x.transpose(1, 2))
-# - torch.bmm is a batched matrix multiplication. It 
-#   applies matrix multiplication over batches of 
+# - torch.bmm is a batched matrix multiplication. It
+#   applies matrix multiplication over batches of
 #   matrices.</code></pre>
 
 <p>Then, to turn the raw weights \(w'_{\rc{i}\gc{j}}\) into positive values that sum to one, we apply a <em>row-wise</em> softmax:</p>
@@ -144,7 +144,7 @@ That's all. Two matrix multiplications and one softmax gives us a basic self-att
 
 ### Additional tricks
 
-The actual self-attention used in modern transformers relies on three additional tricks. 
+The actual self-attention used in modern transformers relies on three additional tricks.
 
 #### 1) Queries, keys and values
 
@@ -153,14 +153,14 @@ Every input vector \\(\x_\rc{i}\\) is used in three different ways in the self a
 * It is compared to every other vector to establish the weights for the output  of the \\(\gc{j}\\)-th vector \\(\y_\gc{j}\\)
 * It is used as part of the weighted sum to compute each output vector once the weights have been established.
 
-<p>These roles are often called the <strong>query</strong>, the <strong>key</strong> and the <strong>value</strong> (we'll explain where these names come from later). 
+<p>These roles are often called the <strong>query</strong>, the <strong>key</strong> and the <strong>value</strong> (we'll explain where these names come from later).
 
 In the basic self-attention we've seen so far, each input vector must play all three roles. We make its life a little easier by deriving new vectors for each role, by applying a linear transformation to the original input vector. In other words, we add three \(k  \times k\) weight matrices \(\W_q\), \(\W_k\),\(\W_v\) and compute three linear transformations of each \(x_\rc{i}\), for the three different parts of the self attention:
 $$
 \begin{align*}
 \q_\rc{i} &= \W_q\x_\rc{i} &
 \k_\rc{i} &= \W_k\x_\rc{i} &
-\v_\rc{i} &= \W_v\x_\rc{i} 
+\v_\rc{i} &= \W_v\x_\rc{i}
 \end{align*}
 $$
 
@@ -194,11 +194,11 @@ $$</p>
 
 Finally, we must account for the fact that a word can mean different things to different neighbours. Consider the following example.
 $$\bc{\text{mary}}, \bc{\text{gave}}, \bc{\text{roses}}, \bc{\text{to}}, \bc{\text{susan}}$$
-We see that the word <span class="bc">gave</span> has different relations to different parts of the sentence.  <span class="bc">mary</span> expresses who's doing the giving,  <span class="bc">roses</span> expresses what's being given, and <span class="bc">susan</span> expresses who the recipient is. 
+We see that the word <span class="bc">gave</span> has different relations to different parts of the sentence.  <span class="bc">mary</span> expresses who's doing the giving,  <span class="bc">roses</span> expresses what's being given, and <span class="bc">susan</span> expresses who the recipient is.
 
-In a single self-attention operation, all this information just gets summed together. If Susan gave Mary the roses instead, the output vector \\(\y_\bc{\text{gave}}\\) would be the same, even though the meaning has changed. 
+In a single self-attention operation, all this information just gets summed together. If Susan gave Mary the roses instead, the output vector \\(\y_\bc{\text{gave}}\\) would be the same, even though the meaning has changed.
 
-<p>We can give the self attention greater power of discrimination, by combining several self attention mechanisms (which we'll index with \(\bc{r}\)), each with different matrices \(\W_q^\bc{r}\), \(\W_k^\bc{r}\),\(\W_v^\bc{r}\). These are called <em>attention heads</em>.</p> 
+<p>We can give the self attention greater power of discrimination, by combining several self attention mechanisms (which we'll index with \(\bc{r}\)), each with different matrices \(\W_q^\bc{r}\), \(\W_k^\bc{r}\),\(\W_v^\bc{r}\). These are called <em>attention heads</em>.</p>
 
 <p>For input \(\x_\rc{i}\) each attention head produces a different output vector \(\y_\rc{i}^\bc{r}\). We concatenate these, and pass them through a linear transformation to reduce the dimension back to \(k\).
 </p>
@@ -207,7 +207,7 @@ In a single self-attention operation, all this information just gets summed toge
 
 <p>It turns out we can have our cake and eat it too: there is a way to implement multi-head self-attention so that it is roughly as fast as the single-head version, but we still get the benefit of having different attention matrices in parallel. To accomplish this, we cut each incoming vector into chunks: if the input vector has 256 dimensions, and we have 8 attention heads, we cut it into 8 chunks of 32 dimensions. For each chunk, we generate keys, values and queries of 32 dimensions each. This means that the matrices \(\W_q^\bc{r}\), \(\W_k^\bc{r}\),\(\W_v^\bc{r}\) are all \(32 \times 32\).</p>
 
-For the sake of simplicity, we'll describe the implementation of the first, more expensive multi-head self-attention below. 
+For the sake of simplicity, we'll describe the implementation of the first, more expensive multi-head self-attention below.
 
 <aside>To understand in detail how the more efficient, sliced-up version is implemented, see the lecture linked at the top of the post.</aside>
 
@@ -234,18 +234,18 @@ class SelfAttention(nn.Module):
 
 <p>We think of the \(h\) attention heads as \(h\) separate sets of three matrices \(\W^\bc{r}_q\), \(\W^\bc{r}_k\),\(\W^\bc{r}_v\), but it's actually more efficient to combine these for all heads into three single \(k \times hk\) matrices, so that we can compute all the concatenated queries, keys and values in a single matrix multiplication.</p>
 
-<pre><code class="python">    # These compute the queries, keys and values for all 
+<pre><code class="python">    # These compute the queries, keys and values for all
     # heads (as a single concatenated vector)
     self.tokeys    = nn.Linear(k, k * heads, bias=False)
     self.toqueries = nn.Linear(k, k * heads, bias=False)
 	self.tovalues  = nn.Linear(k, k * heads, bias=False)
 
-	# This unifies the outputs of the different heads into 
+	# This unifies the outputs of the different heads into
 	# a single k-vector
 	self.unifyheads = nn.Linear(heads * k, k)
 </code></pre>
 
-We can now implement the computation of the self-attention (the module's ```forward``` function). First, we compute the queries, keys and values: 
+We can now implement the computation of the self-attention (the module's ```forward``` function). First, we compute the queries, keys and values:
 
 <pre><code class="python">  def forward(self, x):
     b, t, k = x.size()
@@ -278,7 +278,7 @@ Before that, however, we move the scaling of the dot product by \\(\sqrt{k}\\) b
     dot = torch.bmm(queries, keys.transpose(1, 2))
     # - dot has size (b*h, t, t) containing raw weights
 
-    dot = F.softmax(dot, dim=2) 
+    dot = F.softmax(dot, dim=2)
     # - dot now contains row-wise normalized weights
 </code></pre>
 
@@ -297,7 +297,7 @@ To unify the attention heads, we transpose again, so that the head dimension and
 And there you have it: multi-head, scaled dot-product self attention. You can see [the complete implementation here](https://github.com/pbloem/former/blob/b438731ceeaf6c468f8b961bb07c2adde3b54a9f/former/modules.py#L10).
 
 <aside>
-The implementation can be made more concise using <a href="https://rockt.github.io/2018/04/30/einsum">einsum notation</a> (see an example <a href="https://github.com/pbloem/former/issues/4">here</a>). 
+The implementation can be made more concise using <a href="https://rockt.github.io/2018/04/30/einsum">einsum notation</a> (see an example <a href="https://github.com/pbloem/former/issues/4">here</a>).
 </aside>
 
 ## Building _transformers_
@@ -341,7 +341,7 @@ Here's what the transformer block looks like in pytorch.
   def forward(self, x):
     attended = self.attention(x)
     x = self.norm1(attended + x)
-    
+
     fedforward = self.ff(x)
     return self.norm2(fedforward + x)</code></pre>
 
@@ -383,7 +383,7 @@ The solution is simple: we create a second vector of equal length, that represen
 
 For the sake of simplicity, we'll use position embeddings in our implementation.
 
-#### Pytorch 
+#### Pytorch
 
 Here is the complete text classification transformer in pytorch.
 
@@ -395,7 +395,7 @@ Here is the complete text classification transformer in pytorch.
         self.token_emb = nn.Embedding(num_tokens, k)
         self.pos_emb = nn.Embedding(seq_length, k)
 
-		# The sequence of transformer blocks that does all the 
+		# The sequence of transformer blocks that does all the
 		# heavy lifting
         tblocks = []
         for i in range(depth):
@@ -407,9 +407,9 @@ Here is the complete text classification transformer in pytorch.
 
     def forward(self, x):
         """
-        :param x: A (b, t) tensor of integer values representing 
+        :param x: A (b, t) tensor of integer values representing
                   words (in some predetermined vocabulary).
-        :return: A (b, c) tensor of log-probabilities over the 
+        :return: A (b, c) tensor of log-probabilities over the
                  classes (where c is the nr. of classes).
         """
 		# generate token embeddings
@@ -419,11 +419,11 @@ Here is the complete text classification transformer in pytorch.
 		# generate position embeddings
 		positions = torch.arange(t)
         positions = self.pos_emb(positions)[None, :, :].expand(b, t, k)
-        
+
         x = tokens + positions
         x = self.tblocks(x)
-        
-        # Average-pool over the t dimension and project to class 
+
+        # Average-pool over the t dimension and project to class
         # probabilities
         x = self.toprobs(x.mean(dim=1))
         return F.log_softmax(x, dim=1)
@@ -457,14 +457,14 @@ Since we want these elements to be zero after the softmax, we set them to \\(-\i
 indices = torch.triu_indices(t, t, offset=1)
 dot[:, indices[0], indices[1]] = float('-inf')
 
-dot = F.softmax(dot, dim=2) 
+dot = F.softmax(dot, dim=2)
 </code></pre>
 
-After we've handicapped the self-attention module like this, the model can no longer look forward in the sequence. 
+After we've handicapped the self-attention module like this, the model can no longer look forward in the sequence.
 
-We train on the standard ```enwik8``` dataset (taken from the [Hutter prize](http://prize.hutter1.net/)), which contains \\(10^8\\) characters of Wikipedia text (including markup). During training, we generate batches by randomly sampling subsequences from the data. 
+We train on the standard ```enwik8``` dataset (taken from the [Hutter prize](http://prize.hutter1.net/)), which contains \\(10^8\\) characters of Wikipedia text (including markup). During training, we generate batches by randomly sampling subsequences from the data.
 
-We train on sequences of length 256, using a model of 12 transformer blocks and 256 embedding dimension. After about 24 hours training on an RTX 2080Ti (some 170K batches of size 32), we let the model generate from <span class="lbc">a 256-character seed</span>: for each character, we feed it the preceding 256 characters, and look what it predicts for the next character (the last output vector). We sample from that with a [temperature](https://towardsdatascience.com/how-to-sample-from-language-models-682bceb97277) of 0.5, and move to the next character. 
+We train on sequences of length 256, using a model of 12 transformer blocks and 256 embedding dimension. After about 24 hours training on an RTX 2080Ti (some 170K batches of size 32), we let the model generate from <span class="lbc">a 256-character seed</span>: for each character, we feed it the preceding 256 characters, and look what it predicts for the next character (the last output vector). We sample from that with a [temperature](https://towardsdatascience.com/how-to-sample-from-language-models-682bceb97277) of 0.5, and move to the next character.
 
 The output looks like this:
 
@@ -472,13 +472,13 @@ The output looks like this:
 <span class="lbc">1228X Human &amp; Rousseau.
 
 Because many of his stories were originally published in long-forgotten magazines and
- journals, there are a number of [[anthology|anthologies]] by different collators each containing a different selection. His original books ha</span>ve been considered an 
- anthologie in the [[Middle Ages]], and were likely to be one of the most common in the 
- [[Indian Ocean]] in the [[1st century]]. As a result of his death, the Bible was 
- recognised as a counter-attack by the [[Gospel of Matthew]] (1177-1133), and the 
- [[Saxony|Saxons]] of the [[Isle of Matthew]] (1100-1138), the third was a topic of the 
- [[Saxony|Saxon]] throne, and the [[Roman Empire|Roman]] troops of [[Antiochia]] 
- (1145-1148). The [[Roman Empire|Romans]] resigned in [[1148]] and [[1148]] began to 
+ journals, there are a number of [[anthology|anthologies]] by different collators each containing a different selection. His original books ha</span>ve been considered an
+ anthologie in the [[Middle Ages]], and were likely to be one of the most common in the
+ [[Indian Ocean]] in the [[1st century]]. As a result of his death, the Bible was
+ recognised as a counter-attack by the [[Gospel of Matthew]] (1177-1133), and the
+ [[Saxony|Saxons]] of the [[Isle of Matthew]] (1100-1138), the third was a topic of the
+ [[Saxony|Saxon]] throne, and the [[Roman Empire|Roman]] troops of [[Antiochia]]
+ (1145-1148). The [[Roman Empire|Romans]] resigned in [[1148]] and [[1148]] began to
  collapse. The [[Saxony|Saxons]] of the [[Battle of Valasander]] reported the y
 </div>
 
@@ -539,7 +539,7 @@ The _encoder_ takes the input sequence and maps it to a _latent_ representation 
 
 _Teacher forcing_ refers to the technique of also allowing the decoder access to the input sentence, but in an autoregressive fashion. That is, the decoder generates the output sentence word for word based both on the latent vector and the words it has already generated. This takes some of the pressure off the latent representation: the decoder can use word-for-word sampling to take care of the low-level structure like syntax and grammar and use the latent vector to capture more high-level semantic structure. Decoding twice with the same latent representation would, ideally, give you two different sentences with the same meaning.
 
-In later transformers, like BERT and GPT-2, the encoder/decoder configuration was entirely dispensed with. A simple stack of transformer blocks was found to be sufficient to achieve state of the art in many sequence based tasks. 
+In later transformers, like BERT and GPT-2, the encoder/decoder configuration was entirely dispensed with. A simple stack of transformer blocks was found to be sufficient to achieve state of the art in many sequence based tasks.
 
 <aside>This approach is sometimes called a decoder-only transformer (for an autoregressive model) or an encoder-only transformer (for a model without masking). </aside>
 
@@ -565,9 +565,9 @@ The input is prepended with a special <span class="bc"><cls\></span> token. The 
 
 After pretraining, a single task-specific layer is placed after the body of transformer blocks, which maps the general purpose representation to a task specific output. For classification tasks, this simply maps the first output token to softmax probabilities over the classes. For more complex tasks, a final sequence-to-sequence layer is designed specifically for the task.
 
-The whole model is then re-trained to finetune the model for the specific task at hand. 
+The whole model is then re-trained to finetune the model for the specific task at hand.
 
-In an ablation experiment, the authors show that the largest improvement as compared to previous models comes from the bidirectional nature of BERT. That is, previous models like GPT used an autoregressive mask, which allowed attention only over previous tokens. The fact that in BERT all attention is over the whole sequence is the main cause of the improved performance. 
+In an ablation experiment, the authors show that the largest improvement as compared to previous models comes from the bidirectional nature of BERT. That is, previous models like GPT used an autoregressive mask, which allowed attention only over previous tokens. The fact that in BERT all attention is over the whole sequence is the main cause of the improved performance.
 <aside>
 This is why the B in BERT stands for "bidirectional".
 </aside>
@@ -576,7 +576,7 @@ The largest BERT model uses 24 transformer blocks, an embedding dimension of 102
 
 ### [GPT-2](https://openai.com/blog/better-language-models/)
 
-<abbr title="generative pre-trained transformer">GPT</abbr>-2 is the first transformer model that actually made it into [the mainstream news](https://www.bbc.com/news/technology-47249163), after the controversial decision by OpenAI not to release the full model. 
+<abbr title="generative pre-trained transformer">GPT</abbr>-2 is the first transformer model that actually made it into [the mainstream news](https://www.bbc.com/news/technology-47249163), after the controversial decision by OpenAI not to release the full model.
 
 <aside>The reason was that GPT-2 could generate sufficiently believable text that large-scale fake news campaigns of the kind seen in the 2016 US presidential election would become effectively a one-person job.</aside>
 
@@ -598,9 +598,9 @@ During training, a long sequence of text (longer than the model could deal with)
 A similar trick in RNN training is called truncated backpropagation through time. We feed the model a very long sequence, but backpropagate only over part of it. The first part of the sequence, for which no gradients are computed, still influences the values of the hidden states in the part for which they are.
 </aside>
 
-To make this work, the authors had to let go of the standard position encoding/embedding scheme. Since the position encoding is _absolute_, it would change for each segment and not lead to a consistent embedding over the whole sequence. Instead they use a _relative_ encoding. For each output vector, a different sequence of position vectors is used that denotes not the absolute position, but the distance to the current output. 
+To make this work, the authors had to let go of the standard position encoding/embedding scheme. Since the position encoding is _absolute_, it would change for each segment and not lead to a consistent embedding over the whole sequence. Instead they use a _relative_ encoding. For each output vector, a different sequence of position vectors is used that denotes not the absolute position, but the distance to the current output.
 
-This requires moving the position encoding into the attention mechanism (which is detailed in the paper). One benefit is that the resulting transformer will likely generalize much better to sequences of unseen length. 
+This requires moving the position encoding into the attention mechanism (which is detailed in the paper). One benefit is that the resulting transformer will likely generalize much better to sequences of unseen length.
 
 ### [Sparse transformers](https://openai.com/blog/sparse-transformer/)
 
@@ -612,7 +612,7 @@ Beyond the simple benefit of training transformers with very large sequence leng
 
 ## Going big
 
-The big bottleneck in training transformers is the matrix of dot products in the self attention. For a sequence length \\(t\\), this is a dense matrix containing \\(t^2\\) elements. At standard 32-bit precision, and with \\(t=1000\\) a batch of 16 such matrices takes up about 250Mb of memory. Since we need at least four of them per self attention operation (before and after softmax, plus their gradients), that limits us to at most twelve layers in a standard 12Gb GPU. In practice, we get even less, since the inputs and outputs also take up a lot of memory (although the dot product dominates). 
+The big bottleneck in training transformers is the matrix of dot products in the self attention. For a sequence length \\(t\\), this is a dense matrix containing \\(t^2\\) elements. At standard 32-bit precision, and with \\(t=1000\\) a batch of 16 such matrices takes up about 250Mb of memory. Since we need at least four of them per self attention operation (before and after softmax, plus their gradients), that limits us to at most twelve layers in a standard 12Gb GPU. In practice, we get even less, since the inputs and outputs also take up a lot of memory (although the dot product dominates).
 
 And yet models reported in the literature contain [sequence lengths of over 12000, with 48 layers](https://openai.com/blog/sparse-transformer/), using dense dot product matrices. These models are trained on clusters, of course, but a single GPU is still required to do a single forward/backward pass. How do we fit such humongous transformers into 12Gb of memory? There are three main tricks:
 
@@ -623,7 +623,7 @@ And yet models reported in the literature contain [sequence lengths of over 1200
 </dd>
 </dl>
 
-For more information on how to do this, see [this blogpost](https://medium.com/huggingface/training-larger-batches-practical-tips-on-1-gpu-multi-gpu-distributed-setups-ec88c3e51255). 
+For more information on how to do this, see [this blogpost](https://medium.com/huggingface/training-larger-batches-practical-tips-on-1-gpu-multi-gpu-distributed-setups-ec88c3e51255).
 
 ## Conclusion
 
@@ -637,7 +637,7 @@ This is particularly useful in multi-modal learning. We could easily combine a c
 
 So far, transformers are still primarily seen as a language model. I expect that in time, we'll see them adopted much more in other domains, not just to increase performance, but to simplify existing models, and to allow practitioners more intuitive control over their models' inductive biases.
 
-## References 
+## References
 
 [1] <a href="http://jalammar.github.io/illustrated-transformer/">The illustrated transformer</a>, Jay Allamar.
 
