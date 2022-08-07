@@ -16,7 +16,8 @@ code: true
 	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca/pca-1.ipynb">notebook</a></li>
 		<li><a href="/blog/pca-2">part 2</a></li>
 		<li><a href="/blog/pca-3">3</a></li>
-		<li>4</li>
+		<li><a href="/blog/pca-4">4</a></li>
+		<li>5</li>
 </ul>
 
 <aside>

@@ -15,7 +15,8 @@ code: true
 	<li>8 Oct 2021</li>
 		<li><a href="/blog/pca">part 1</a></li>
 		<li><a href="/blog/pca-2">part 2</a></li>
-		<li>part 4</li>
+		<li><a href="/blog/pca-4">4</a></li>
+		<li>5</li>
 </ul>
 
 When I started this series of blogposts, it was not meant to be a four-parter. I was going for an explanation  of Principal Component Analysis that was simple, but that also didn't skip any steps. I was frustrated with other explanations that leave things out, or require the reader to take things at face value.

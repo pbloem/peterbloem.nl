@@ -6,6 +6,12 @@ article: false
 <!-- {% raw %} -->
 <ul class="nav publications content">
 
+	<li><a href="pca-4">
+	  	<h2>The singular value decomposition (PCA 4)
+	  	</h2>
+	  	<span class="year">2022</span>
+	  	</a>	  	
+	</li>
 	<li><a href="pca-3">
 	  	<h2>Proving the spectral theorem (PCA 3)
 	  	</h2>

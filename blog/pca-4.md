@@ -12,11 +12,11 @@ code: true
 </header>
 
 <ul class="links">
-	<li>16 May 2022</li>
+	<li>7 Aug 2022</li>
 		<li><a href="/blog/pca">part 1</a></li>
-		<li><a href="/blog/pca-2">part 2</a></li>
-		<li><a href="/blog/pca-3">part 3</a></li>
-		<li>part 5</li>
+		<li><a href="/blog/pca-2">2</a></li>
+		<li><a href="/blog/pca-3">3</a></li>
+		<li>5</li>
 </ul>
 
 In the previous parts of this series, we learned that principal components are <em>eigen</em>vectors. Specifically, they are the eigenvectors of the covariance matrix $\bc{\S}$ of our data $\X$.

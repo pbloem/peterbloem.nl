@@ -15,9 +15,11 @@ code: true
 	<li>31 Jan 2020</li>
 	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca.ipynb">notebook on github</a></li>
 		<li><a href="/blog/pca">part 1</a></li>
-		<li><a href="/blog/pca-2">part 2</a></li>
-		<li><a href="/blog/pca-3">part 3</a></li>		
-		<li><a href="/blog/pca-4">part 4</a></li>
+		<li><a href="/blog/pca-2">2</a></li>
+		<li><a href="/blog/pca-3">3</a></li>		
+		<li><a href="/blog/pca-4">4</a></li>
+		<li>5</li>
+
 </ul>
 
 We have looked at what PCA is, at how to understand it, and we have spent a full post on developing the tools necessary to prove the spectral theorem, the particular decomposition that makes it all possible.
