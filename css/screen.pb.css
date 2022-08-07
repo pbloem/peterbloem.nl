@@ -623,6 +623,11 @@ figure.centering img {
     width: 100%;
 }
 
+#body figure.wide figcaption {
+		margin: 0 auto 1em auto;
+		width: 660px;
+}
+
 #body figure.tight {
 	margin-top: 0;
 	margin-bottom: 1em;
@@ -641,6 +646,10 @@ figure.wide img,
 figure.wide-margin img {
    	width: 100%;
 	min-width: 200px; 
+}
+
+figure img.small-margin{
+   	width: 800px;
 }
 
 figure.right {
@@ -697,6 +706,25 @@ figure img.right {
 #body figure .three-quarters {
 	width: 75%;
 	min-width: 150px;
+}
+
+figure.steps {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;	
+}
+
+#body figure.steps img {
+	width: calc(60% - 1em);
+	margin-bottom: 1em;
+}
+
+figure.steps figcaption {
+	width: 40%;
+	margin: 2em 0 0 0;
+	padding: 0;
+	
+	vertical-align: middle;
 }
 
 #body dl {

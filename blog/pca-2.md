@@ -570,7 +570,6 @@ Taking the alternative perspective we took above, we can also keep the data wher
 
 ## Quadratic forms
 
-
 Have we fully married our first intuition about eigenvectors in transformation matrices with the role eigenvectors play in PCA, as the eigenvectors of $\bc{\S}$? Not quite. We've shown that $\bc{\S}$ is in some sense composed of a very important transformation $\bc{\A}$, which transforms decorrelated data with unit variance to have covariance $\bc{\S}$, but the eigenvectors we're using are not the eigenvectors of $\bc{\A}$. Rather,  $\bc{\A}$ is _made up_ of our eigenvectors and may itself have different eigenvectors, or no (real) eigenvectors at all.
 
 To develop an intuition for how $\bc{\S}$ operates on space, it's more helpful not to look at the linear form
@@ -609,6 +608,10 @@ $$</p>
 \z\|^2  = {z_1}^2 + \ldots + {\z_\bc{m}}^2$ is the squared length of vector $\z$, which we constrained to 1.</p>
 
 We'll call this a <strong>weighted sum</strong>: a sum over some set of numbers where each term is multiplied by a positive weight, so that the weights sum to 1.
+
+<!--
+ We can explain why S is acting on space as a quadratic transform and why maximizing the quadritic form maximizes the variance. Double check and add this.
+ -->
 
 In the next section, we will use this sum it to prove just about every open question we have left. For now, just notice what happens when $\x$ is an eigenvector. In that case, $\z$ is a one-hot vector, because $\rc{\P}\z = \x$, and only one of the terms in the sum is non-zero.
 
