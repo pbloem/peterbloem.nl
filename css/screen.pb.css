@@ -623,6 +623,11 @@ figure.centering img {
     width: 100%;
 }
 
+#body figure.wide figcaption {
+		margin: 0 auto 1em auto;
+		width: 660px;
+}
+
 #body figure.tight {
 	margin-top: 0;
 	margin-bottom: 1em;
@@ -718,6 +723,8 @@ figure.steps figcaption {
 	width: 40%;
 	margin: 2em 0 0 0;
 	padding: 0;
+	
+	vertical-align: middle;
 }
 
 #body dl {

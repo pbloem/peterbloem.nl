@@ -16,7 +16,7 @@ code: true
 		<li><a href="/blog/pca">part 1</a></li>
 		<li><a href="/blog/pca-2">part 2</a></li>
 		<li><a href="/blog/pca-3">part 3</a></li>
-		<li><a href="/blog/pca-5">part 5</a></li>
+		<li>part 5</li>
 </ul>
 
 In the previous parts of this series, we learned that principal components are <em>eigen</em>vectors. Specifically, they are the eigenvectors of the covariance matrix $\bc{\S}$ of our data $\X$.
@@ -86,7 +86,7 @@ maps a vector $\x \in \mR^m$ to a vector $\y \in \mR^n$. If we constrain $\x$ to
 
 For some matrices, for instance singular square ones, the resulting ellipsoid is not fully $n$-dimensional, but of some lower dimensionality. For instance, if $m = n = 3$, there are matrices that produce a 2D ellipse, or even a 1D ellipsoid (a line segment). The matrix could even compress everything into a single point, which we'll call a 0D ellipsoid.
 
-<figure class="wide centering small-margin">
+<figure class="narrow centering">
 <img src="/images/pca-4/ellipsoids.svg"/>
 </figure>
 
@@ -187,7 +187,7 @@ In this case ${\X'}^T\X'$ has one eigenvalue, which is simply the scalar value $
 
 In short, if we ignore a scaling factor of $\frac{1}{\sqrt{n}}$, the singular values of $\X$ are analogous to the standard deviation and the eigenvalues of the covariance matrix $\X^T\X$ are analogous to the variance.
 
-## The singular value decomposition
+### The singular value decomposition
 
 When we developed eigenvalues and eigenvectors, we saw that they allowed us to decompose square matrices as the product of three simpler matrices: $\bc{\A} = \rc{\P}\bc{\D}\rc{\P}^T$. We can do the same thing with singular values and vectors.
 
@@ -293,7 +293,9 @@ Where, to reiterate:
 
 Here it is in a diagram.
 
-- diagram
+<figure class="narrow centering">
+<img src="/images/pca-4/svd-final.svg" class="three-quarters">
+</figure>
 
 This is called a&nbsp;&#8202;&#8202;**_full_ singular value decomposition**. It gives us all singular values, and two complete orthonormal bases for $\mR^n$ and $\mR^m$.
 
@@ -303,64 +305,54 @@ If we look at $\gc{\Sig}$, we see that we added a lot of zeros, in order to move
 
 How much do we need? We know that $\gc{\M}$ maps the axes of a sphere in the input space to the axes of an ellipsoid in the output space. Each singular value corresponds to one such mapping from axis to axis. We also know that to get from the equation with only the singular values and vectors to the full SVD, we only added zeros to $\gc{\Sig}$ and null-space vectors to $\rc{\V}$. It's hard to escape the intuition that we had what we needed already before we extended $\rc{\V}$ and $\rc{\U}$ to be square, and the singular vectors and values by themselves already provided a complete description of $\gc{\M}$.
 
-<p>Can we prove this? The easiest way, is to start with the full SVD, which we know is an exact description of $\gc{\M}$, and to separate the singular values and vectors we started with and the zeroes and zero vectors we added. Let $\rc{\V}_k$ represent the first $k$ columns of  $\rc{\V}$&mdash;the $k$ right singular vectors of $\gc{\M}$&mdash;and let $\rc{\V}'$ represent the remainder, which we added to make $\rc{\V}$ square. Using square brackets to denote the concatenation of matrices, this gives us $\rc{\V} = \left [\rc{\V}_k\;\rc{\V}'\right]$. We break $\rc{\U}$ up in the same way.</p>
+To prove this, we can walk back the exact steps we took to get to the full SVD, but now with $\rc{\V}$ on the right hand side. First, here is the full SVD, for reference.
 
-<p>For $\gc{\Sig}$, we know that the top left $k \times k$ submatrix is the diagonal matrix $\gc{\Sig}_k$, and the rest contains only $0$ entries. If we let $\mathbf 0$ denote a matrix with only zeros, we can write this as </p>
 
-$$
-\gc{\Sig} = \left [ \begin{array}
-~\gc{\Sig}_k & \kc{\mathbf 0} \\
-\kc{\mathbf 0} & \kc{\mathbf 0} \\
-\end{array}\right ].$$
+<figure class="narrow centering">
+<img src="/images/pca-4/walking-back-step1.svg" class="three-quarters">
+</figure>
 
-The full SVD now looks like this
+We've highlighted how the elements of $\rc{\U}\gc{\Sig}$ in the middle are computed: each is the dot product of a row of $\rc{\U}$ and a column of $\gc{\Sig}$. The elements of each are matched up, multiplied and the result is summed together. What we see here, is that the elements of the columns we added to $\rc{\U}$, the ones that don't correspond to a singular value, are always matched up to a zero. Removing them won't change the dot product, and thus won't change the elements of the matrix $\rc{\U}\gc{\Sig}$. This means we can safely remove the columns we added to $\rc{\U}$, and each corresponding row of $\gc{\Sig}$.
 
-- image and formula side by side
+Here's the result:
 
-<p>$$ \gc{\M} =
- \left [ \rc{\U}_k \; \rc{\U}'\right ]
-\left [ \begin{array}
-~\gc{\Sigma}_k & \kc{\mathbf 0} \\
-\kc{\mathbf 0} & \kc{\mathbf 0} \\
-\end{array}\right ]
-\left [\rc{\V}_k \;\rc{\V}'\right]$$</p>
+<figure class="narrow centering">
+<img src="/images/pca-4/walking-back-step2.svg" class="three-quarters">
+</figure>
 
-We can now prove what we want---that $\rc{\U}'$, $\rc{\V}'$, and the zeroes around $\gc{\Sig}_k$ aren't necessary to decompose $\gc{\M}$---simply by a small number of rewriting steps. To do this, it's useful to know how matrix multiplication distributes over this concatenation operator $\left [\;\right ]$. It depends on whether the "split" in the matrix is parallel to the dimension we match to multiply or orthogonal to it.
+We can use the same logic on the multiplication of $\rc{\U}\gc{\Sig}$ by $\rc{\V}^T$. The added rows of $\rc{\V}^T$ are always matched up to zero columns of $\rc{\U}\gc{\Z}$. Removing these will not affect the value of each dot product. To remove the zero columns from $\rc{\U}\gc{\Sig}$, all we need to do is remove the rightmost block of zeros. 
 
-- image parallel and orthogonal split
+Removing all three, we arrive at a more economical representation of $\gc{\M}$:
 
-<p>If the split is parallel, as in the multiplication $\left [ \begin{array}~\A\\ \B \end{array}\right] \C$, the result is another concatenated matrix, but with each submatrix multiplied by $\C$:</p>
+<figure class="narrow centering tight">
+<img src="/images/pca-4/walking-back-step3.svg" class="three-quarters">
+</figure>
 
-- image.
+It turns out that without extending $\rc{\V}$ and $\rc{\U}$ to full bases, we already had a complete decomposition of $\gc{\M}$, although we had to first make the extension to prove the fact.
 
-<p>If the split is orthogonal, as in the multiplication $\left [\A \;\B \right]\,\C$,  we must split the other matrix $\C$ into submatrices $\C_1$, $\C_2$ to match, and the result is the sum of $\A\C_1$ and $\B\C_2$.</p>
+<p>We've done a lot of variable reassignments here: first using $\rc{\V}$ to refer to just the singular vectors, then extending it to a square matrix, and then clipping it back again. To make our notation more precise, from now on we'll use $\rc{\U}$ and $\rc{\V}$ for the complete, square, basis matrices and $\rc{\U}_r$ and $\rc{\V}_r$ for the matrices made up of the first $r$ columns of each.</p>
 
-- image. Little red angle to indicate that the split is orthogonal.
+If we assume that $\gc{\M}$ has $k$ singular values, we can now write this latest decomposition as:
 
-With these two rules, we can take the full SVD, and simply distribute the matrix multiplications out over the various concatenations.
+<p>$$\gc{\M} = \rc{\U}_k\gc{\Sig}_k{\rc{\V}_k}^T
+$$</p> 
 
-- step by step with images
+This is called the **compact SVD**.
 
-And there we have it. It turns out that without extending $\rc{\V}$ and $\rc{\U}$ to full bases, we already have a complete decomposition of $\gc{\M}$ with
-
-<p>$$\gc{\M} = \rc{\U}_k\gc{\Sig}_k\rc{\V}_k
-$$</p>
-
-although we had to make the extension to prove the fact.
-
-This decomposition is sometimes called the **compact SVD**.
+<aside>See the appendix for a more formal proof of the correctness of the compact SVD. 
+</aside>
 
 Finally, if we're not interested a perfect decomposition, we can extract only the top $r < k$ singular values and vectors. If we then construct the matrices $\rc{\V}_r$ with the corresponding right singular vectors, $\rc{\U}_r$ with the corresponding left singular vectors and $\gc{\Sig}_r$ with these singular values along the diagonal, we can still perform the multiplication
 
-$$
+<p>$$
 \gc{\M}_r = \rc{\U}_r\gc{\Sig}_r{\rc{\V}_r}^T \p
-$$
+$$</p>
 
-<p> This is called the <strong>truncated SVD</strong>. It is not a proper decomposition of $\gc{\M}$, since $\gc{\M}_r$ won't be <em>equal</em> to $\gc{\M}$, but it will be, in a very precise sense, the closest we can get. We'll dig into the details of this later.</p>
+<p> This is called the <strong>truncated SVD</strong>. It is not a proper decomposition of $\gc{\M}$, since $\gc{\M}_r$ won't be <em>equal</em> to $\gc{\M}$, but it will be, in a very precise sense, the closest we can get. We'll dig into the details of that later.</p>
 
 ### Principal Component Analysis by SVD
 
-<p>The derivation of the SVD we've used above suggests a simple algorithm to decompose a matrix $\gc{\M}$. We can use gradient descent to find the singular vector $\rc{\v}$ for which $|| \gc{\M}\rc{\v} ||$ is maximal, subject to the constraint that $\rc{\v}$ is a unit vector. Once gradient descent has converged, we find the next vector in the same way, but with the added constraint that it is orthogonal to all the vectors we've already chosen.</p>
+<p>Before we move on, let's convince ourselves we can actually compute the SVD for a given $\gc{\M}$. The derivation of the SVD we've used above suggests a simple algorithm to decompose a matrix $\gc{\M}$. We can use gradient descent to find the singular vector $\rc{\v}$ for which $|| \gc{\M}\rc{\v} ||$ is maximal, subject to the constraint that $\rc{\v}$ is a unit vector. Once gradient descent has converged, we find the next vector in the same way, but with the added constraint that it is orthogonal to all the vectors we've already chosen.</p>
 
 <aside>This is of course, similar to how we computed the PCA in the <a href="/blog/pca">first part</a>. Like in the first part, we can enforce the constraints by projecting back to an orthogonal unit vector after the gradient update step.
 </aside>
@@ -431,23 +423,31 @@ Next, we'll take a look at some of the most important things the SVD can do for 
 
 The first use case will provide an intuition for the number of singular values we can expect in a matrix.
 
-# Rank
+## Rank
 
 Think back to the income dataset from the very first part, before we made it more realistic by adding some noise.
 
--- image from pt 1.
+<figure class="narrow centering">
+<img src="/images/pca/income1.svg" >
+<figcaption>A plot of monthly salary vs. quarterly income for a small sample of people. Since there is a simple linear relation between these two quantities, the data lies on a straight line.
+</figcaption>
+</figure>
 
-<p>As we noted then, even though this data is presented as two-dimensional&mdash;with two features&mdash;it is really inherently one-dimensional. This is easy to see in the picture, since the data lies on a line. What does this look like in the matrix? Note that each $y$ value can be derived from the $x$ value by multiplying it by $4$. This means that the second column of our data matrix is a multiple of the first. For every row $r$, $4\X_{r1} = \X_{r2}$.</p>
+<p>As we noted then, even though this data is presented as two-dimensional&mdash;with two features&mdash;it is really inherently one-dimensional. This is easy to see in the picture, since the data lies on a line. What does this look like in the data matrix $\X$? Note that each $x$ value can be derived from the $y$ value by multiplying it by $3$. This means that the second column of our data matrix is a multiple of the first. For every row $r$, $\X_{r1} = 3\X_{r2}$.</p>
 
-Interestingly, the same holds true in the vertical direction. If we think of each person in the data as a vector, all these vectors point in the same direction. Only their lengths differ. This means that if we fix some arbitrary instance $i$, every other instance (every row in $\X$) can be described as some scalar $m$ times $X_{i\cdot}$.
+<p>Interestingly, the same holds true in the vertical direction. If we think of each person in the data as a vector, all these vectors point in the same direction. Only their lengths differ. This means that if we fix some arbitrary instance $i$, desribed by $\x_i$, the $i$-th row of $\X$, every other instance (every row in $\X$) can be described as some scalar $m$ times $\x_i$.</p>
 
 In some sense, this tells us that the matrix $\X$ is _compressible_. We are given $300 \cdot 2 = 600$ numbers, but we really only need one vector in $\mR^{300}$ and a single scalar, or one vector in $\mR^2$ and $299$ scalars.
 
-- image
+<figure class="narrow centering">
+<img src="/images/pca-4/rank-intuition.svg" class="three-quarters">
+<figcaption>We can represent the data by storing the monthly salary of all subjects and multiplying it by $\bc{3}$ to get the quarterly income, or we can store one reference person, together with <span class="rc">a multiplier</span> for every other person in the data.
+</figcaption>
+</figure>
 
 How much a matrix can be compressed in this way is indicated by its **rank**. In this case the horizontal reduction tells us that the matrix has a _column rank_ of one---we can represent it by just one of its columns and a bunch of multipliers.
 
-It has _row rank_ of one as well---we can also represent it by one of its rows and a bunch of multipliers. We will see in a bit that this is no accident.
+It has _row rank_ of one as well---we can also represent it by one of its rows and a bunch of multipliers. We will see in a bit that it is no accident that the row and column rank are the same.
 
 What does it mean to have a higher rank than one? Let's say that a matrix can be _compressed_ to $n$ columns if a subset of $n$ of its columns is enough to express the rest as a linear combination of these $n$. For instance, if a matrix has column rank of $3$, then there are three column vectors $\a$, $\b$, and $\c$, so that every other column can be expressed as $\rc{a}\a + \rc{b}\b + \rc{c}\c$ with some numbers $\rc{a}, \rc{b}, \rc{c}$ unique to that column. The column rank of a matrix is the smallest number of columns that it can be compressed to, and and the row rank is the smallest number of rows that it can be compressed to.
 
@@ -457,17 +457,23 @@ Before we draw the diagram, note that $\a$, $\b$ and $\c$ don't actually _have_ 
 
 Now, to our diagram. Put the three basis vectors $\a$, $\b$ and $\c$ side by side in a matrix $\bc{\B}$ of $n \times 3$. For a given column of $\gc{\M}$, we can work out what $\rc{a}$, $\rc{b}$ and $\rc{c}$ should be and put these together in a column vector $\rc{\d}$. Multiplying $\bc{\B}\rc{\d}$ gives us the linear combination $\rc{a}\a + \rc{b}\b + \rc{c}\c$, and thus reconstructs our column vector of $\gc{\M}$. If we work out all the vectors $\rc{\d}$ for all columns of $\gc{\M}$ and concatenate them as the columns of a big $3 \times m$ matrix $\rc{\D}$, then multiplying $\bc{\B}\rc{\D}$ reconstructs all columns of $\gc{\M}$. Or, put simply, $\gc{\M} = \bc{\B}\rc{\D}$.
 
-- diagram.
+<figure class="narrow centering">
+<img src="/images/pca-4/rank1.svg" class="three-quarters">
+<figcaption>A matrix $\gc{\M}$ with column rank $3$ can be written as the multiplication of an $\bc{n \times 3}$ matrix and a $\rc{3 \times m}$ matrix.
+</figcaption>
+</figure>
 
-<aside>This is called a <em>rank decomposition</em> of $\gc{\M}$.</aside>
+This is called a <em>rank decomposition</em> of $\gc{\M}$.
 
-Looking at this diagram, we can directly deduce one of the more magical facts about ranks: **that the column rank is equal to the row rank.**
+Looking at this diagram, we can almost directly deduce one of the more magical facts about ranks: **that the column rank is equal to the row rank.**
 
 Imagine if we were to follow the same recipe for the row rank. We don't know the row rank, so let's call it $k$. If the row rank is $k$, there will be $k$ rows that can serve as a basis for all rows. We concatenate them into a $k \times m$ matrix $\bc{\B}'$ and work out the row vectors $\rc{\d}'$ for each row of $\gc{\M}$. Concatenating these into a matrix $\rc{\D}'$ of $n \times k$, we get $\rc{\D}'\bc{\B}' = \gc{\M}$. In other words, we get exactly the same diagram, but with the roles reversed.
 
-- diagram
+<figure class="narrow centering">
+<img src="/images/pca-4/rank2.svg" class="three-quarters">
+</figure>
 
-This means that in the second diagram, we can also interpret $\rc{\D}'$ as representing $k$ column vectors and $\bc{\B}'$ as representing the scalars required to reconstruct the columns of $\gc{\M}$. And from this we can deduce directly what $k$ should be. Since $3$ is the column rank of $\gc{\M}$, it can't be less than $3$ or we would have found a representation of $\gc{\M}$ in fewer columns (and the rank is the lowest number of columns possible). It also can't be more than $3$, because then we could go the other way around, start with the diagram for the column rank, interpret it a row rank, and we'd find a representation with fewer rows than $k$, even though $k$ is the row rank. So $k$ must be $3$.
+This means that in the second diagram, we can also interpret $\rc{\D}'$ as representing $k$ column vectors and $\bc{\B}'$ as representing the scalars required to reconstruct the columns of $\gc{\M}$. And from this we can deduce directly what $k$ should be. Since $3$ is the column rank of $\gc{\M}$, it can't be less than $3$ or we would have found a representation of $\gc{\M}$ in fewer columns (and the rank is the lowest number of columns possible). It also can't be more than $3$, because then we could go the other way around: start with the second diagram, interpret it as a row rank diagram, and we'd find a representation with fewer rows than $k$, even though $k$ is the row rank. So $k$ must be $3$.
 
 This argument shows us that the column and the row rank of any matrix _must_ be equal. We can drop the qualifier, and just refer to the matrix's _rank_. We can also conclude that the maximum possible value of the rank is $\text{min}(n, m)$: the column rank cannot exceed the number of columns, and the row rank cannot exceed the number of rows, so the minimum of these two must be the matrix rank.
 
@@ -477,18 +483,17 @@ The rank is a very fundamental property of matrices with many interpretations in
 
 **Dimension of the image of $\gc{\M}$** In part three, to explain the determinant, we modeled the operation of a square matrix as a mapping from a unit cube to a polyhedron. We can extend this intuition to rectangular matrices as well. Take an $n \times m$ matrix $\gc{\M}$. The input space of this matrix is spanned by $m$ unit vectors pointing along the axes of $\mR^m$. If we imagine these as $m$ sides defining a unit cube, then we can ask how this cube is transformed by $\gc{\M}$ into a parallelotope in $\mR^n$.
 
--image: show columns as unit vectors along axes, explicit mapping. Three different colors in 3D?
-
 The input vectors are one-hot, so multiplying one by $\gc{\M}$ just picks out one of the columns of $\gc{\M}$. Thus, we are creating the parallelotope spanned by the columns of $\gc{\M}$. If all of these point in different directions, the parallelotope is of dimension $m$. If we only get $r < m$ unique directions, we get an $r$-dimensional shape.
 
--- Example 3 -> 2 dims?
+We also get a shape of less than $m$ diemsions if one or more of the vectors lies in a plane spanned by two of the others, or more generally in an subspace spanned by some of the others. In short, if one of the vectors is a linear combination of the rest.
 
-<aside>We also get a shape of less than $m$ diemsions if one or more of the vectors lies in a plane spanned by two of the others, or more generally in an subspace spanned by some of the others. In short, if one of the vectors is a linear combination of the rest.
-</aside>
+The rank of $\gc{\M}$ tells us the dimension of the _image_: the shape we get after operating on a shape of dimension $m$. Since column and row rank are equal, we now know that this is also the dimension of an image of $\gc{\M}^T$. In the image below, we look at the image of the unit cube under a matrix. Since the matrix has rank two, the resulting figure is two-dimensional.
 
-The rank of $\gc{\M}$ tells us the dimension of the _image_: the shape we get after operating on a shape of dimension $m$. Since column and row rank are equal, we now know that this is also the dimension of an image of $\gc{\M}^T$.
-
-- image 2D: mona lisas?
+<figure class="narrow centering">
+<img src="/images/pca-4/image-dim.svg" class="three-quarters">
+<figcaption>The matrix above maps the three standard basis vectors to three different points in space that correspond to the columns of the matrix. The matrix has low rank because we can express one column as a linear combination of the other two. This means that the unit cube is flattened into a two-dimensional sheet containing all three vectors.
+</figcaption>
+</figure>
 
 **Invertibility and determinants** A square matrix $\bc{\A}$ with dimensions $n \times n$ can be invertible. That means that given $\y$, there is always only one $\x$ such that $\y = \bc{\A}\x$. We've already seen that the determinant tells us when a matrix is invertible: if the image of the matrix has volume $0$, then the matrix is not invertible. Note that we are talking about $n$-volume here. If the matrix is $3 \times 3$ and the image of the unit cube is 2 dimensional, then it has a nonzero area but not a nonzero volume. In general if the image of an $n \times n$ matrix has nonzero $n$-volume, the determinant of $\bc{\A}$ is zero.
 
@@ -504,11 +509,17 @@ You can probably guess the answer, so let's start there and work backwards: _the
 
 How do we show this? We discussed above that the rank is the dimension of the image of a matrix. That means that if we start with all unit vectors in $\mR^m$, a sphere of dimension $m$, and look at the image of this set under $\gc{\M}$, we will see a $k$-dimensional ellipsoid. This means that the process that enumerates the singular vectors can spit out $k$ mutually orthogonal vectors. After that, every vector $\rc{\v}$ that is orthogonal to the ones already produced must have $\gc{\M}\rc{\v} = \mathbf 0$.
 
+### Computing rank
+
 So, that's rank. A fundamental, and very useful property of matrices. Now, given a matrix $\gc{\M}$, how do we _compute_ its rank? There are many algorithms: QR decomposition, row reductions, etc. The problem with all of these, is that when we encounter a matrix in the wild, there is often a little bit of noise. Either the matrix contains measurements, which are always subject to noise, or it's the result of some numeric computation, in which case floating point errors probably add a little bit of imprecision.
 
 Any small amount of noise means that, with overwhelming probability, no column vectors will lie in _exactly_ the subspace spanned by the others. The noise will always push it a tiny bit out of the subspace. This will technically make the matrix full rank, but what we are actually interested in, is what rank the matrix would have if we could remove the noise.
 
--- image: The effect of adding some small noise to a 3x3 matrix with rank 2 (show the matrix and its image).
+<figure class="narrow centering">
+<img src="/images/pca-4/low-rank-noise.svg" class="three-quarters">
+<figcaption>The low rank matrix we used above, but now with a noise matrix $\oc{\E}$ added to it containing random values of small magnitude. The result is that each of the columns  is nudged a little in a random direction, pushing it out of the $xy$-plane. The image of the unit cube is now no longer a 2D sheet, but a very flat 3D shape.
+</figcaption>
+</figure>
 
 This is why the SVD is the preferred way of computing the rank of a matrix. If  have a column vector that lies almost but not quite in the subspace spanned by the others, the result is _a very small singular value_.
 
@@ -516,21 +527,25 @@ To see why, imagine a rank 1 matrix with dimensions $3 \times 3$. This matrix wo
 
 If we apply a tiny bit of noise to one of the columns, one of the vectors in the image won't quite point in the same direction as the others. As a result, we get an ellipse that looks a lot like a line segment: very thin in one direction. The image has 2 axes, so we get two singular vectors: one very similar to what we had before, for the main axis of the ellipse, and one very tiny one orthogonal to it, representing the extra dimension created by the noise.
 
--- image. rank one matrix, 3x3, with and without noise.
+<figure class="narrow centering tight">
+<img src="/images/pca-4/low-rank-sphere.svg">
+<figcaption>For a rank-1 matrix, the image of the unit sphere is a line segment. If a little noise is added, the image becomes an elongated ellipsoid. Its major axis has large magnitude, corresponding to the original singular value and vector. The other two are very small: these correspond to the singular values introduced by the noise.
+</figcaption>
+</figure>
 
 If the noise is small, then the singular values created by the noise are of an entirely different magnitude to the original singular values. This is why the SVD helps us to compute the rank in the presence of noise: we simply set a threshold to some low number like $10^{-7}$, and treat any singular value below the threshold as zero. The number of singular values remaining is the rank of our matrix _if we ignore the noise_.
-
--- Singular value spectrum for realistic example.
 
 <p>What if we were to remove the corresponding singular <em>vectors</em> as well? If $r$ is the rank we've established with the method described above, this means performing an $r$-truncated SVD. Multiplying the matrices $\rc{\U}_r$, $\gc{\Sig}_r$, $\rc{\V}_r$ back together gives us a matrix $\gc{\M}'$ which approximates $\gc{\M}$, but removes the singular vectors corresponding to the noise. Can we treat this as a denoised version of our matrix? If so, what can we say about the remainder?</p>
 
 We can answer that question very precisely, but to do so, we'll first look at how the SVD can help us solve equations.
 
-# Linear systems and least squares solutions
+## The pseudo-inverse
 
-A very common use of the singular value decomposition is to solve systems of linear equations. To put that in a familiar context, let's return again to the example that we started with in <a href="/blog/pca-1">part one</a>: the salary dataset. This time, we'll look at the noisy variant.
+A very common use of the singular value decomposition is to solve systems of linear equations. To put that in a familiar context, let's return again to the example that we started with in <a href="/blog/pca-1">part one</a>: the salary dataset. This time, we'll look at the more realistic version.
 
-- image from part 1.
+<figure class="narrow">
+<img src="/images/pca/income2.svg">
+</figure>
 
 When I first showed this picture, I tried to steer you away from seeing this as a linear regression problem, where the task is to predict the variable on the vertical axis from the one on the horizontal. PCA, after all, is an _unsupervised_ method: no feature in our data is marked as the target to be predicted. Instead, we want a compressed representation from which we can "predict" all of them as well as possible.
 
@@ -540,7 +555,11 @@ We'll stick with linear regression. This means we want to draw a line through th
 
 Here's a comparison to the definition of the first principal component. For the linear regression, we minimize the squares of the vertical distance, while for the principal component, we minimize the squares of the distances across both dimensions.
 
-- image: dataset in background, with few pts highlighted. LR, PCA side by side.
+<figure class="narrow">
+<img src="/images/pca-4/pca-vs-reg.svg">
+<figcaption>In PCA, the objective is to choose the black line to minimize the squared <span class="bc">distances between the data and the line</span>. In linear regression, we are minimizing only the squares of the <span class="rc">the vertical distances</span>.
+</figcaption>
+</figure>
 
 <p>For a general solution, assume we have $n$ instances with $m$ input features each, collected into an $n \times m$ data matrix $\X$, and that for each instance $\x_i$, we have one target value $y_i$, collected into a vector $\y \in \mR^n$.</p>
 
@@ -579,11 +598,15 @@ or in matrix notation
 \argmin{\bc{\w}} \;\;\| \X\bc{\w} - \y \|^2 \p
 $$</p>
 
-Note that the term $\X\bc{\w}$ is computing a linear combination of the columns of $\X$: each element of $\bc{\w}$ is mulitplied by one of the columns of $\X$ and the result is multiplied together. The space of all linear combinations of the columns of a matrix $\X$ is called its _column space_,  denoted $\text{col} X\$. Each possible $\bc{\w}$ results in a unique point $\X\bc{\w}$ in the column space of $\X$. The set of all these points together coincides with the entire column space.
+Note that the term $\X\bc{\w}$ is computing a linear combination of the columns of $\X$: each element of $\bc{\w}$ is multiplied by one of the columns of $\X$ and the result is summed together. The space of all linear combinations of the columns of a matrix $\X$ is called its _column space_,  denoted $\text{col}\;\X$. Every possible $\bc{\w}$ results in a unique point $\X\bc{\w}$ in the column space of $\X$. The set of all these points together coincides with the entire column space.
 
 So, we can now say that we are looking for the point in the column space of $\X$ that is closest, by least squares, to the vector $\y$ (which may be outside the column space).
 
--- image: 3D
+<figure class="narrow">
+<img src="/images/pca-4/orth-proj.svg">
+<figcaption>The values $\X\bc{\w}$ are constrained to the column space of $\X$, represented by the blue plane. The best solution $\hat \y$ to our linear regression problem is the closest we can get to $\y$ while staying in the the plane.
+</figcaption>
+</figure>
 
 <aside>This is a bit of a change of perspective. We are used to visualizing the space $\mR^m$ where every instance in our dataset is a point in space and every feature is an axis. Now, we're visualizing the space $\mR^n$, where every feature in our dataset is a point, and every instance is an axis.
 </aside>
@@ -595,7 +618,11 @@ We have a similar situation here. There is a point $\y$ that we want to approxim
 <aside>A (linear) subspace is a subset of a larger space which contains the origin and for which the linear combination of any two vectors of the subspace is also in the subspace. A column space is always a subspace.
 </aside>
 
--- image: best approximation line, best approximation subspace.
+<figure class="narrow">
+<img src="/images/pca-4/oned-nd-proj.svg">
+<figcaption>If our subspace is a line, the closest we can get to <span class="gc">any point</span> is <span class="rc">the orthogonal projection</span> of that point onto the line. If we define orthogonal projections correctly for n-dimensional subspaces, this principle applies in general.
+</figcaption>
+</figure>
 
 Happily, the best approximation theorem holds also when the subspace we're restricted to is more than a line: the closest we can get to a point $\q$ while staying in some subspace $\rc{S}$ is the orthogonal projection of $\q$ onto $\rc{S}$. In our case, that means that the best approximation to $\y$ within the column space of $\X$ is the orthogonal projection of $\y$ onto $\text{col} \X$.
 
@@ -603,18 +630,20 @@ The first thing we should do is to define what an orthogonal projection _means_ 
 
 <!-- <aside>In three dimensions there is only one orthogonal direction, but in higher dimensions, there are infinitely many. If we imagine a line through the origin in a 3D space, the directions orthogonal to it together form a plane.</aside> -->
 
-An orthogonal projection of $\q$ onto $\rc{S}$ is a point $\rc{\hat \q}$ in $\rc{S}$ so that the difference $\q - \rc{\hat \q}$ is orthogonal to $\r {S}$. Note how this generalizes the one-dimensional case: the line segment pointing out of the line $\rc{P}$ at the orthogonal projection is orthogonal to every vector that points along $\rc{P}$.
+An orthogonal projection of $\q$ onto $\rc{S}$ is a point $\rc{\hat \q}$ in $\rc{S}$ so that the difference $\q - \rc{\hat \q}$ is orthogonal to $\rc{S}$. Note how this generalizes the one-dimensional case: the line segment pointing out of the line $\rc{P}$ at the orthogonal projection is orthogonal to every vector that points along $\rc{P}$.
 
 Now, we want to show that if we find an orthogonal projection of $\q$ onto $\rc{S}$, that that is the closest we can get to $\q$ while staying in $\rc{S}$. We'll follow the same logic as we did in the 1D case. Imagine that we have an orthogonal projection $\rc{\hat \q}$ and any other point $\rc{\bar \q}$ in $\rc{S}$. No matter how many dimensions our space has, the three points $\q$, $\rc{\hat \q}$ and $\rc{\bar \q}$ form a triangle.
 
 In this triangle, we know that the points $\rc{\hat \q}$ and $\rc{\bar \q}$ are in $\rc{S}$ so the vector $\rc{\hat \q} - \rc{\bar \q}$ must be as well. Because this vector is in $\rc{S}$, we know that $\q - \rc{\hat \q}$ is orthogonal to it so our triangle has a right angle at $\rc{\hat \q}$.
 
--- image
+<figure class="narrow centering">
+<img src="/images/pca-4/triangle.png">
+</figure>
 
 From the image, you can already see that the vector $\bc{\q - \hat \q}$ must be shorter than or equal to $\gc{\q - \bar \q}$. The Pythagorean theorem lets us formalize this:
 
 <p>$$
-\|\gc{\q - \bar \q}\|^2 = \|\hat \q - \bar \q\|^2 + \|\bc{\q - \bar \q}\|^2 \p
+\|\gc{\q - \bar \q}\|^2 = \|\hat \q - \bar \q\|^2 + \|\bc{\q - \hat \q}\|^2 \p
 $$</p>
 
 <p>This tells us that the only way $\rc{\bar \q}$ can be as good an approximation as $\rc{\hat \q}$ is if $\|\rc{\hat \q} - \rc{\bar\q}\| = 0$, which implies that they are the same vector.</p>
@@ -636,19 +665,29 @@ $$
 
 with $\oc{\e} = \y - \hat \y$, and $\mathbf 0$ a vector of zeros. With a bit of filling in and rewriting, we get
 
+<!-- 
 $$\begin{align*}
 \X^T\left(\y - \X\bc{\w}\right) &= {\mathbf 0} \\
 \y^T\X - \X^T\X\bc{\w} &= {\mathbf 0} \\
 \X^T\X\bc{\w} &= \X^T\y \\
+\end{align*}$$
+ -->
+
+$$\begin{align*}
+\X^T\left(\y - \hat\y\right) &= {\mathbf 0} \\
+\X^T\y  &= \X^T\hat\y \\
+\X^T\y &= \X^T\X\bc{\w} \\
 \end{align*}$$
 
 This is called the **normal equation** for our linear problem. Any $\bc{\w}$ that satisfies this equation is a least squares solution. Note that $\X^T\X$ has popped up again.
 
 In fact, we can see here that **if $\X^T\X$ is invertible**, we can multiply both sides by the inverse and get
 
-$$\bc{\w} = \left (\X^T\X\right)^{-1}\X^T\y $$
+$$\left (\X^T\X\right)^{-1}\X^T\y = \bc{\w}$$
 
-as a single, unique solution.<!--  When is this the case? We saw earlier that a square matrix is invertible if and only if it is full-rank. That means that the $m$ rows of $\X^T\X$ need to be linearly independent. -->
+as a single, unique solution for $\bc{\w}$.
+
+<!--  When is this the case? We saw earlier that a square matrix is invertible if and only if it is full-rank. That means that the $m$ rows of $\X^T\X$ need to be linearly independent. -->
 
 The term $\left (\X^T\X\right)^{-1}\X^T$ is an instance of something called the *pseudo-inverse* of $\X$, written $\X^\dagger$. We'll provide a more robust definition later, but it's interesting to see where the name comes from. Think back to the idealized version of our problem $\X\bc{\w} = \y$. If we had been lucky enough to have a square and full-rank $\X$, we could compute the exact solution by multiplying both sides by the inverse of $\X$: $\bc{\w} = \X^{-1}\y$. We take the multiplier "to the other side" just like we would do with a scalar equation. General rectangular matrices don't have an inverse, but when we replace it by the pseudo-inverse, we get the least-squares solution, which will coincide with the ideal solution if one exists.
 
@@ -661,7 +700,7 @@ What happens if $\X^T\X$ is not invertible? It turns out this this happens preci
 
 <!-- <aside>Another way we can have a lower rank than $m$ is if the matrix is taller than it is wide, but most rows aren't linearly independent. We'll see an example of this in a bit.</aside> -->
 
-We can prove this fact simply from the SVD. This is a good illustration of how the SVD can be used for theoretical purposes. What we want to show is that if $\X^T\X$ is non-invertivle, $\X$ must have a column rank less than $m$. Let $k < m$ be the rank of $\X$ and let
+We can prove this fact simply from the SVD. This is a good illustration of how the SVD can be used for theoretical purposes. What we want to show is that if $\X^T\X$ is non-invertible, $\X$ must have a column rank less than $m$. Let $k < m$ be the rank of $\X$ and let
 
 $$\X = \rc{\U}_m\gc{\Sig}_m{\rc{\V}_m}^T$$
 
@@ -674,9 +713,9 @@ be the SVD of $\X$ truncated at $m$. Note that we only have $k$ singular values 
 \end{align*}$$</p>
 <p>where the $\rc{\U}_m$'s in the middle disappear, because $\rc{\U}_m$'s columns are orthogonal to one another, so together they form an identity matrix. Note also that $\gc{\Sig}_m$ is diagonal, so it's equal to its transpose and multiplying it by itself boils down to squaring the diagonal values.</p>
 
-The resulting decomposition is equal to the eigendecomposition of $\X^T\X$, which we already know existed. However, what we've now shown as well, is that because $\X$ has lower rank than $m$, _some of its eigenvalues are zero_. We know that $\rc{\V}_m$ and ${\rc{\V}_m}^T$ are orthogonal, so they are invertible. 
+The resulting decomposition is equal to the eigendecomposition of $\X^T\X$, which we already knew existed. However, what we've now shown as well, is that because $\X$ has lower rank than $m$, _some of its eigenvalues are zero_. We know that $\rc{\V}_m$ and ${\rc{\V}_m}^T$ are orthogonal, so they are invertible. 
 
-The composition of invertible matrices is invertible, so whether $\X^T\X$ is invertible boils down to whether $\gc{\Sigma}_m^2$ is invertible. A diagonal matrix with all _non_zero values on the diagonal is invertible: when we multiply a vector by it, we multiply each element of the vector by one of the diagonal elements, so we can get back the original elements by multiplying by their inverses. However, the diagonal matrix with zeros on the diagonal is singular. We lose information if we multiply by it, because those elements of the input vector that were multiplied by zero cannot be recovered from the output vector.
+The composition of invertible matrices is invertible, so whether $\X^T\X$ is invertible boils down to whether ${\gc{\Sigma}_m}^2$ is invertible. A diagonal matrix with all <em>non</em>zero values on the diagonal is invertible: when we multiply a vector by it, we multiply each element of the vector by one of the diagonal elements, so we can get back the original elements by multiplying by their inverses. However, the diagonal matrix with zeros on the diagonal is singular. We lose information if we multiply by it, because those elements of the input vector that were multiplied by zero cannot be recovered from the output vector.
 
 That means that if $\X$ has rank $m$, ${\gc{\Sig}}^2$ has $m$ non-zero diagonal values, i.e. $\X^T\X$ must be invertible. If the rank of $\X$ is less than $m$, we get fewer nonzero values on the diagonal of ${\gc{\Sig}}^2$, and $\X^T\X$ is singular.
 
@@ -700,9 +739,13 @@ The idea is that we can let $\oc{\epsilon}$ go to zero to see which solution the
 
 To see why $\X^T\X + \oc{\epsilon}\I$ must be invertible, consider the vectors represented by its columns. If $\X^T\X$ is singular, and thus rank deficient, these must all lie in some subspace of lower dimension than $m$. By adding $\oc{\epsilon}\I$, we are pulling each vector a little bit in the direction of a _different_ axis. Imagine two vectors on the same line. If I pull one a little toward the horizontal, and the other a little toward the vertical, they must leave the line they originally had in common. 
 
-- image
+<figure class="narrow centering">
+<img src="/images/pca-4/nudge.svg">
+<figcaption>Adding a matrix $\oc{\epsilon}\I$ to a low rank matrix, nudges each column vector of the original by $\oc{\epsilon}$ in the direction one of the axes, making the matrix full rank.
+</figcaption>
+</figure>
 
-We can rewrite our modified normal equation as
+We can now rewrite our modified normal equation as
 
 $$\begin{align*}
 \X^T\X\bc{\w} = \X^T\y - \oc{\epsilon}\bc{\w} \p
@@ -712,21 +755,51 @@ To get some insight into what the solutions to this equation look like, let's im
 
 $$\X^T\X = \begin{pmatrix}1 & 2 \\ 2 & 4 \end{pmatrix}\p$$
 
-This is a singular matrix: the second column is twice the first. The original normal equation states that we want to choose $\bc{\w}$ so that $\X^T\X\bc{\w}$ coincides with the point $\X^T\y$. Since the second column of $\X$ is twice the first,  $\X^T\y$ will always be a vector with the second element twice as big as the first, whatever $\y$ is. Since the second _row_ of $\X^T\X$ is also twice the first, the same property holds for the result of $\X^T\X\bc{\w}$, whatever $\bc{\w}$ is. Both sides will lie on the line $x = 2y$. More importantly, this means that the matrix $\X^T\X$ squishes a 2D space into a 1D space. A whole line of points is being mapped to the point $\X^T\y$. Any point on this line is a solution to the normal equation.
+<p>This is a singular matrix: the second column is twice the first. Its operation is to squeeze the whole plane into a single line. Any $\bc{\w}$ is mapped to a point $(\rc{x}, 2\rc{x})$, with $\rc{x} = \bc{w}_1 + 2\bc{w_2}$.</p>
 
-- image
+<figure class="narrow centering">
+<img src="/images/pca-4/projection.svg" class="three-quarters">
+<figcaption>The low-rank matrix $\X^T\X$ projects multiple points $\bc{\w}$ onto the same point in its column space. In this case, a line of points is projected to a single point on the line $\bc{w}_1 = 2\bc{w}_2$
+</figcaption>
+</figure>
 
-Specifically, if our target is the point $(\rc{c}, 2\rc{c})$, then any $\bc{\w} = (a, b)$ with $a + 2b = \rc{c}$ will hit the target. This is the line with slope $- \frac{1}{2}$ that intersects the horizontal axis at $\rc{c}$.
+<p>The line of all points mapped to $(\rc{x}, 2\rc{x})$, its <em>pre-image</em>, is orthogonal to the line that forms the column space. In this specific instance, we can rewrite $\bc{w}_2 = -\frac{1}{2}\bc{w}_1 \kc{+ \frac{1}{2}x}$. That is, a line with slope $-\frac{1}{2}$, which we can tell by inspection is orthogonal to our line with slope $2$. But this is not just true in this istance, it holds more generally. For any matrix $\gc{\M}$, the pre-image of some point in $\text{col } \gc{\M}$ is orthogonal to the column space itself. </p>
 
-- image?
+<aside>See the appendix for a proof.</aside>
 
-Now, when we introduce the term $- \oc{\epsilon}\bc{\w}$ to the right-hand-side. This moves our target by a small multiple of $\bc{\w}$. To keep the target reachable by the singular matrix $\X^T\X$, we should stay on the line $x = 2y$. This means we have an additional constraint, that $2\bc{w}_1 = \bc{w}_2$. Combining this with the constraint above, we find a single solution.
+The original normal equation states that we want to choose $\bc{\w}$ so that $\X^T\X\bc{\w}$ coincides with the point $\X^T\y$. Since the second column of $\X$ is twice the first, we have 
 
-- image
+$$\X^T\y = \begin{pmatrix}y' \\ 2 y'\end{pmatrix}$$
 
-The second constraint is the line orthogonal to the first, through the origin. This means it's the orthogonal projection of the origin onto the first, or put more simnply, the point in our space of acceptable solutions with the smallest norm.
+<p>for some $y'$. This is on the line that corresponds to $\text{col } \X^T\X$. Every $\bc{\w}$ for which $\bc{w}_1 + 2\bc{\w}_2 = y'$, will be mapped onto this point giving us a solution for $\X^T\X\bc{\w} = \X^\y$
+</p>
 
-We've ignored the fact that we changed the target by the term $- \oc{\epsilon}\I$, but we can justify that by making $\oc{\epsilon}$ very small. The whole derivation still holds, so long as it's non-zero. More technically, as we let $\oc{\epsilon}$ go to zero, our solution converges to the one with the lowest L2 norm.
+<!-- 
+Since the second column of $\X$ is twice the first, $\X^T\y$ will always be a vector with the second element twice as big as the first, whatever $\y$ is. 
+ -->
+
+<!-- 
+Since the second _row_ of $\X^T\X$ is also twice the first, the same property holds for the result of $\X^T\X\bc{\w}$, whatever $\bc{\w}$ is. Both sides will lie on the line $x = 2y$. More importantly, this means that the matrix $\X^T\X$ squishes a 2D space into a 1D space. A whole line of points is being mapped to the point $\X^T\y$. Any point on this line is a solution to the normal equation.
+ -->
+
+<figure class="narrow centering">
+<img src="/images/pca-4/projection-target.svg" class="three-quarters">
+<figcaption>Given our target $\y$, we note that $\x^T\y$ is in the column space of $\X^T\X$, and its pre-image forms an orthogonal line. Here we see the effect of an overdetermined problem: we have multiple solutions to the normal equation.
+</figcaption>
+</figure>
+
+Now, when we introduce the term $\oc{\epsilon}\bc{\w}$ to the left-hand-side. This moves our target by a small multiple of $\bc{\w}$. Where formerly we got from $\bc{\w}$ to the target $\X^T\y$ in a single matrix multiplication, we now need two steps: first we multiply $\X^T\X\bc{\w}$ and then we add $\oc{\epsilon}\bc{\w}$. The first step is guaranteed to put us in the column space of $\X^T\X$, which is where the target is as well. Therefore, if we are going to reach the target, the second step should keep us in the column space. In other words, $\bc{\w}$ needs to point along the column space.
+
+<figure class="narrow centering">
+<img src="/images/pca-4/projection-fin.svg" class="three-quarters">
+<figcaption>After we change the normal equation to $\X^T\X\bc{\w} + \oc{\epsilon}\bc{\w} = \X^T\y$, we need an extra step to get to the target. The projection onto the column space should end slightly below $\X^T\y$ so that the term $+\oc{\epsilon}\bc{\w}$ can take us to the target. We then see that only one point on the dotted line will do the trick: if we use the blue point, the second step will push us out of the column space. Only the $\bc{\w}$ corresponding to the direction of the column space will allow the final step to actually reach $\X^T\y$.
+</figcaption>
+</figure>
+
+
+This is how the term $\oc{\epsilon}\bc{\w}$ moves us from a problem with multiple solutions a problem with a single solution. We've also claimed that this solution is the one with the smallest norm. How do we see this in the image? The trick is to note that the the line $\oc{P}$ from which we choose $\bc{\w}$ is orthogonal to the column space, which crosses the origin. This means that if we choose the point where the two cross, we are essentially _projecting the origin onto $\oc{P}$_. This means we've chosen the point on $\oc{P}$ that is _closest_ to the origin, or, in other words, the solution with the smallest norm.
+
+We've ignored the fact that we changed the target by the term $\oc{\epsilon}\I$, so we've slightly changed the model. But we can justify that by making $\oc{\epsilon}$ very small. The whole derivation still holds, so long as it's non-zero. More technically, as we let $\oc{\epsilon}$ go to zero, our solution converges to the one with the lowest L2 norm.
 
 This is a very neat principle, which we'd like to work into our definition of the pseudo-inverse. To this end, we can define $\X^\dagger$ as the matrix
 
@@ -753,18 +826,21 @@ On the diagonal of $\gc{\Sig}$, replace all non-zero values $\gc{\sigma}$ by the
 
 $$\X^\dagger = \rc{\V}\gc{\Sig}^\dagger\rc{\U}^T \p$$
 
+<aside>Note that this also directly provides us with an SVD of $\X^\dagger$.
+</aside>
+
 If we don't want to compute the full SVD, we get the same result with the truncated SVD, so long as we include all singular values.
 
 <aside>This is because the $\rc{\v}$ and $\rc{\u}$ vectors corresponding to the the $\mathbf 0$ block of $\gc{\Sig}$ can be safely removed without changing the value of the decomposition. We haven't modified these vectors when we computed $\X^\dagger$, so the result isn't changed if we don't include these.</aside>
 
-The main reason that the SVD is the preferred way of computing the pseudo-inverse is similar to what we saw before: noise. A small amount of noise turns zero singular values into very small non-zero singular values. If we leave these untouched, we can see above that they become very big singular values in the pseudo-inverse because we take their inverse, when actually they should be ignored. The SVD makes this process explicit, and allows us to simply treat very small singular values as zero.
+The main reason that the SVD is the preferred way of computing the pseudo-inverse is one we've seen before: noise. In fact noise can be particularly disastrous when we compute the pseudo-inverse. A small amount of noise turns zero singular values into very small non-zero singular values. If we leave these untouched, we can see above that they become very _big_ singular values in the pseudo-inverse because we take their inverse, when actually they should be ignored. In short, a small amount of noise in $\X$ creates a huge error in  $\X^\dagger$. The SVD makes this process explicit, and allows us to simply treat very small singular values as zero, eliminating the problem.
 
-Now, why does this algorithm give us the pseudo-inverse? Let's first look at the case where $\X$ has rank $m$. In that case, the pseudo-inverse is simply:
+Now, why does this algorithm give us the pseudo-inverse? Let's first look at the case where $\X$ has full column rank $m$. In that case, the pseudo-inverse is simply:
 
 $$\X^\dagger = \left( \X^T\X\right)^{-1}\X^T
 $$
 
-Replacing each $\X$ by its SVD, truncated to $m$. Omitting the subscripts to simplify the notation, we get
+Replacing each $\X$ by its SVD, truncated to $m$ and omitting the subscripts to simplify the notation, we get
 
 $$\begin{align*}
 \X^\dagger &= \left( \rc{\V}\gc{\Sig}\rc{\U}^T \rc{\U}\gc{\Sig}\rc{\V}^T \right)^{-1} \rc{\V}\gc{\Sig}\rc{\U}^T \\
@@ -777,14 +853,24 @@ Which is the result of the algorithm described above. Note that because we trunc
 
 To make it intuitive exactly how SVD is solving our problem here, we can return to an idea we used before when we were developing eigenvectors: everything is a lot easier when your matrices are diagonal. Let's try that here. Imagine that $\X$ is a diagonal $n \times n$ matrix and we are looking for the vector $\bc{\w}$ that minimizes the distance between $\X\bc{\w}$ and a given $\y \in \mR^n$.
 
--- image
+<figure class="narrow centering">
+<img src="/images/pca-4/diagonal.svg" class="three-quarters">
+<figcaption>The very simplest setting for the problem $\X\bc{\w} = \y$ is when $\X$ is square and diagonal. In that case, each $\bc{w}_i$ can be solved as a simple scalar equation.
+</figcaption>
+</figure>
 
 <p>What we see here is that for a diagonal matrix, the choices for each $\bc{w}_i$ become in a sense <em>independent</em>. The only requirement for $\bc{w}_1$ is that it makes $X_{11}\bc{w}_1$ as close as possible to $y_1$. We can make them equal by setting $\bc{w}_1 = y_1 / X_{11}$, without worrying about the other parts of $\X$ or $\bc{\w}$. We can do the same thing for every $\bc{w}_{i}$.
 </p>
 
 If $\X$ is not square, but it is still diagonal, we get some extra zero rows or extra zero columns. In the first case, we can't control the elements of $\X\bc{\w}$ corresponding to the zero rows, so we may not be able to produce $\y$ exactly. The best solution is to optimize for the values we can control. In short, the solution in the previous paragraph will give us the orthogonal projection onto the column space of $\X$. In the second case, when $\X$ is wide, we get some extra elements of $\bc{\w}$, which we can set to whatever we like, because they correspond to zero columns. Setting these to zero will give us the minimal-norm solution.  
 
--- image tall and wide  $\X$, non-zero solution.
+<figure class="narrow centering">
+<img src="/images/pca-4/diagonal-rect.svg">
+<figcaption>If we have a diagonal, but non-square $\X$, two situations can arise. If $\X$ is wide, we get <span class="gc">some entries</span> in $\bc{\w}$ corresponding to zero-columns. We have an underdetermined problem with multiple possible solutions. We get the solution with the smallest norm by setting these entries to zero. If we have a tall $\X$, we have <span class="rc">some entries</span> in $\y$ corresponding to zero rows. This means we can never make $\X\bc{\w}$ exactly equal to $\y$. We have an overdetermined problem, and the best we can do is to minimize $\|\X\bc{\w} - \y\|$. We do this by ensuring that the elements of $\X\bc{\w}$ we <em>can</em> control are equal to the corresponding elements of $\y$.
+</figcaption>
+</figure>
+
+<p>The important thing, in both cases, is that we can work out the optimal solution simply by solving the scalar equation $X_{ii}\bc{w}_i = y_i$ for every $\bc{w}_i$ individually.</p>
 
 When we studied eigenvectors, after we saw how easy things were for a diagonal matrix, all we needed to do to deal with non-diagonal matrices was to develop a _diagonalization_: a way to transform space to a basis where the transformation expressed by our matrix _becomes_ expressed by a diagonal matrix.
 
@@ -802,13 +888,13 @@ We can see this happen more clearly if we rewrite directly from the minimization
  -->
 
 <p>$$\begin{align} \|\X\bc{\w} - \y\| &= \|\rc{\U}\gc{\Sig}\rc{\V}^T\bc{\w} - \rc{\U}\rc{\U}^T\y \| \\
-&= \|\gc{\Sig}\rc{\V}^T\bc{\w} - \rc{\U}^T\y \| 
+&= \|\gc{\Sig}\rc{\V}^T\bc{\w} - \rc{\U}^T\y \|  \\
 &= \|\gc{\Sig}\bc{\w}' - \y' \| 
 \end{align}$$</p>
 
-with $\bc{\w}' = \rc{\V}^T\bc{\w}$ and $\y' = \rc{\U}^T\y$
+with $\bc{\w}' = \rc{\V}^T\bc{\w}$ and $\y' = \rc{\U}^T\y$.
 
-And with that, we have a diagonal minimization objective. If we compute the SVD, then we can transform $\y$ to $\y'$ easily. Once we find a solution for $\bc{\w}'$, we can easily transform it back to the desired $\bc{\w}$ by reversing the basis transformation: $\bc{\w} = \rc{\V}\bc{\w}'$.
+And with that, we have a diagonal minimization objective. If we compute the SVD of $\X$, we can transform $\y$ to $\y'$ easily. Once we find a solution for $\bc{\w}'$, we can easily transform it back to the desired $\bc{\w}$ by reversing the basis transformation: $\bc{\w} = \rc{\V}\bc{\w}'$.
 
 For the solution to $\bc{\w}'$, there are a few different possible situations.
 
@@ -817,7 +903,7 @@ For the solution to $\bc{\w}'$, there are a few different possible situations.
 <aside>As before, we only get a perfect solution if $\gc{\Sig}$ is square or wide (assuming it's full rank). If it's tall, we have a bunch of rows we can't control, and we have to settle for the orthogonal projection.
 </aside>
 
-Now, what do we do if $\X$ is rank deficient? If we follow the simple defition of the pseudoinverse, and fill in the SVD, we get stuck at:
+Now, what do we do if $\X$ is rank deficient? If we follow the simple definition of the pseudoinverse, and fill in the SVD, we get stuck at:
 
 $$\X^\dagger \overset{?}{=} \left( \rc{\V}\gc{\Sig}^2\rc{\V}^T \right)^{-1} \rc{\V}\gc{\Sig}\rc{\U}^T \p$$
 
@@ -833,56 +919,75 @@ $$\begin{align*}
 \| (\X^T\X + \oc{\epsilon}\I)\bc{\w} - \X^T\y \| &= \| (\rc{\V}\gc{\Sig}^T\rc{\U}^T\rc{\U}\gc{\Sig}\rc{\V}^T + \oc{\epsilon}\rc{\V}\rc{\V}^T)\bc{\w} - \rc{\V}\gc{\Sig}^T\rc{\U}^T\y \| \\
 &= \| (\gc{\Sig}^T\gc{\Sig}\rc{\V}^T + \oc{\epsilon}\rc{\V}^T)\bc{\w} - \gc{\Sig}^T\rc{\U}^T\y \| \\
 &= \| (\gc{\Sig}^T\gc{\Sig} + \oc{\epsilon}\I)\rc{\V}^T\bc{\w} - \gc{\Sig}^T\rc{\U}^T\y \|^2 \\
-&= \| (\gc{\Sig}^T\gc{\Sig} + \oc{\epsilon}\I)\bc{\w'} - \y' \|
+&= \| (\gc{\Sig}^2 + \oc{\epsilon}\I)\bc{\w'} - \y' \|
 \end{align*}$$
 
-@ unify the two derivations?
+where we've set $\y' = \gc{\Sig}^T\rc{\U}^T\y$ and $\bc{\w}' = \rc{\V}^T\bc{\w}$. It's a bit more complex than what we had before, but the principle is the same.
 
-where we've set $\y' = \gc{\Sig}^T\rc{\U}^T\y$ and $\bc{\w}' = \rc{\V}^T\bc{\w}$. 
+<p>In the final line, we see that we again have a simple linear problem with a diagonal matrix: $\gc{\Sig}^2 + \oc{\epsilon}\I$. 
 
-<p>In the final line, we see that we again have a simple linear problem with a diagonal matrix: $\gc{\Sig}^T\gc{\Sig} + \oc{\epsilon}\I$. The solution to this problem is to set $\bc{w'}_i$ equal to ${y'}_i / ({\gc{\Sigma}_{ii}}^2 + \oc{\epsilon})$. From the definition of $\y'$, we see that $y'_i = \gc{\Sigma}_{ii} \rc{\u}_{i} \cdot \y$ where $\rc{\u}_{i}$ is the $i$-th column of $\rc{\U}$. Filling this in, we get
+The solution to this problem is to solve, for each $\bc{w'}_i$, the scalar equation  $({\gc{\Sigma}_{ii}}^2 + \oc{\epsilon}) \bc{w'}_i = {y'}_i$, which gives us  
+
+$$\bc{w'}_i = \frac{ {y'}_i }{ {\gc{\Sigma}_{ii}}^2 + \oc{\epsilon} } \p$$ 
+
+From the definition of $\y'$, we see that $y'_i = \gc{\Sigma}_{ii} \rc{\u}_{i} \cdot \y$ where $\rc{\u}_{i}$ is the $i$-th column of $\rc{\U}$. Filling this in, we get
 </p>
 
 <p>$$
-\bc{w}_i = \frac{\gc{\Sigma}_{ii} \kc{\times {\u_i} ^T\y}}{{\gc{\Sigma}_{ii}}^2 + \oc{\epsilon}} \p
+\bc{w'}_i = \frac{\gc{\Sigma}_{ii} \kc{\times {\u_i} ^T\y}}{{\gc{\Sigma}_{ii}}^2 + \oc{\epsilon}} \p
 $$</p>
 
-<p>Here, we can see clearly where the problem of invertibility occurs: if $\gc{\Sigma}_{ii}$ is zero, and we don't add $\oc{\epsilon}$, we get a division by zero, which is undefined. The small $\oc{\epsilon}$ added to the diagonal of $\X^T\X$ ends up being added to the denominator, so we are preventing this division by zero. Since $\gc{\Sig}_{ii}$ also occurs in the numerator, we know that in such cases the result is always a clean, well-defined zero divided by nonzero, equals zero.</p>
+<p>Here, we can see clearly where the problem of invertibility occurs: if $\gc{\Sigma}_{ii}$ is zero, and we don't add $\oc{\epsilon}$, we get a division by zero, which is undefined. The small $\oc{\epsilon}$ added to the diagonal of $\X^T\X$ ends up being added to the denominator, so we are preventing this division by zero. </p>
 
-<aside>The addition of $\oc{\epsilon}$ also affects the result for $\bc{w'}_i$ where $\gc{\Sig}_{ii}$ is nonzero, but we eliminate this effect by letting $\oc{\epsilon}$ go to zero.
-</aside>
+<aside>Since $\gc{\Sig}_{ii}$ also occurs in the numerator, we know that these divisions by zero will always be instances of $0/0$. The addition of $\oc{\epsilon}$ in the denominator turns this value into $0$. </aside>
 
-Putting all this together, we can derive the algorithm we already know. Given $\X$, we compute its SVD $rc{\U}\gc{\Sig}\rc{\V}^T$. We transform our targets $\y$ to a new basis $\y' = \gc{\Sig}^T\rc{\U}^T\y$. 
+<p>The addition of $\oc{\epsilon}$ also affects the result for $\bc{w'}_i$ where $\gc{\Sig}_{ii}$ is nonzero, but we eliminate this effect by letting $\oc{\epsilon}$ go to zero. In that case, the solution goes to $\bc{w}_i = {\gc{\Sigma}_{ii}}^{-1} {\rc{\u}_i} ^T\y$</p>
 
--- image
+Putting all this together, we can derive the algorithm we already know. Given $\X$, we compute its SVD $\rc{\U}\gc{\Sig}\rc{\V}^T$. We transform our targets $\y$ to a new basis $\y' = \gc{\Sig}^T\rc{\U}^T\y$. We solve the diagonal problem 
+
+$$\argmin{\bc{\w'}}\;\left \| \left( \gc{\Sig}^2 + \oc{\epsilon}\I \right)\bc{\w'} - \y'\right\| $$
+
+which we've shown above gives us 
+
+<p>$$\bc{w}'_i = {\gc{\Sigma}_{ii}}^{-1} y_i' = {\gc{\Sigma}_{ii}}^{-1} {\rc{\u}_i}^T\y $$</p>
+
+<p>if $\gc{\Sigma}_{ii} \neq 0$ and $\bc{w}'_i = 0$ otherwise. In matrix notation, we can write</p> 
+
+$$\bc{\w'} = \gc{\Sig}^\dagger\rc{\U}^T\y \p$$
+
+Finally, we translate $\bc{\w'}$ back to $\bc{\w}$ by multiplying by $\bc{\V}$:
+
+$$\bc{\w} = \rc{\V}\bc{\w'} = \rc{\V}\gc{\Sig}^\dagger\rc{\U}^T\y = \X^\dagger\y$$
+
+which is the algorithm we started out with.
 
 As always, there are other ways of computing the pseudo-inverse, but we like the SVD method, because we can very cleanly eliminate any noise by simply taking the singular values that are close to zero and treating them as zero.
 
 So, what have we learned? Firstly, that the least squares linear regression problem is solved by forming the pseudo-inverse, and secondly, that the pseudo-inverse can be computed very robustly by taking the SVD, inverting the nonzero values of $\gc{\Sig}$, multiplying it back together and transposing it.
 
-But don't think that all this is good for is linear regression. What we've shown here is the basis behind pretty much any linear learning method. Imagine that you have a large space of points $\mR^n$ and some target $\y$ anywhere in that space. You are looking for a point $\x \in \mR^n$ as close to $\y$ as possible but under the constraint that $\x$ is in some linear subspace $\rc{P}$ of dimension $n$. This may sound a bit abstract, but it covers a huge swathe of search problems in machine learning, optimization and computer vision.
+But don't think that all this is good for is linear regression. What we've shown here is the basis behind pretty much any linear learning method. Imagine that you have a large space of points $\mR^n$ and some target $\y$ anywhere in that space. You are looking for a point $\x \in \mR^n$ as close to $\y$ as possible but under the constraint that $\x$ is in some linear subspace $\rc{P}$ of dimension $n$. In that case the pseudo-inverse will give you your solution, quickly and precisely. This may sound a bit abstract, but it covers a huge swathe of search problems in machine learning, optimization and computer vision.
 
 Even if your problem isn't linear, for instance if you're training a neural network, this can be a worthwhile perspective. Such models are usually trained by assuming that they are _locally_ linear, computing the linear solution to this local approximation, and then taking a small step towards this solution. This is, for instance, how gradient descent operates. Even if you are training a non-linear model, the linear perspective can tell you a lot.
 
-Finally, it's worth taking a minute to consider what all this boils down to. The best approximation theorem at heart is nothing more than an application of the Pythagorean theorem. When I first learned that theorem, long ago, I didn't really get what the big deal was, why this theorem was so much more famous than any other one in Euclidean geometry. Only now do I see that pretty much everything we do in statistics and machine learning comes down to the best approximation theorem, which in turn is built on the Pythagorean theorem.
+Finally, it's worth taking a minute to consider what all this boils down to. The best approximation theorem at heart is nothing more than an application of the Pythagorean theorem. When I first learned that theorem, long ago, I didn't really get what the big deal was, why this theorem was so much more famous than any other one in Euclidean geometry. Now, I see that pretty much everything we do in statistics and machine learning comes down to the best approximation theorem, which in turn is built on the Pythagorean theorem.
 
-# Making use of the SVD
+## Making use of the SVD
 
 To finish up, let's see what else the pseudo-inverse and SVD can do for us. I promised that the basic framework of the best approximation theorem popped up in a lot of places, so let's make good on that promise with a few examples. The last example will, once again, bring us back to principal component analysis.
 
-## Compression and noise removal
+### Compression and noise removal
 
-Let's start by looking a little closer at something we've glossed over in the story so far: the idea of _noise_. We've said that one of the main benefits of the SVD is that is easily allows us to remove noise. If we have a low-rank matrix that contains some data that we're interested in, but through some process like measurement error or floating point computation, a little noise has been added, we will see that the singular values that were zero bfore will now be small non-zero values. Setting these back to zero removes a large part of the noise.
+Let's start by looking a little closer at something we've glossed over in the story so far: the idea of _noise_. We've said that one of the main benefits of the SVD is that it easily allows us to remove noise. If we have a low-rank matrix that contains some data that we're interested in, but through some process like measurement error or floating point computation, a little noise has been added, we saw that the singular values that were zero before will now be small non-zero values. Setting these back to zero removes a large part of the noise.
 
 The idea of noise is an important and very deep subject in machine learning and statistics. If you look up an official definition of noise in data analysis, you may find some assertion that the noise is the "random part" of the data. The pattern is caused by a mechanism, and the noise is a random signal "without cause" that is added on top. The pattern and the noise together make the data we observe.
 
-This is an interesting perspective, but in practice it doesn't quite work like that. What constitutes noise is usually a very subjective choice. Imagine weighing yourself regularly and analysing the resulting data. 
+This is an interesting perspective, but in practice it doesn't quite work like that. What constitutes noise is usually a very _subjective_ choice. Two people may look at the same data, and consider different parts noise. To explain, imagine that you've decided to weigh yourself regularly and to analyse the resulting data. 
 
-If you're looking to lose weight, your're probably only interested in a rough weekly trend. The daily fluctuations won't mean much, but over a whole week, you can tell whether your current diet and exercise regime is working. In this view, the first-ordertrend  is all you're interested in. The rest you can treat as random noise. It's not random in the sense that there is no cause behind it, it's just that we are interested in looking at the data at a more granular level.
+If you're looking to lose weight, you're probably only interested in a rough weekly trend. The daily fluctuations won't mean much, but over a whole week, you can tell whether your current diet and exercise regime is working. In this view, the first-ordertrend  is all you're interested in. The rest you can treat as random noise. It's not random in the sense that there is no cause behind it, it's just that we are interested in looking at the data at a more granular level.
 
 If you are interested in something else, you may want to retain more of the data. For instance, you might wonder whether it's true that eating starchy food causes you to retain water, increasing your weight the next day. In that case, you are interested in the difference between successive days, based on what you ate the day before. You may even be interested in the way in which your metabolism changes throughout the day, in which case, you'd want to retain all the fine detail of the data over the course of the day (assuming you weigh yourself often enough).
 
-In short, what you consider noise and what you consider patter is a subjective choice, depending on what you do want to do with the data.
+In short, what you consider noise and what you consider pattern is a subjective choice, depending on what you do want to do with the data.
 
 In some sense this is true of almost anything we call random. In theory, we could predict quite accurately how a flipped coin will land if we had a good idea of the state of the atmosphere around the coin, and the amount of force impacting the coin at the start of the flip. In practice, we usually treat all of this as unknown: we call it noise or randomness, and we say that the coin will land either side with equal probability. It's not random because there's no cause and effect, it's random because we don't care about that part of the process.
 
@@ -896,19 +1001,19 @@ If we wanted to, we could ramp up the threshold, and also zero out some of the m
 
 We've seen an example of this already, although we didn't know it at the time. In part one, we reconstructed our face data step by step, by adding more principal components. The principal component are the singular vectors, so this process is equivalent to taking an SVD decomposition, truncated at $k$, and looking at the reconstructed data.
 
-<figure>
--- Diagram. Plot of singular values, and reconstructions.
-<figcaption>
+<figure class="narrow centering">
+<img src="/images/pca-4/faces-svs.svg" >
+<figcaption>A plot of the singular values of the Olivetti faces data, in order of magnitude. The insets show the reconstructions using 10, 75, 140, 205, 270 and 335 singular values and vectors.
 </figcaption>
 </figure>
 
-We see that at the high end, we get a noise level around $10^{-8?}$. This corresponds to things like camera noise, compression artifacts and floating point errors in the computation of the SVD itself. Reconstructing the data from only the principal components with singular values above this noise level results in a general smoothing of the images but little loss in identifiability.
+We see that at the high end, we get singular values with a magnitude between $0.1$ and $1.0$. This corresponds to things like camera noise, compression artifacts and floating point errors in the computation of the SVD itself. Reconstructing the data from only the principal components with singular values above this noise level results in a barely noticeable smoothing of the images but little loss in identifiability.
 
-If we set the noise threshold higher, we begin to lose some of the detailed facial features, but the basic identity of each person is still retained. If we go even higher than that, so that only a handful of principal components remains, we see that the faces are so smoothed out that only basic properties like gender, age and lighting direction are retained.
+If we set the noise threshold higher, around $10$, we begin to lose some of the detailed facial features but the basic identity of each person is still retained. If we go even higher than that, to around $100$, only a handful of principal components remain. We see that the faces are so smoothed out that only basic properties like gender, age and lighting direction are retained.
 
 <aside>There may not be many causes for reconstructing the data from this few components, but there are certainly use cases for analysing the data where we may care about a subject's gender and age without caring much about what their exact face looks like.</aside>
 
-## Compressing single images
+### Compressing single images
 
 Representing images with their principal components in a larger dataset is a kind of image compression "in context". We can work out that age and gender are important attributes because they are important causes of variation in the images in the set. In practice, image compression happens on one image at a time, without explicit reference to a larger set of images they belong too.
 
@@ -923,115 +1028,125 @@ The first thing to note is that we get a perfect reconstruction (at least in the
 <aside>What if we're storing $\rc{\U}$, $\gc{\Sig}$, $\rc{\V}$ efficiently? An orthogonal $k \times k$  matrix can be stored in a sequence of $\frac{k^2 - k}{2}$ angles. This means that we can store the SVD of an $n \times m$ matrix in $\frac{n^2-n}{2} + \frac{m^2 - m}{2} + \text{min}(n, m)$ values, while the full matrix takes $mn$ values to store. For a square matrix, these result in the same number of values. For a rectangular matrix, the SVD always requires more, even if we store it efficiently like this.
 </aside>
 
-What happens if we use a compact SVD? That way we still have all the information, but we don't use as many numbers to represent $\gc{\M}$ as the full SVD does. In his case, it depends on the image. For some images, the whole thing may be described with only a handful of singular vectors and values. In that case, the compact SVD will be much more efficient. This happens if the image itself is a low-rank matrix. That means that we can visualize quite neatly what a low-rank matrix looks like, which should help with our intuition.
+What happens if we use a compact SVD? That way we still have all the information, but we don't use as many numbers to represent $\gc{\M}$ as the full SVD does. In his case, it depends on the image. For some images, the whole thing may be described with only a handful of singular vectors and values. In that case, the compact SVD will be much more efficient. This happens if the image itself is a low-rank matrix.
 
 In most cases, if we want compression, we'll need to use a truncated SVD. That is we will throw away information, but we will hopefully end up with an image that still looks to us like the original.
 
-As we illustrate what this looks like, we can also show a link to the rank decomposition, we introduced earlier. This is a decomposition of the $n \times m$ matrix $\gc{\M}$ into the product $\A\B$ of an $n \times k$ matrix $\A$ and a $k \times m$ matrix $\B$
+As we illustrate what this looks like, we can also show a link to the rank decomposition, we introduced earlier. This is a decomposition of the $n \times m$ matrix $\gc{\M}$ into the product $\bc{\A}\rc{\B}$ of an $n \times k$ matrix $\bc{\A}$ and a $k \times m$ matrix $\rc{\B}$
 
--- image
+<figure class="narrow centering">
+<img src="/images/pca-4/image-rd.jpg" >
+<figcaption>Taking a grayscale photograph, and interpreting it as a matrix, we can find a compression by applying a rank decomposition. <a href="https://www.pexels.com/photo/photo-of-person-standing-on-cliff-edge-3181458/">Photograph by Tom Verdoot</a>.
+</figcaption>
+</figure>
+
+There are plenty of interesting patterns in the above photograph, but we can also tell immediately that the matrix $\gc{\M}$ is either low-rank or very close to it. On the left there are several columns of pixels that are almost entirely white, save for a gentle gradient into light gray. If just one of these columns is an exact scalar multiple of another, or a linear combination of several others, the matrix is rank deficient. More generally, because these columns are all close to being the same, we can treat them as such to compress them.
+
+Now, how do we find the rank decomposition? It may not surprise you to learn that the SVD can help us here.
 
 If we can find two matrices such that they multiply to form something close to $\gc{\M}$, and we can keep $k$ small enough, we will have achieved compression. We can easily turn the truncated SVD into an approximate rank decomposition: the matrices $\rc{\U}_k$ and ${\rc{\V}_k}^T$ have the right dimensions already. All we need to do is add the singular values. The simplest thing to do is to take the squares of the  first $k$ singular values, arrange the in a diagonal matrix $\gc{\Sig}^\frac{1}{2}$, so that $\gc{\Sig}^\frac{1}{2}\gc{\Sig}^\frac{1}{2} = \gc{\Sig}_k$ and write
 
-$$\gc{\M} \approx \A\B = \rc{\U}_k\gc{\Sig}^\frac{1}{2}\gc{\Sig}^\frac{1}{2}\rc{\V}_k^T = \rc{\U}_k\gc{\Sig}_k\rc{\V}_k^T$$
+$$\gc{\M} \approx \bc{\A}\rc{\B} = \rc{\U}_k\gc{\Sig}^\frac{1}{2}\gc{\Sig}^\frac{1}{2}\rc{\V}_k^T = \rc{\U}_k\gc{\Sig}_k\rc{\V}_k^T$$
 
-with $\A = \rc{\U}\gc{\Sig}^\frac{1}{2}$ and $\B = \gc{\Sig}^\frac{1}{2}\rc{\V}^T$.
+with $\bc{\A} = \rc{\U}\gc{\Sig}^\frac{1}{2}$ and $\rc{\B} = \gc{\Sig}^\frac{1}{2}\rc{\V}^T$.
 
-This gives us a quick way to compute a decomposition of an image matrix. Here are some examples of what this looks like at different levels of truncation.
+This gives us a quick way to compute a decomposition of an image matrix. Here's what this looks like at different levels of truncation.
 
--- image: black and white
+<figure class="wide">
+<img src="/images/pca-4/photo-cliff-001.jpeg" class="tile4"><img src="/images/pca-4/photo-cliff-002.jpeg" class="tile4"><img src="/images/pca-4/photo-cliff-003.jpeg" class="tile4"><img src="/images/pca-4/photo-cliff-005.jpeg" class="tile4">
+<img src="/images/pca-4/photo-cliff-010.jpeg" class="tile4"><img src="/images/pca-4/photo-cliff-050.jpeg" class="tile4"><img src="/images/pca-4/photo-cliff-100.jpeg" class="tile4"><img src="/images/pca-4/photo-cliff-500.jpeg" class="tile4">
+<figcaption>Reconstructions of our image using 1, 2, 3, 5, 10, 50, 100 and 500 singular values and vectors.</figcaption>
+</figure>
 
-<aside>For an interactive, color experience, see <a href="http://timbaumann.info/svd-image-compression-demo/">
+<aside>To play around with this algorithm in color, see <a href="http://timbaumann.info/svd-image-compression-demo/">
 this demo</a> by Tim Baumann.
 </aside>
 
-## Computing Rank Decompositions
+### Computing rank decompositions
 
 How good is this as an approximation of $\gc{\M}$ using a rank decomposition? It turns out it's optimal. The [Eckart-Young-Mirsky theorem](https://en.wikipedia.org/wiki/Low-rank_approximation) tells us that no two rank-$k$ matrices can multiply to produce a matrix that is closer than $\A\B$. There are others that are equally close, but none are better.
 
 This sounds like another best-approximation theorem. The proof of this fact is pretty straightforward, but it doesn't illustrate how this relates to the best approximation results we've seen already. To make that link clear, we'll look at something a little short of a formal proof, which will hopefully provide more intuition into what is happening when we approximate a matrix this way.
 
-First, let's state the problem formally. We are looking for two matrices $\A$ and $\B$ with sizes $n \times k$ and $k \times m$ so that
-$$\| \A\B - \gc{\M} \|$$
+First, let's state the problem formally. We are looking for two matrices $\bc{\A}$ and $\rc{\B}$ with sizes $n \times k$ and $k \times m$ so that
+$$\| \bc{\A}\rc{\B} - \gc{\M} \|$$
 is as small as possible.
 
-<aside>We're using a matrix norm here called the Frobenius norm. That sounds fancy, but we're just talking about the Euclidean distance between $\A\B$ and $\gc{\M}$ that you would get if you flattened both matrices into vectors.
+<aside>We're using a matrix norm here called the Frobenius norm. That sounds fancy, but we're just talking about the Euclidean distance between $\bc{\A}\rc{\B}$ and $\gc{\M}$ that you would get if you flattened both matrices into vectors.
 </aside>
 
-This is a _bi-linear_ minimization objective. If we fix $\A$, we can use what we already know about linear problems to find the optimal $\B$ and vice versa. To illustrate, let's first assume that the opimal $\A$ is given and we only need to find $\B$.
+This is a _bi-linear_ minimization objective. If we fix $\bc{\A}$, we can use what we already know about linear problems to find the optimal $\rc{\B}$ and vice versa. To illustrate, let's first assume that the opimal $\bc{\A}$ is given and we only need to find $\rc{\B}$.
 
-To apply what we've learned about the pseudo-inverse, we can proceed column by column. Looking at a matrix multiplication, we know that whatever $\B$ we choose, the $i$-th column of $\B$ multiplies by $\A$ to make the $i$-th column of $\M$
+To apply what we've learned about the pseudo-inverse, we can proceed column by column. Looking at a matrix multiplication, we know that whatever $\rc{\B}$ we choose, the $i$-th column of $\rc{\B}$ multiplies by $\bc{\A}$ to make the $i$-th column of $\gc{\M}$: $\bc{\A}\rc{\b}_i = \gc{\m}_i$.
 
-<p>$$
-\A\b_i = \gc{\m}_i \p
-$$</p>
+<figure class="narrow centering">
+<img src="/images/pca-4/decomp-col.svg" class="three-quarters">
+</figure>
 
--- image with formula
-
-<p>This is entirely independent of what we choose for the other columns: if we change something in $\b_i$, only $\gc{\m}_i$ is affected. Thus, we can treat this as a separate optimization problem for each column, and apply the pseudo-inverse. The solution is
+<p>This is entirely independent of what we choose for the other columns: if we change something in $\rc{\b}_i$, only $\gc{\m}_i$ is affected. Thus, we can treat this as a separate optimization problem for each column, and apply the pseudo-inverse to each. The solution is
 </p>
 
 $$
-\b_i = \A^\dagger\gc{\m}_i \p
+\rc{\b}_i = \bc{\A}^\dagger\gc{\m}_i \p
 $$
 
-If we combine the columns $\b_i$ back into a matrix, we get
+If we combine the columns $\rc{\b}_i$ back into a matrix, we get
 
 <p>$$
-\B = [\b_1 \ldots \b_n] = [\A^\dagger\gc{\m}_1 \ldots \A^\dagger\gc{\m}_n] = \A^\dagger \gc{\M} \p
+\rc{\B} = \left[\,\rc{\b}_1\,\ldots \,\rc{\b}_m\,\right] = \left[\,\bc{\A}^\dagger\gc{\m}_1 \,\ldots\, \bc{\A}^\dagger\gc{\m}_m\,\right] = \bc{\A}^\dagger \gc{\M} \p
 $$</p>
 
-In short, solving $\A\B = \gc{\M}$ for $\B$, we find that $\B = \A^\dagger\gc{\M}$. We take $\A$ to the other side using the pseudo-inverse, analogous to the way we would solve a scalar equation.
+In short, solving $\bc{\A}\rc{\B} = \gc{\M}$ for $\rc{\B}$, we find that $\rc{\B} = \bc{\A}^\dagger\gc{\M}$. We take $\bc{\A}$ to the other side using the pseudo-inverse, analogous to the way we would solve a scalar equation.
 
-<p>If we reverse the setting, and assume that $\B$ is given, we can take the transpose of all matrices so that our objective becomes $\| \B^T\A^T - \gc{\M}^T \|$. We can then follow the same derivation as above, finding that the <em>rows</em> of $\A$ multiply by $\B^T$ to make the rows of $\M$. Ultimately, the optimal choice of $\A$ becomes</p>
+<p>If we reverse the setting, and assume that $\rc{\B}$ is given, we can take the transpose of all matrices so that our objective becomes $\| \rc{\B}^T\bc{\A}^T - \gc{\M}^T \|$. We can then follow the same derivation as above, finding that the <em>rows</em> of $\bc{\A}$ multiply by $\rc{\B}^T$ to make the rows of $\gc{\M}$. Ultimately, the optimal choice of $\bc{\A}$ becomes</p>
 
-$$\A = \gc{\M}\B^\dagger \p$$
+$$\bc{\A} = \gc{\M}\rc{\B}^\dagger \p$$
 
 This gives us two equations that should hold at the optimum. We can now show that the SVD solution to the rank decomposition problem we described above satisfies these equations.
 
-First, we take the SVD of $\gc{\M}$ trucated at $k$:
+First, we take the SVD of $\gc{\M}$ truncated at $k$:
 
 $$\gc{\M} \approx \rc{\U}\gc{\Sig}\rc{\V}^T \p$$
 
 We've ommitted the subscripts for clarity, but note that $\rc{\U}$ is $n \times k$, $\gc{\Sig}$ is $k \times k$ and $\rc{\V}$ is $m \times k$.
 
-If we define $\A = \rc{\U}\gc{\Sig}^\frac{1}{2}$ and $\B = \gc{\Sig}^\frac{1}{2}\rc{\V}^T$ then they combine into a low rank approximation of $\gc{\M}$ as we already showed. What we can also conclude is that this gives us the SVD decompositions of $\A$ and $\B$. All we need is to add a $k \times k$ identity matrix:
+If we define $\bc{\A} = \rc{\U}\gc{\Sig}^\frac{1}{2}$ and $\rc{\B} = \gc{\Sig}^\frac{1}{2}\rc{\V}^T$ then they combine into a low rank approximation of $\gc{\M}$ as we already showed. What we can also conclude is that this gives us the SVD decompositions of $\bc{\A}$ and $\rc{\B}$. All we need is to add a $k \times k$ identity matrix:
 
 <p>$$\begin{align*}
-\A &= \rc{\U}\gc{\Sig}^\frac{1}{2}\rc{\I}^\kc{T} \\
-\B &= \rc{\I}\gc{\Sig}^\frac{1}{2}\rc{\V}^T \p
+\bc{\A} &= \rc{\U}\gc{\Sig}^\frac{1}{2}\rc{\I}^\kc{T} \\
+\rc{\B} &= \rc{\I}\gc{\Sig}^\frac{1}{2}\rc{\V}^T \p
 \end{align*}$$</p>
 
 This in turn, tells us what the pseudo-inverses of $\A$ and $\B$ are.
 
-$$\begin{align*}
-\A^\dagger &= \rc{\I}\gc{\Sig}^{-\frac{1}{2}}\rc{\U}^T \\
-\B^\dagger &= \rc{\V}\gc{\Sig}^{-\frac{1}{2}}\rc{\I}^\kc{T} \p
-\end{align*}$$
+<p>$$\begin{align*}
+\bc{\A}^\dagger &= \rc{\I}\gc{\Sig}^{-\frac{1}{2}}\rc{\U}^T \\
+\rc{\B}^\dagger &= \rc{\V}\gc{\Sig}^{-\frac{1}{2}}\rc{\I}^\kc{T} \p
+\end{align*}$$</p>
 
-We can now simply fill in these definitions to show that the required equations hold for this choice of $\A$ and $\B$. For $\A$ we get
+We can now simply fill in these definitions to show that the required equations hold for this choice of $\bc{\A}$ and $\rc{\B}$. For $\bc{\A}$ we get
 
-$$\begin{align*}
-\A &= \rc{\U}\gc{\Sig}^\frac{1}{2}\rc{\I}^\kc{T} \\
+<p>$$\begin{align*}
+\bc{\A} &= \rc{\U}\gc{\Sig}^\frac{1}{2}\rc{\I}^\kc{T} \\
 &= \rc{\U}\gc{\Sig}\gc{\Sig}^{-\frac{1}{2}}\rc{\I}^\kc{T}\\
 &= \rc{\U}\gc{\Sig}\rc{\V}^T\rc{\V}\gc{\Sig}^{-\frac{1}{2}}\rc{\I}^\kc{T}\\
-&= \gc{\M}\B^\dagger \p
-\end{align*}$$
+&= \gc{\M}\rc{\B}^\dagger \p
+\end{align*}$$</p>
 
-And for $\B$
+And for $\rc{\B}$
 
-$$\begin{align*}
-\B &= \rc{\I}\gc{\Sig}^\frac{1}{2}\rc{\V}^T \\
+<p>$$\begin{align*}
+\rc{\B} &= \rc{\I}\gc{\Sig}^\frac{1}{2}\rc{\V}^T \\
 &= \rc{\I}\gc{\Sig}^{-\frac{1}{2}}\gc{\Sig}\rc{\V}^T \\
 &= \rc{\I}\gc{\Sig}^{-\frac{1}{2}}\rc{\U}^T\rc{\U}\gc{\Sig}\rc{\V}^T \\
-&= \A^\dagger\gc{\M}\p
-\end{align*}$$
+&= \bc{\A}^\dagger\gc{\M}\p
+\end{align*}$$</p>
 
-This isn't a complete proof. We have only shown that one necessary condition holds. To complete the proof, we should show that this condition is also sufficient. This is possible, but a bit technical. Instead, we'll wait until we tie this back into principal component analysis, at the end of this part. There, we will see that the results we already know will serve as a proof of the Eckart-Young-Mirsky theorem.
+This isn't a complete proof. We have only shown that one necessary condition holds. To complete the proof, we should show that this condition is also sufficient. This is possible, but a bit technical. Instead, we'll wait until we tie this back into principal component analysis, in the next subsection. There, we will see that the results we already know will serve as a proof of the Eckart-Young-Mirsky theorem.
 
 So, in summary, the SVD gives us a very efficient way to approximate matrices by compressed representations. We started with image compression as a use case, because it's a visual example. But there are many other situations where our data forms a matrix, and in any such case, the rank decomposition, computed by SVD, provides us with an efficient mechanism to separate pattern from noise. Either for compression, analysis or for prediction.
 
-## Recommendation
+### Recommendation
 
 One particularly relevant and popular example is that of **recommendation**. This is where we see that the SVD can be a powerful tool for _prediction_.
 
@@ -1043,25 +1158,26 @@ Each user has given you a few ratings for a small subset of the movies. This rat
 
 If we have $\oc{n}$ users, and $\bc{m}$ movies, we can put these ratings in a big $\oc{n} \times \bc{m}$ matrix $\R$. The element $R_{\oc{i}\bc{j}}$ tells us what user $\oc{i}$ thought of movie $\bc{j}$. For some pairs $\oc{i}, \bc{j}$, we don't have a rating (if we knew the whole matrix, we wouldn't need a recommender). For now, we'll set these elements of the matrix to zero, and see what we can do.
 
--- image
-
 Let's see what happens if we apply a rank decomposition to the matrix $\R$. We'll get one $\oc{n} \times k$ matrix $\oc{\U}$, and one $\bc{m} \times k$ matrix $\bc{\M}$ such that $\R \approx \oc{\U}\bc{\M}^T$.
 
--- image
+<figure class="narrow centering">
+<img src="/images/pca-4/movieratings.svg">
+</figure>
 
-We can think of the $\oc{i}$-th column of $\oc{\U}$ as a representation of the $\oc{i}$-th user and the $\bc{j}$-th column of $\bc{\M}$ as a representation of the $\bc{j}$-th user. Their dot product is the approximation to the rating $R_{\oc{i}\bc{j}}$. The basic idea of this kind of recommendation is that if $R_{\oc{i}\bc{j}}$ approximates the known ratings well, then it may approximate the unknown ratings too. We can think of $R_{\oc{i}\bc{j}}$ as a _prediction_ for whether user $\oc{i}$ will like movie $\bc{j}$.
+We can think of the $\oc{i}$-th row of $\oc{\U}$ as a representation of the $\oc{i}$-th user and the $\bc{j}$-th row of $\bc{\M}$ as a representation of the $\bc{j}$-th user. Their dot product is the approximation to the rating $R_{\oc{i}\bc{j}}$. The basic idea of this kind of recommendation is that if $R_{\oc{i}\bc{j}}$ approximates the known ratings well, then it may approximate the unknown ratings too. We can think of $R_{\oc{i}\bc{j}}$ as a _prediction_ for whether user $\oc{i}$ will like movie $\bc{j}$.
 
 <aside>Of course, we're now also explicitly optimizing for the prediction to be $0$ for these entries, so something slightly counter-intuitive is happening here, but in practice the way the algorithm deviates from these $0$'s is still predictive. We'll see a fix for this later.
 </aside>
 
 What might a good solution to this problem look like? Here's one way to think about it. Imagine that we were to fill in the user representation $\oc{\u}$ and the movie representation $\bc{\m}$ by hand, in such a way that their dot product would be positive if the user likes the movie and negative if the user dislikes the movie.
 
-
 One way to do this is to come up with $k$ features a movie can have, like comedy, drama and romance. You can score the movie on each aspect, giving it for instance, a large negative score if for comedy if the movie is highly un-comedic and a zero for romance if the movie is neither romantic nor unromantic.
 
 We can then score the user in a similar way based on how much they like these aspects. If the used loves comedy, we give them a large score for comedy. If they hate romance, we give them a large negative score for romance, and if they are ambivalent about drama, we give them a zero for drama.
 
--- image: dot products again.
+<figure class="narrow centering">
+<img src="/images/pca-4/dotprod.svg">
+</figure>
 
 If we have all this information for the user and the movie, then we can see that the dot product is a great predictor for how much the user will like the movie.
 
@@ -1071,14 +1187,14 @@ In practice, we don't have the means to collect all this information for our use
 
 The surprising thing is that matrix decomposition still learns intepretable features. Here are the first two dimensions in this learned space from a simple matrix decomposition of a movie rating dataset.
 
-<figure>
--- image: Koren (copy from trf)
+<figure class="narrow centering">
+<img src="/images/pca-4/movie-features.svg">
 <figcaption>
-The first two dimensions of a movie representation learned by matrix decomposition. From ... It's nto clear from the paper exactly which decomposition was used for this specific image, but it will be something close to a rank decomposition.
+The first two dimensions of a movie representation learned by matrix decomposition. From <a href="https://datajobs.com/data-science-repo/Recommender-Systems-[Netflix].pdf">Matrix factorization techniques for recommender systems</a> by Yehuda Koren et al. It's not clear from the paper exactly which decomposition was used for this specific image, but it will be something close to a rank decomposition.
 </figcaption>
 </figure>
 
-This is an interesting takeaway of the recommender system use case: it shows us how we can interpret the rows of the two matrices we've decomposed $\R$ into. In general, if we decompose $\gc{\M}$ into $\A\B$, then the $i$-th row of $\A$ is a vector representation of the element represented in the $i$-th row of $\gc{\M}$. In movie recommendation, this is the $i$th user, and in image compression, it's something more abstract like the $i$-th row of pixels. Likewise, the $j$-th column of $\B$ is a learned representation of whatever the $j$-th column of $\gc{\M}$ represents.
+This is an interesting takeaway of the recommender system use case: it shows us how we can interpret the rows of the two matrices we've decomposed $\R$ into. In general, if we decompose $\gc{\M}$ into $\bc{\A}\rc{\B}$, then the $i$-th row of $\bc{\A}$ is a vector representation of the element represented in the $i$-th row of $\gc{\M}$. In movie recommendation, this is the $i$-th user, and in image compression, it's something more abstract like the $i$-th row of pixels. Likewise, the $j$-th column of $\rc{\B}$ is a learned representation of whatever the $j$-th column of $\gc{\M}$ represents.
 
 The hyperparameter $k$ gives us a classic under/overfitting tradeoff. For low $k$, we have little space to model many aspects of our users and movies. We won't fit much of the pattern in the data, but we can be sure that we are ignoring any noise. If $k$ gets higher, we can model the existing ratings more accurately, but at some point we will also be capturing more and more of the noise. At this point we are fitting the original ratings too accurately, and the representations may no longer generalize to user/movie pairs for which the rating is unknown.
 
@@ -1100,11 +1216,13 @@ We can define this more precisely, but, first, we'll look at one more use case, 
 
 It's only fitting that we end back where we started, at principal component analysis. Now that we have added matrix decompositions to our toolbelt, we can view PCA from this perspective.
 
-Let's start with a given PCA, using $k$ components. If we place the principal components of the data in an $n \times k$ matrix $\Z$, with each row representing an instance, and the reconstruction vectors in an $m \times k$ matrix $\C$, then we can illustrate the whole PCA analysis with single matrix multiplication.
+Let's start with a given PCA, using $k$ components. If we place the principal components of the data in an $n \times k$ matrix $\bc{\Z}$, with each row representing an instance, and the reconstruction vectors in an $m \times k$ matrix $\rc{\C}$, then we can illustrate the whole PCA analysis with single matrix multiplication.
 
--- image PCA
+<figure class="narrow centering">
+<img src="/images/pca-4/pca-decomp.svg" class="half">
+</figure>
 
-Here we see that PCA is nothing but a low-rank approximation of our data matrix $\X$, albeit with the extra constraint that the columns of $\Z$ and $\C$ should be mutually orthogonal unit vectors.
+Here we see that PCA is nothing but a low-rank approximation of our data matrix $\X$, albeit with the extra constraint that the columns of $\bc{\Z}$ and $\rc{\C}$ should be mutually orthogonal unit vectors.
 
 One particularly useful aspect of this perspective is that it shows that we've already proved the Eckart-Young-Mirsky theorem.
 
@@ -1112,7 +1230,7 @@ In part two, we showed that PCA provides an optimal reconstruction from a lower 
 
 First, note that the second constraint does not actually limit the quality of the solution. If we find a solution with non-orthogonal vectors, we can always convert them to an orthogonal set of vectors, keeping the reconstruction the same.
 
-The conclusion is that if we have any matrix $\gc{\M}$ and ask for a rank $k$ approximation, we can interpret $\gc{\M}$ as a data matrix and apply PCA. This will give us two matrices $\Z$ and $\C$ which we have already shown in previous parts to be an optimal approximation to $\gc{\M}$. As we already derived earlier, if we have a full SVD $\gc{\M} = \rc{\U}\gc{\Sig}\rc{\V}^T$, then the PCA can be computed as $\Z = \rc{\U}\gc{\Sig}$ and $\C = \rc{\V}$.
+The conclusion is that if we have any matrix $\gc{\M}$ and ask for a rank $k$ approximation, we can interpret $\gc{\M}$ as a data matrix and apply PCA. This will give us two matrices $\bc{\Z}$ and $\rc{\C}$ which we have already shown in previous parts to be an optimal approximation to $\gc{\M}$. As we already derived earlier, if we have a full SVD $\gc{\M} = \rc{\U}\gc{\Sig}\rc{\V}^T$, then the PCA can be computed as $\bc{\Z} = \rc{\U}\gc{\Sig}$ and $\rc{\C} = \rc{\V}$.
 
 <aside>Earlier, we distributed  $\gc{\Sig}$ equally over the two matrices. In PCA, it's more common to multiply them only by the principal components.
 </aside>
@@ -1163,7 +1281,11 @@ Now, we apply the central trick that we first saw in [part 2](/blog/pca-2): that
 
 Looking at the following diagram
 
--- image, adapted from part 2
+<figure class="narrow centering">
+<img src="/images/pca-4/pythagoras-again.svg" class="half">
+<figcaption>The vectors $\gc{\m}_i$ and $\rc{u}_i\gc{\sigma}\rc{\v}$ form a right-handed triangle at the optimimum. However we set $\rc{\v}$, $\rc{u}_i\gc{\sigma}\rc{\v}$ will be an prtohogonal projection of $\gc{\m}_i$ onto $\rc{\v}$ at the point where the reconstruction error is minimized. 
+</figcaption>
+</figure>
 
 we see that we have
 
@@ -1195,7 +1317,7 @@ or, equivalently
 \text{such that}\;\;& \|\rc{\v}\| = 1 \p \\
 \end{align*}$$</p>
 
-So, the reconstruction definition is equivalent to the "maximum stretch" definition for the first singular vector. The definition is the same for the other singular vectors, with the exception that there are additional constraints, so the same proof will work for the other singular vectors.
+So, the reconstruction definition is equivalent to the "maximum stretch" definition for the first singular vector. The definition is the same for the other singular vectors, with the exception that there are additional constraints, so the same proof will work for the other singular vectors too.
 
 We can now define an SVD for matrices that are only partially known, for instance, a recommendation matrix, or a data matrix with missing values. We simply use the reconstruction definition, and compute the reconstruction only over the known values.
 
@@ -1213,14 +1335,92 @@ The main thing the SVD definition has to offer is that it is the preferred way t
 
 Still, can we really claim to have understood SVD, and by extension PCA, if we cannot implement it from scratch? In the next part we will take the final step in our journey, and look at some algorithms for computing both eigenvectors and singular vectors.
 
-<!-- 
 ## Appendix
 
+### Proofs
 
-### Clip
- -->
+<div class="theorem"><p>
+Let $\gc{\M}$ be any matrix with $k$ singular values and let $\gc{\M} = \rc{\U}\gc{\Sig}\rc{\V}^T$ be its full SVD. Then, the compact SVD $\gc{\M} = \rc{\U}_k\gc{\Sig}_k{\rc{\V}_k}^T$ also holds.</p>
+</div>
+<div class="proof"><p><em>Proof.</em> We denote the different submatrices of the full SVD as follows.</p>
 
+<figure class="narrow centering">
+<img src="/images/pca-4/svd-split.svg" class="three-quarters">
+<figcaption>$$ \gc{\M} =
+ \left [ \rc{\U}_k \; \rc{\U}'\right ]
+\left [ \begin{array}
+~\gc{\Sigma}_k & \kc{\mathbf 0} \\
+\kc{\mathbf 0} & \kc{\mathbf 0} \\
+\end{array}\right ]
+\left [\rc{\V}_k \;\rc{\V}'\right]$$ &nbsp;
+</figcaption>
+</figure>
 
+<p>We can now prove what we want&mdash;that $\rc{\U}'$, $\rc{\V}'$, and the zeroes around $\gc{\Sig}_k$ aren't necessary to decompose $\gc{\M}$&mdash;simply by a small number of rewriting steps. To do this, it's useful to know how matrix multiplication distributes over this concatenation operator $\left [\;\right ]$. It depends on whether the "split" in the matrix is parallel to the dimension we match to multiply or orthogonal to it.</p>
+
+<p>If the split is parallel, as in the multiplication $\left [ \begin{array}~\A\\ \B \end{array}\right] \C$, the result is another concatenated matrix, but with each submatrix multiplied by $\C$:</p>
+
+<p>$$\left [ \begin{array}~\A\\ \B \end{array}\right] \C = \left [ \begin{array}~\A\C\\ \B\C \end{array}\right]
+$$</p>
+
+<p>If the split is orthogonal, as in the multiplication $\left [\A \;\B \right]\,\C$,  we must split the other matrix $\C$ into submatrices $\C_1$, $\C_2$ to match, and the result is the sum:</p>
+
+<p>$$\left [\,\A \;\B \,\right]\,\C = \A\C_1 + \B\C_2 \p$$</p>
+
+<p>With these two rules, we can take the full SVD, and simply distribute the matrix multiplications out over the various concatenations.</p>
+
+<p>$$\begin{align*} 
+\gc{\M} &= \rc{\U}\gc{\Sig}\rc{\V}^T \\
+&=  \left [ \rc{\U}_k \; \rc{\U}'\right ]
+\left [ \begin{array}
+~\gc{\Sigma}_k & \kc{\mathbf 0} \\
+\kc{\mathbf 0} & \kc{\mathbf 0} \\
+\end{array}\right ]
+\rc{\V}^T\\
+&=  \rc{\U}_k 
+\left [ \begin{array}
+~\gc{\Sigma}_k & \kc{\mathbf 0} \\
+\end{array}\right ]
+\rc{\V}^T + \kc{\U'\left [ \begin{array}
+~ \mathbf 0 &  \mathbf 0 \\
+\end{array}\right ] \V^T}\\ 
+&=  \rc{\U}_k 
+\left [ \begin{array}
+~\gc{\Sigma}_k & \kc{\mathbf 0}
+\end{array}\right ]
+\left [\rc{\V}_k^T \;\rc{\V}'^T\right]\\
+&=  \rc{\U}_k 
+\gc{\Sigma}_k
+\rc{\V}_k^T + \kc{\U_k{\mathbf 0} \V'^T} \\
+&=  \rc{\U}_k 
+\gc{\Sigma}_k
+\rc{\V}_k^T
+\end{align*}$$<span class="qed"></span></p>
+
+<br/>
+
+</div>
+
+<br/>
+
+<div class="theorem"><p>
+ The pre-image of a point in a column space is orthogonal to the column space.</p>
+</div>
+<div class="proof"><p><em>Proof.</em> Let $\gc{\M}\x = \gc{\M}\y$, let $\z \in \text{\col }\gc{\M}$ and let $\gc{\M} = \left[\,\gc{\m}_1 \ldots \gc{\m}_m\,\right]$. Then, for some $z'_1 \ldots z'_m$ we can write $\z = z'_1\gc{\m}_1 + \ldots + \z'_m\gc{\m}_m$. Thus,</p>
+
+$$
+\begin{align}
+\z^T(\x - \y) &= (z'_1\gc{\m}_1 + \ldots + \z'_m\gc{\m}_m)^T(\x - \y) \\
+&= (z'_1\gc{\m}_1x_1 + \ldots + \z'_m\gc{\m}_mx_m) - (z'_1\gc{\m}_1y_1 + \ldots + \z'_m\gc{\m}_my_m) \\
+&= \z'\gc{\M}\x - \z'\gc{M}\y = 0 \p
+\end{align}
+$$
+
+<p>
+This tells us that the difference between any two vectors in the pre-image of a point is orthogonal to any vector in the column space of $\gc{\M}$, so the two are orthogonal.<span class="qed"></span>
+</p>
+
+</div>
 
 
 
