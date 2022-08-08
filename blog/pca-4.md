@@ -120,10 +120,10 @@ This is similar to what we derived in part two: there, we started with a (square
 Most importantly, we saw that maximizing the value $\x^T\bc{\S}\x$ gives us the principal eigenvector of $\bc{\S}$. What we are seeing here is that the same thing holds for any matrix $\gc{\M}$. Optimizing for maximum stretch gives us a direction that is equal to the first eigenvector $\rc{\v}$ of $\gc{\M}^T\gc{\M}$. Using this we can work out the relation between the amount that $\rc{\v}$ is stretched in the multiplication $\gc{\M}\rc{\v}$, and the corresponding eigenvalue of $\gc{\M}^T\gc{\M}$:
 
 $$
-\|\gc{\M}\rc{\v}\|^2 = \rc{\v}^T\gc{\M}^T\gc{\M}\rc{\v} = \rc{\v}^T\bc{\lambda}\rc{\x} = \bc{\lambda}\rc{\v}^T\rc{\v} = \bc{\lambda} \p
+\|\gc{\M}\rc{\v}\|^2 = \rc{\v}^T\gc{\M}^T\gc{\M}\rc{\v} = \rc{\v}^T\bc{\lambda}\rc{\v} = \bc{\lambda}\rc{\v}^T\rc{\v} = \bc{\lambda} \p
 $$
 
-That is, if $\rc{\v}$ is an eigenvector of of $\gc{\M}^T\gc{\M}$ with eigenvalue $\bc{\lambda}$, then multiplying $\rc{\v}$ by $\gc{\M}$ stretches $\rc{\v}$ by $\sqrt{\bc{\lambda}}$.
+That is, if $\rc{\v}$ is an eigenvector of $\gc{\M}^T\gc{\M}$ with eigenvalue $\bc{\lambda}$, then multiplying $\rc{\v}$ by $\gc{\M}$ stretches $\rc{\v}$ by $\sqrt{\bc{\lambda}}$.
 
 Moreover, even though $\gc{\M}$ may be non-square or singular, we know that $\gc{\M}^T\gc{\M}$ is _always_ symmetric, which tells us that it has exactly $m$ real eigenvalues, including multiplicities. The square roots of these eigenvalues indicate how much $\gc{\M}$ stretches space along the various axes of the ellipsoid we get if we transform the unit vectors by it.
 
