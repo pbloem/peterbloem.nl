@@ -321,8 +321,6 @@ Or, in diagram form:
 
 <figure class="narrow centering">
 <img src="/images/pca/multiplication-nd.svg" class="half"/>
-<figcaption>Note that in this diagram $\x$, $\z$ and $\x'$ are transposed to row vectors, so that the second multiplication shown here is $\x'^T = \z^T\rc{\W}^T$ which implies $\x' = \rc{\W}\z$.
-</figcaption>
 </figure>
 
 This would already work fine as a dimensionality reduction method. You can think of this as an autoencoder, if you're familiar with those. However, we can add one more rule to improve our reduced representation. **We will require that $\rc{\w_2}$ is orthogonal to $\rc{\w_1}$.**
