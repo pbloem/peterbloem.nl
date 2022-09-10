@@ -312,15 +312,17 @@ We can combine the two vectors $\rc{\w_1}$ and $\rc{\w_2}$ in a single matrix $\
 
 $$
 \begin{align*}
-\z &= \x^T\rc{\W} \\
-\x' &= \rc{\W}\x
+\z &= \rc{\W}^T\x \\
+\x' &= \rc{\W}\z
 \end{align*}
 $$
 
-
 Or, in diagram form:
+
 <figure class="narrow centering">
-<img src="/images/pca/multiplication-nd.svg"/>
+<img src="/images/pca/multiplication-nd.svg" class="half"/>
+<figcaption>Note that in this diagram $\x$, $\z$ and $\x'$ are transposed to row vectors, so that the second multiplication shown here is $\x'^T = \z^T\rc{\W}^T$ which implies $\x' = \rc{\W}\z$.
+</figcaption>
 </figure>
 
 This would already work fine as a dimensionality reduction method. You can think of this as an autoencoder, if you're familiar with those. However, we can add one more rule to improve our reduced representation. **We will require that $\rc{\w_2}$ is orthogonal to $\rc{\w_1}$.**
@@ -345,7 +347,7 @@ The **combined** problem is simply to add the matrix constraint above and stick 
 
 $$
 \begin{align*}
-&\argmin{\rc{\W}} \sum_\x ||\x^T\rc{\W}\rc{\W}^T - \x||^2 \\
+&\argmin{\rc{\W}} \sum_\x ||\rc{\W}\rc{\W}^T\x - \x||^2 \\
 &\;\;\text{such that } \rc{\W}^T\rc{\W} = I
 \end{align*}
 $$
@@ -366,7 +368,7 @@ These approaches are very similar. In fact, they're sometimes confused as equiva
 
 The vector $\rc{\w_1}$ defined in the iterative problem, is the same vector we found in the one dimensional setting above: the first principal component. If the two problems are equivalent (i.e. they have the same set of solutions), this vector should always be one of the columns of $\rc{\W}$ in the combined problem.
 
-To show that this isn't guaranteed, we can look at the case where $\rc{k} = \bc{m}$. That is, we use as many <span class="rc">latent features</span> as we have <span class="bc">features in our data</span>. In this case, the first vector $\rc{\w}$ returned by the iterative approach is still the first principal component, as we've defined it above. However, for the combined approach, we can set $\rc{\W} = \I$ for a perfect solution: clearly the columns of $\I$ are orthogonal unit vectors, and $\x^T\rc{\W}\rc{\W}^T - \x = \x^T\I\I^T - \x = \x -\x = \mathbf{0}$, so the solution is optimal.
+To show that this isn't guaranteed, we can look at the case where $\rc{k} = \bc{m}$. That is, we use as many <span class="rc">latent features</span> as we have <span class="bc">features in our data</span>. In this case, the first vector $\rc{\w}$ returned by the iterative approach is still the first principal component, as we've defined it above. However, for the combined approach, we can set $\rc{\W} = \I$ for a perfect solution: clearly the columns of $\I$ are orthogonal unit vectors, and $\rc{\W}\rc{\W}^T\x - \x = \x^T\I\I^T - \x = \x -\x = \mathbf{0}$, so the solution is optimal.
 
 In short, a solution to the combined problem may not be a solution to the iterated approach. What about the other way around, does solving the iterated problem always give us a solution to the combined problem? Certainly the vectors returned are always mutually orthogonal unit vectors, so the constraint is satisfied. Do we also reach a minimum? It turns out that we do.
 
