@@ -1164,7 +1164,7 @@ Let's see what happens if we apply a rank decomposition to the matrix $\R$. We'l
 <img src="/images/pca-4/movieratings.svg">
 </figure>
 
-We can think of the $\oc{i}$-th row of $\oc{\U}$ as a representation of the $\oc{i}$-th user and the $\bc{j}$-th row of $\bc{\M}$ as a representation of the $\bc{j}$-th user. Their dot product is the approximation to the rating $R_{\oc{i}\bc{j}}$. The basic idea of this kind of recommendation is that if $R_{\oc{i}\bc{j}}$ approximates the known ratings well, then it may approximate the unknown ratings too. We can think of $R_{\oc{i}\bc{j}}$ as a _prediction_ for whether user $\oc{i}$ will like movie $\bc{j}$.
+We can think of the $\oc{i}$-th row of $\oc{\U}$ as a representation of the $\oc{i}$-th user and the $\bc{j}$-th row of $\bc{\M}$ as a representation of the $\bc{j}$-th movie. Their dot product is the approximation to the rating $R_{\oc{i}\bc{j}}$. The basic idea of this kind of recommendation is that if $R_{\oc{i}\bc{j}}$ approximates the known ratings well, then it may approximate the unknown ratings too. We can think of $R_{\oc{i}\bc{j}}$ as a _prediction_ for whether user $\oc{i}$ will like movie $\bc{j}$.
 
 <aside>Of course, we're now also explicitly optimizing for the prediction to be $0$ for these entries, so something slightly counter-intuitive is happening here, but in practice the way the algorithm deviates from these $0$'s is still predictive. We'll see a fix for this later.
 </aside>
@@ -1198,7 +1198,7 @@ This is an interesting takeaway of the recommender system use case: it shows us 
 
 The hyperparameter $k$ gives us a classic under/overfitting tradeoff. For low $k$, we have little space to model many aspects of our users and movies. We won't fit much of the pattern in the data, but we can be sure that we are ignoring any noise. If $k$ gets higher, we can model the existing ratings more accurately, but at some point we will also be capturing more and more of the noise. At this point we are fitting the original ratings too accurately, and the representations may no longer generalize to user/movie pairs for which the rating is unknown.
 
-One interesting aspect about the movie recommendation problem is that the matrix that we decompose is incomplete. As a first line of attack, we just set the missing values to $0$ and applied the matrix decomposition anyway. In practice, this tells the algorithm to optimize for a lot of values that we actually don't want to optimize for. What we can do instead, is compute the minimization objective _only for the missing values_.
+One interesting aspect about the movie recommendation problem is that the matrix that we decompose is incomplete. As a first line of attack, we just set the missing values to $0$ and applied the matrix decomposition anyway. In practice, this tells the algorithm to optimize for a lot of values that we actually don't want to optimize for. What we can do instead, is compute the minimization objective _only for the known values_.
 
 It's easy to see how this should be done if we open up the minimization objective a little. Focusing on the square of the norm, we see that
 
@@ -1334,6 +1334,8 @@ In the context of PCA, you can think of the SVD as a way to compute a principal 
 The main thing the SVD definition has to offer is that it is the preferred way to compute a principal component analysis. If you're willing to take an SVD routine as a given, you now have everything you need to compute the PCA in almost all settings. And in almost all cases, that is what you should do. There are very few situations where you would want to implement your own SVD algorithm.
 
 Still, can we really claim to have understood SVD, and by extension PCA, if we cannot implement it from scratch? In the next part we will take the final step in our journey, and look at some algorithms for computing both eigenvectors and singular vectors.
+
+**Acknowledgements** Many thanks to Charlie Lu for corrections. 
 
 ## Appendix
 
