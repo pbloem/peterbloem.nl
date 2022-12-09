@@ -193,12 +193,16 @@ $$</p>
 #### 3) Multi-head attention
 
 Finally, we must account for the fact that a word can mean different things to different neighbours. Consider the following example.
+
 $$\bc{\text{mary}}, \bc{\text{gave}}, \bc{\text{roses}}, \bc{\text{to}}, \bc{\text{susan}}$$
+
 We see that the word <span class="bc">gave</span> has different relations to different parts of the sentence.  <span class="bc">mary</span> expresses who's doing the giving,  <span class="bc">roses</span> expresses what's being given, and <span class="bc">susan</span> expresses who the recipient is.
 
-In a single self-attention operation, all this information just gets summed together. If Susan gave Mary the roses instead, the output vector \\(\y_\bc{\text{gave}}\\) would be the same, even though the meaning has changed.
+In a single self-attention operation, all this information just gets summed together. The inputs $\x_\bc{\text{mary}}$ and $\x_\bc{\text{susan}}$ can influence the output $\y_\bc{\text{gave}}$ by different amounts, depending on their dot-product with $\x_\bc{\text{gave}}$, but they can't influence it _in different ways_. If, for instance, we want the information about who gave the roses and who received them to end up in different parts of $\y_\bc{\text{gave}}$, we need a little more flexibility.
 
-<p>We can give the self attention greater power of discrimination, by combining several self attention mechanisms (which we'll index with \(\bc{r}\)), each with different matrices \(\W_q^\bc{r}\), \(\W_k^\bc{r}\),\(\W_v^\bc{r}\). These are called <em>attention heads</em>.</p>
+<aside>This leaves aside how we figure out who gave the roses. We can do that based on prior knowledge about Mary and Susan, encoded in the embeddings. We can also look at the order of the words, but we'll look at how to achieve that later.</aside>
+
+<p>We can give the self attention greater power of discrimination, by combining several self-attention mechanisms (which we'll index with \(\bc{r}\)), each with different matrices \(\W_q^\bc{r}\), \(\W_k^\bc{r}\),\(\W_v^\bc{r}\). These are called <em>attention heads</em>.</p>
 
 <p>For input \(\x_\rc{i}\) each attention head produces a different output vector \(\y_\rc{i}^\bc{r}\). We concatenate these, and pass them through a linear transformation to reduce the dimension back to \(k\).
 </p>
@@ -652,6 +656,8 @@ So far, transformers are still primarily seen as a language model. I expect that
 <dl>
 <dt>19 October 2019</dt>
 <dd>Added a section on the difference between wide and narrow self-attention. Thanks to <a href="https://github.com/sidneyaraujomelo">Sidney Melo</a> for <a href="https://github.com/pbloem/former/issues/8">spotting the mistake</a> in the original implementation.</dd>
+<dt>9 December 2022</dt>
+<dd>Clarified the example in the section on multi-head attention.</dd>
 </dl>
 
 <!-- {% endraw %} -->
