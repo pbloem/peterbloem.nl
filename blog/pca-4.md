@@ -1,6 +1,6 @@
 ---
 title: The Singular Value Decomposition
-date: 31-01-2020
+date: 07-08-2022
 math: true
 code: true
 ---
@@ -16,7 +16,7 @@ code: true
 		<li><a href="/blog/pca">part 1</a></li>
 		<li><a href="/blog/pca-2">2</a></li>
 		<li><a href="/blog/pca-3">3</a></li>
-		<li>5</li>
+		<li><a href="/blog/pca-5">5</a></li>
 </ul>
 
 In the previous parts of this series, we learned that principal components are <em>eigen</em>vectors. Specifically, they are the eigenvectors of the covariance matrix $\bc{\S}$ of our data $\X$.

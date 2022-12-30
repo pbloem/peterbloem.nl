@@ -7,6 +7,18 @@
  <ttl>1800</ttl>
 
 	<item>
+		<title>Computing the eigendecomposition and the singular value decomposition (PCA 5)</title>
+		<link>http://peterbloem.nl/blog/pca-5</link>
+		<pubDate>30 Dec 2022 00:00:00 GMT</pubDate>
+	</item>
+
+	<item>
+		<title>The singular value decomposition (PCA 4)</title>
+		<link>http://peterbloem.nl/blog/pca-4</link>
+		<pubDate>7 Aug 2022 00:00:00 GMT</pubDate>
+	</item>
+
+	<item>
 		<title>Proving the spectral theorem (PCA 3)</title>
 		<link>http://peterbloem.nl/blog/pca-3</link>
 		<pubDate>8 Oct 2021 00:00:00 GMT</pubDate>
