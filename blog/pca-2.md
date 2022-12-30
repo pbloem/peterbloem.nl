@@ -13,11 +13,10 @@ code: true
 
 <ul class="links">
 	<li>27 Sep 2020</li>
-	<li><a href="https://github.com/pbloem/blog/blob/master/2020/pca/pca-2.ipynb">notebook</a></li>
 		<li><a href="/blog/pca">part 1</a></li>
 		<li><a href="/blog/pca-3">3</a></li>
 		<li><a href="/blog/pca-4">4</a></li>
-		<li>5</li>
+		<li><a href="/blog/pca-5">5</a></li>
 </ul>
 
 In <a href="/blog/pca">part 1</a> of this series, we took what I think is the most intuitive route to defining PCA: framing the method in terms of reconstruction error. The solution method we used wasn't very efficient or stable, and some parts of the "why" question were left unresolved, but we answered the "how" question well enough to show the method in action and hopefully convince you that it's worth digging a little deeper.
