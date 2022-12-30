@@ -6,10 +6,15 @@ article: false
 <!-- {% raw %} -->
 <ul class="nav publications content">
 
+	<li><a href="pca-5">
+	  	<h2>Computing the eigendecomposition and the singular value decomposition (PCA 5)
+	  	</h2>
+	  	<span class="year">2022</span>
+	  	</a>	  	
+	</li>
 	<li><a href="pca-4">
 	  	<h2>The singular value decomposition (PCA 4)
 	  	</h2>
-	  	<span class="year">2022</span>
 	  	</a>	  	
 	</li>
 	<li><a href="pca-3">
