@@ -10,12 +10,13 @@ front: true
 <ul class="homepage links">
 <li><a href="https://github.com/pbloem">github</a></li>
 <li><a href="https://twitter.com/pbloemesquire">twitter</a></li>
+<li><a rel="me" href="https://sigmoid.social/@pbloem">mastodon</a></li>
 <li><a href="https://scholar.google.nl/citations?user=zVntAfQAAAAJ&hl=en">scholar</a></li>
 </ul>
 <a href="http://orcid.org/0000-0002-0189-5817" class="orcid">orcid.org/0000-0002-0189-5817</a>
 </div>
 
-<p class="intro-text">I'm a postdoctoral researcher at the VU University in Amsterdam. I specialize in 
+<p class="intro-text">I'm an assistant professor at the VU University in Amsterdam. I specialize in 
 the combination of <strong>Machine Learning</strong> and <strong>Knowledge Representation</strong>.
 </p>
 <p class="intro-text">
