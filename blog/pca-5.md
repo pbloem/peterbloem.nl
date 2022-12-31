@@ -13,6 +13,7 @@ code: true
 
 <ul class="links">
 	<li>30 Dec 2022</li>
+		<li><a href="https://github.com/mlvu/clearbox/tree/main/clearbox/linear">code</a></li>
 		<li><a href="/blog/pca">part 1</a></li>
 		<li><a href="/blog/pca-2">2</a></li>
 		<li><a href="/blog/pca-3">3</a></li>		
