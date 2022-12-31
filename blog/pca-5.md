@@ -907,4 +907,3 @@ Note that $\R$ is invertible because $\gc{\M}$'s columns are linearly independen
 </div>
 
 <!-- {% endraw %} -->
-
