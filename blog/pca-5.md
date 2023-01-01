@@ -458,50 +458,71 @@ This tells us that the sequence of $\Z$'s we generate are all similar to one ano
 
 To show that we eventually get such a matrix, we can show that the sequences computed by the QR iteration and the orthogonal iteration are related in a very precise way.
 
-First, let $\rc{\Q}_1$, $\rc{\Q}_2$, &hellip; and $\R_1$, $\R_2$, &hellip; be the sequences computed by the <em>orthogonal</em> algorithm.
+<p>First, let $\rc{\Q}\sp_1$, $\rc{\Q}\sp_2$, &hellip; and $\R\sp_1$, $\R\sp_2$, &hellip; be the sequences computed by the <em>orthogonal</em> algorithm.</p>
 
-<aside>Note that we are changing the meaning of $\rc{\Q}_i$.</aside>
+<aside>Note the prime to indicate that these come from the orthogonal algorithm, not the QR algorithm.</aside>
 
-We know that under the right conditions, the orthogonal algorithm converges to the diagonalization $\bc{\A} = \rc{\Q}\bc{\D}\rc{\Q}^T$, or equivalently $\bc{\D} = \rc{\Q}^T\bc{\A}\rc{\Q}$.
+We know that under the right conditions, the orthogonal algorithm converges to the diagonalization $\bc{\A} = \rc{\Q}\sp\bc{\D}{\rc{\Q}\sp}^T$, or equivalently $\bc{\D} = {\rc{\Q}\sp}^T\bc{\A}\rc{\Q}\sp$.
 
-Now, for every step in the sequence of the orthogonal algorithm, we will define a new matrix called the matrix $\bc{\D}_i$. Its definition is $$\bc{\D}_i = {\rc{\Q}_i}^T\bc{\A}\rc{\Q}_i$$. 
+Now, for every step in the sequence of the orthogonal algorithm, we will define a new matrix called the matrix $\bc{\D}_i$. Its definition is $$\bc{\D}_i = {\rc{\Q}'_i}^T\bc{\A}\rc{\Q}'_i$$. 
 
-<p>Note that this is a different sequence from the intermediate values $\R_i$ computed by the orthogonal algorithm. There, we had $\bc{\A} = \rc{\Q}_i\R_i{\rc{\Q}_{i-1}}^T$ or equivalently</p>
+<p>Note that this is a different sequence from the intermediate values $\R\sp_i$ computed by the orthogonal algorithm. There, we had $\bc{\A} = \rc{\Q}\sp_i\R\sp_i{\rc{\Q}\sp_{i-1}}^T$ or equivalently</p>
 
 <p>$$
-\R_i = {\rc{\Q}_i}^T\bc{\A}\rc{\Q}_{i-1} \p
+\R\sp_i = {\rc{\Q}\sp_i}^T\bc{\A}\rc{\Q}\sp_{i-1} \p
 $$</p>
 
-<p>$\R_i$ are the values that the orthogonal algorithm computes. The sequence of $\bc{\D}_i$'s is simply a sequence of new matrices we now define. We know that the sequences converge eventually, as the difference between $\rc{\Q}_{i-1}$ and $\rc{\Q}_i$ vanishes, but early on, $\R_i$ may be very different from $\bc{\D}_i$.</p>
+<p>$\R\sp_i$ are the values that the orthogonal algorithm computes. The sequence of $\bc{\D}_i$'s is simply a sequence of new matrices we now define. We know that the sequences converge to the same point, as the difference between $\rc{\Q}\sp_{i-1}$ and $\rc{\Q}\sp_i$ vanishes, but early on, $\R\sp_i$ may be very different from $\bc{\D}_i$.</p>
 
 <aside>$\bc{\D}_i$ <em>converges</em> to a diagonal matrix (if $\bc{\A}$ is symmetric), but the intermediate values won't necessarily be diagonal.</aside>
 
 Let's look at the sequence $\bc{\D}_i$ at time $i$. For the step prior to that, $i - 1$, we know that
 
 $$\begin{align*}
-\bc{\D}_{i-1} &= {\rc{\Q}_{i-1}}^T\bc{\A}\rc{\Q}_{i-1}   &\text{by the definition of $\bc{\D}_{i-1}$} \\
-&= \rc{\Q}_{i-1}\rc{\Q}_i\R_i& \text{since $\bc{\A}\rc{\Q}_{i-1}$ is QR'ed in step $i$.}
+\bc{\D}_{i-1} &= {\rc{\Q}\sp_{i-1}}^T\bc{\A}\rc{\Q}\sp_{i-1}   &\text{by the definition of $\bc{\D}_{i-1}$} \\
+&= \rc{\Q}\sp_{i-1}\rc{\Q}\sp_i\R\sp_i& \text{since $\bc{\A}\rc{\Q}\sp_{i-1}$ is QR'ed in step $i$.}
 \end{align*}$$
 
-<p>Then, at step $i$, after the QR decomposition, $\R_i = {\rc{\Q}_i}^T\bc{\A}\rc{\Q}_{i-1}$. We can use this to write:</p>
+<p>Then, at step $i$, after the QR decomposition, $\R\sp_i = {\rc{\Q}\sp_i}^T\bc{\A}\rc{\Q}\sp_{i-1}$. We can use this to write:</p>
 
 $$\begin{align*}
-\bc{\D}_{i} &= {\rc{\Q}_{i}}^T\bc{\A}\rc{\Q}_{i}   & \\
-&= {\rc{\Q}_{i}}^T\bc{\A}{\rc{\Q}_{i-1}}^T\rc{\Q}_{i-1}\rc{\Q}_{i}  & \text{because ${\rc{\Q}_{i-1}}^T{\rc{\Q}_{i-1}} = \I$} \\
-&= \R_i {\rc{\Q}_{i-1}}\rc{\Q}_{i} & \text{see above} \\
+\bc{\D}_{i} &= {\rc{\Q}\sp_{i}}^T\bc{\A}\rc{\Q}\sp_{i}   & \\
+&= {\rc{\Q}\sp_{i}}^T\bc{\A}{\rc{\Q}\sp_{i-1}}^T\rc{\Q}\sp_{i-1}\rc{\Q}_{i}  & \text{because ${\rc{\Q}\sp_{i-1}}^T{\rc{\Q}\sp_{i-1}} = \I$} \\
+&= \R\sp_i {\rc{\Q}\sp_{i-1}}\rc{\Q}\sp_{i} & \text{see above} \\
 \end{align*}$$
 
 So, putting these together, we get
 
-$$\begin{align*}
-\bc{\D}_{i-1} &= \gc{\Q_{i-1}\Q_i}\R_i \\
-\bc{\D}_{i} &= \R_i\gc{\Q_{i-1}\Q_i}\p
-\end{align*}$$
+<p>$$\begin{align*}
+\bc{\D}_{i-1} &= \gc{\Q\sp_{i-1}\Q\sp_i}\R_i \\
+\bc{\D}_{i} &= \R_i\gc{\Q\sp_{i-1}\Q\sp_i}\p
+\end{align*}$$</p>
 
-Note that the factor in <span class="gc">green</span> is the product of two orthogonal matrices, so itself an orthogonal matrix. This means that the first line represents a QR decomposition, with $\rc{\Q} = \gc{\Q_{i-1}\Q_i}$. In short, if we are given $\bc{\D}_{i-1}$, we can compute $\bc{\D}_i$ simply by applying a QR decomposition, and multiplying $\rc{\Q}$ and $\R$ in reverse order. This is precisely what the QR algorithm does.
+Note that the factor in <span class="gc">green</span> is the product of two orthogonal matrices, so itself an orthogonal matrix. This means that the first line represents a QR decomposition, with $\rc{\Q} = \gc{\Q'_{i-1}\Q'_i}$.
+
+In short, if we are given $\bc{\D}_{i-1}$, we can compute $\bc{\D}_i$ simply by applying a QR decomposition, and multiplying $\rc{\Q}$ and $\R$ in reverse order. This is precisely what the QR algorithm does.
 
 <aside>In practice, the QR decomposition can be expensive to compute. There are modern versions of this algorithm that only perform the QR step implicitly, to speed up the computation.
 </aside>
+
+So, in the limit, we know that $\Z$ converges to a matrix, which has the eigenvalues along the diagonal, and 0 everywhere else. What about the eigenvectors? You'd be forgiven for guessing that once the algorithm has converged $\rc{\Q}$ contains these. That isn't the case, however. For one thing, at converge, $\Z$ is diagonal, so its QR decomposition is just the identity matrix times itself.
+
+Note what we showed earlier: that the sequence of $\Z$'s computed by the algorithm are all similar to one another. Making this explicit, we get, at iteration $i$
+
+<p>$$\begin{align*}
+\bc{\D}_i = \Z_i &= {\rc{\Q}_i}^T\Z_{i-1}\rc{\Q}_i = {\rc{\Q}_i}^T{\rc{\Q}_{i-1}}^T\Z_{i-2}\rc{\Q}_{i-1}\rc{\Q}_{i} = \ldots \\
+ &= {\rc{\Q}^\Pi_i}^T\bc{\A}\rc{\Q}^\Pi_i
+\end{align*}$$</p>
+
+where ${\rc{\Q}^\Pi_i}$ is the product of all $\rc{\Q}$ matrices computed so far. (Note that these are the $\rc{\Q}$s from the QR algorithm not from the orthogonal iteration).
+
+If the algorithm has converged to our satisfaction, $\bc{\D}_i$ is diagonal and we get the required diagonalization
+
+<p>$$
+{\rc{\Q}^\Pi_i}\bc{\D}_i{\rc{\Q}^\Pi_i}T = \bc{\A} \p
+$$</p>
+
+The takeaway is that for this algorithm, if all you're interested in is the eigenvalues, you can run the stripped down version we presented above. If you also want the eigenvectors, you'll need to keep a running product of all the $\rc{\Q}$s you've encountered.
 
 That concludes our three methods for computing eigenvectors of a symmetric matrix. The power iteration is a simple, and highly scalable method to find the dominant eigenvector. The orthogonal iteration is an extension we can use to add additional eigenvectors. Finally, the QR algorithm is a superficially different algorithm, that turns out to compute very a similar sequence of orthonormal bases to the orthogonal iteration.
 
@@ -773,7 +794,7 @@ Finally, we can repeat the same argument for the other vectors. If we set the fi
 <p>In practice, of course, the second column doesn't need to wait until the first has converged. The closer $\rc{\bp}_1$ gets to $\rc{\v}_1$, the better constrained the iteration on $\rc{\bp}_2$ will be to the correct subspace. By the time $\rc{\bp}_1$ has converged we are likely to see that $\rc{\bp}_2$ has also found its correct value. However, if it hasn't, we have just shown that it is guaranteed to once $\rc{\bp}_1 = \rc{\v}_1$.
 </p>
 
-### The QR/LQ algorithm for the SVD
+### The QR algorithm for the SVD
 
 If only for the sake of symmetry, it would be nice if there were an SVD version of the QR iteration algorithm. Happily, it turns out there, is, although we need to be careful to translate the logic of the QR iteration in the correct way. 
 
@@ -790,35 +811,45 @@ As before, we'll show the algorithm first, and then work out how it relates to t
 
 Compared to the QR iteration for eigenvectors, things have become a little more complex. There, we just took a QR decomposition and multiplied it back in reverse order. Here, we take two QR decompositions, and we don't just multiply them back in reverse order, we also mix up the matrices, multiplying $\R$ with $\rc{\P}$ and $\B$ with $\rc{\Q}$.
 
-To work out why this is the algorithm that gives us the result we want, we'll need to carefully take the logic from the eigenvector version, and apply it here step-by-step. In the eigenvector version, two ideas were key:
+As before, this algorithm only works if we compute the full QR decomposition. Here's what that looks like for a rectangular matrix.
 
-1. <div>We noted that the sequence of $\R$ matrices computed by the orthogonal algorithm was defined by $\R_i = \rc{\Q}_i\bc{\A}\rc{\Q}_{i-1}$.</div>
-2. <div>We defined a sequence of new matrices $\bc{\D}_i = {\rc{\Q}_{i}}^T\bc{\A}\rc{\Q}_i$, inspired by the equation that holds when the algorithm has converged.</div>
+<figure class="narrow centering">
+<img src="/images/pca-5/rectangular-qr.svg" >
+</figure>
+
+The key requirement is that $\rc{\Q}$ is square. This means that if the matrix is tall, as it is on the left, we compute as many orthogonal vectors as the matrix has columns, and then extend this to a full basis by choosing arbitrary orthogonal vectors until $\rc{\Q}$ is square. To make the multiplication work, we then extend $\R$ with rows filled with zeros.
+
+If the matrix is wide, the QR algorithm should provide us with a full basis. We now just need to extend $\R$ far enough to make the multiplication of $\rc{\Q}$ and $\R$ reconstruct all columns of the matrix. Since we have a full basis with at least the dimensionality of the matrix, we know that the remaining columns are linear combinations of the columns of $\rc{\Q}$. We express each remaining column of the matrix as a linear combination of the columns of $\rc{\Q}$, giving us an additional column of $\R$ until $\R$ is as wide as $\gc{\M}$.
+
+Now, to work out why this is the algorithm that gives us the result we want, we'll need to carefully take the logic from the eigenvector version, and apply it here step-by-step. In the eigenvector version, two ideas were key:
+
+1. <div>We noted that the sequence of $\R\sp$ matrices computed by the orthogonal algorithm was defined by $\R\sp_i = \rc{\Q}\sp_i\bc{\A}\rc{\Q}\sp_{i-1}$.</div>
+2. <div>We defined a sequence of new matrices $\bc{\D}_i = {\rc{\Q}\sp_{i}}^T\bc{\A}\rc{\Q}\sp_i$, inspired by the equation that holds when the algorithm has converged.</div>
 
 We then showed that the sequence of $\bc{\D}_i$'s can be computed by taking the QR decomposition of the previous element, and multiplying it in reverse order, to produce the next.
 
 Translating idea <span class="gc">1.</span> to the SVD version of the orthogonal iteration tells us that 
 
 <p>$$\begin{align}
-\rc{\Q}_i\R_i &= \gc{\M}\rc{\P}_{i-1} &  \R_i &= {\rc{\Q}_i}^T\gc{\M}\rc{\P}_{i-1} \\
-\rc{\P}_i\B_i &= \gc{\M}^T\rc{\Q}_{i} &  \B_i &= {\rc{\P}_i}^T\gc{\M}\rc{\Q}_{i}\p \\
+\rc{\Q}\sp_i\R\sp_i &= \gc{\M}\rc{\P}\sp_{i-1} &  \R\sp_i &= {\rc{\Q}\sp_i}^T\gc{\M}\rc{\P}\sp_{i-1} \\
+\rc{\P}\sp_i\B\sp_i &= \gc{\M}^T\rc{\Q}\sp_{i} &  \B\sp_i &= {\rc{\P}\sp_i}^T\gc{\M}^T\rc{\Q}\sp_{i}\p \\
 \end{align}$$</p>
 
-<aside>On the left are simply the two QR decompositions computed in one iteration of the algorithm. On the right, we've rewritten them to isolate $\R_i$ and $\B_i$</aside>
+<aside>On the left are simply the two QR decompositions computed in one iteration of the orthogonal algorithm. On the right, we've rewritten them to isolate $\R\sp_i$ and $\B\sp_i$</aside>
 
 To translate idea <span class="gc">2.</span> we note that at convergence, we can increment the index of the rightmost factor by one. That is, in the limit of $i \to \infty$, the following equations hold:
 
 <p>$$\begin{align}
-\R_i &= {\rc{\Q}_i}^T\gc{\M}\rc{\P}_{i} \\
-\B_i &= {\rc{\P}_i}^T\gc{\M}\rc{\Q}_{i+1}\p \\
+\R\sp_i &= {\rc{\Q}\sp_i}^T\gc{\M}\rc{\P}\sp_{i} \\
+\B\sp_i &= {\rc{\P}\sp_i}^T\gc{\M}^T\rc{\Q}\sp_{i+1}\p \\
 \end{align}$$</p>
 
-<p>We now take these equations, and define new matrices $\X_i$ and $\Y_i$ according to them. This is exactly the logic we used to define $\bc{\D}_i$. In the limit they are equal to $\R_i$ and $\B_i$, but for small $i$ there may be a large difference.
+<p>We now take these equations, and define new matrices $\X_i$ and $\Y_i$ according to them. This is exactly the logic we used to define $\bc{\D}_i$. In the limit they are equal to $\R\sp_i$ and $\B\sp_i$, but for small $i$ there may be a large difference.
 </p>
 
 <p>$$\begin{align}
-\X_i &= {\rc{\Q}_i}^T\gc{\M}\rc{\P}_{i} \\
-\Y_i &= {\rc{\P}_i}^T\gc{\M}\rc{\Q}_{i+1}\p \\
+\X_i &= {\rc{\Q}\sp_i}^T\gc{\M}\rc{\P}\sp_{i} \\
+\Y_i &= {\rc{\P}\sp_i}^T\gc{\M}\rc{\Q}\sp_{i+1}\p \\
 \end{align}$$</p>
 
 <p>The final step is to show that in these sequences of $\X_i$ and $\Y_i$ we can always compute the element at $i$ by QR decomposing the elements at $i-1$ and multiplying back in reverse order <em>and mixing up the matrices</em>.</p>
@@ -826,9 +857,9 @@ To translate idea <span class="gc">2.</span> we note that at convergence, we can
 <p>We'll start with elements $\X_{i-1}$ and $\Y_{i-1}$. We'll need to express both of them as QR decompositions.</p>
 
 <p>$$\begin{align*}
-\X_{i-1} &= {\rc{\Q}_{i-1}}^T \gc{\M} \rc{\P}_{i-1} & \Y_{i-1} &= {\rc{\P}_{i-1}}^T  \gc{\M}^T \rc{\Q}_{i} & \text{by definition} \\
-\X_{i-1} &= {\rc{\Q}_{i-1}}^T {\Q}_i \R_i & \Y_{i-1} &= {\rc{\P}_{i-1}}^T {\P}_i\B_i & \text{QR's in the orth. alg.} \\
-\X_{i-1} &= \gc{{{\Q}_{i-1}}^T {\Q}_i} \R_i & \Y_{i-1} &= \gc{{{\P}_{i-1}}^T  {\P}_i} \B_i & \gc{\text{highlight}} \p \\
+\X_{i-1} &= {\rc{\Q}\sp_{i-1}}^T \gc{\M} \rc{\P}\sp_{i-1} & \Y_{i-1} &= {\rc{\P}\sp_{i-1}}^T  \gc{\M}^T \rc{\Q}\sp_{i} & \text{by definition} \\
+\X_{i-1} &= {\rc{\Q}\sp_{i-1}}^T \rc{\Q}\sp_i \R\sp_i & \Y_{i-1} &= {\rc{\P}\sp_{i-1}}^T \rc{\P}\sp_i\B\sp_i & \text{QR's in the orth. alg.} \\
+\X_{i-1} &= \gc{{{\Q}\sp_{i-1}}^T {\Q}\sp_i} \R_i & \Y_{i-1} &= \gc{{{\P}\sp_{i-1}}^T  {\P}\sp_i} \B\sp_i & \gc{\text{highlight}} \p \\
 \end{align*}$$</p>
 
 <p>In the last line, we haven't changed anything. We've only highlighted that we've ended up expressing both $\X_{i-1}$ and $\Y_{i-1}$ as a QR decomposition. The <span class="gc">two factors highlighted in green</span> are both orthogonal matrices, so their product is an orthogonal matrix as well, and the remainders $\R_i$ and $\B_i$ are upper triangular.</p>
@@ -836,14 +867,16 @@ To translate idea <span class="gc">2.</span> we note that at convergence, we can
 Now, we need to show that the next matrices in the sequence, $\X_i$ and $\Y_i$, can be expressed in terms of the factors of these two QR decompositions. Starting with the definitions, we get
 
 <p>$$\begin{align}
-\X_i &= {\rc{\Q}_i}^T\gc{\M}\rc{\P}_i &  \B_i &= {\rc{\P}_i}^T\gc{\M}^T\rc{\Q}_{i+1} & \text{by definition} \\
-&= {\rc{\Q}_i}^T\gc{\M}{\rc{\P}_{i-1}}^T\rc{\P}_{i-1}\rc{\P}_i & &= {\rc{\P}_i}^T\gc{\M}^T{\rc{\Q}_{i}}^T\rc{\Q}_{i}\rc{\Q}_{i+1} & \text{insert $\I$} \\
-&= \kc{{{\Q}_i}^T{\Q}_i}\R_i\rc{\P}_{i-1}\rc{\P}_i & &= \kc{{{\P}_i}^T{\P}_i}\B_i\rc{\Q}_{i}\rc{\Q}_{i+1} & \text{from orth. alg.} \\
-&= \R_i\gc{{\P}_{i-1}{\P}_i} & &= \B_i\gc{{\Q}_{i}{\Q}_{i+1}} & \\
+\X_i &= {\rc{\Q}\sp_i}^T\gc{\M}\rc{\P}\sp_i &  \B_i &= {\rc{\P}\sp_i}^T\gc{\M}^T\rc{\Q}\sp_{i+1} & \text{by definition} \\
+&= {\rc{\Q}\sp_i}^T\gc{\M}{\rc{\P}\sp_{i-1}}^T\rc{\P}\sp_{i-1}\rc{\P}\sp_i & &= {\rc{\P}\sp_i}^T\gc{\M}^T{\rc{\Q}\sp_{i}}^T\rc{\Q}\sp_{i}\rc{\Q}\sp_{i+1} & \text{insert $\I$} \\
+&= \kc{{{\Q}\sp_i}^T{\Q}\sp_i}\R\sp_i\rc{\P}\sp_{i-1}\rc{\P}\sp_i & &= \kc{{{\P}\sp_i}^T{\P}\sp_i}\B\sp_i\rc{\Q}\sp_{i}\rc{\Q}\sp_{i+1} & \text{from orth. alg.} \\
+&= \R\sp_i\gc{{\P}\sp_{i-1}{\P}\sp_i} & &= \B_i\gc{{\Q}\sp_{i}{\Q}\sp_{i+1}} & \\
 \end{align}$$</p>
 
-<p>And there we have the proof of our algorithm. If we QR decompose $\X_{i-1}$ and $\Y_{i-1}$ and multiply the results back together, mixed up and in reverse order, we get the values $\X_i$ and $\Y_i$. Since we know that these converge to the same values as the sequences $\R_i$ and $\B_i$ we get from the orthogonal algorithm, we see that we must be computing the singular value decomposition of $\gc{\M}$.
+<p>And there we have the proof of our algorithm. If we QR decompose $\X_{i-1}$ and $\Y_{i-1}$ and multiply the results back together, mixed up and in reverse order, we get the values $\X_i$ and $\Y_i$. Since we know that these converge to the same values as the sequences $\R\sp_i$ and $\B\sp_i$, we see that we must be computing the singular value decomposition of $\gc{\M}$.
 </p>
+
+<aside>As before, the stripped down version we've given here only gives you the singular values (on the diagonal of $\X$). If you want the singular vectors as well, you'll need to keep a running product of $\rc{\Q}$ and $\rc{\P}$. See the link at the top for implementations these algorithms, which contain these details.</aside>
 
 ## Conclusion
 
