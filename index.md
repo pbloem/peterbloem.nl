@@ -1,5 +1,6 @@
 ---
 front: true
+article: false
 ---
 
 <img tabindex="4" class="photo" src="./files/peterbloem.bw.jpg" />
@@ -16,7 +17,7 @@ front: true
 <a href="http://orcid.org/0000-0002-0189-5817" class="orcid">orcid.org/0000-0002-0189-5817</a>
 </div>
 
-<p class="intro-text">I'm an assistant professor at the VU University in Amsterdam. I specialize in 
+<p class="intro-text">I'm an assistant professor at the Vrije Universiteit Amsterdam. I specialize in 
 the combination of <strong>Machine Learning</strong> and <strong>Knowledge Representation</strong>.
 </p>
 <p class="intro-text">
