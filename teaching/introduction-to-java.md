@@ -1,6 +1,8 @@
 ---
 title: Introduction to Java
 description: Description of my lectures on Java 
+parent: publications
+
 ---
 
 # Introduction to Java

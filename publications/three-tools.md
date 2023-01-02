@@ -1,5 +1,7 @@
 ---
 Title: Three tools for practical differential privacy
+parent: publications
+
 ---
 
 <header>

@@ -3,6 +3,8 @@ title: Computing the eigendecomposition and the singular value decomposition
 date: 30-12-2022
 math: true
 code: true
+parent: blog
+
 ---
 <!-- {% raw %} -->
 

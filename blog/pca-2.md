@@ -3,6 +3,8 @@ title: Eigenvalues and eigenvectors
 date: 31-01-2020
 math: true
 code: true
+parent: blog
+
 ---
 <!-- {% raw %} -->
 

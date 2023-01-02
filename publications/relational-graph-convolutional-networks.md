@@ -1,7 +1,9 @@
 ---
-Title: Modeling Relational Data with Graph Convolutional Networks
+title: Modeling Relational Data with Graph Convolutional Networks
 D3: true
-Script: rel
+script: rel
+parent: publications
+
 ---
 
 <header>

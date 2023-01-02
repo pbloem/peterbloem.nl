@@ -1,5 +1,7 @@
 ---
-Title: Single sample statistics
+title: Single sample statistics
+parent: publications
+
 ---
 
 <header>

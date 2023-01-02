@@ -1,5 +1,7 @@
 ---
-Title: A safe approximation of Kolmogorov complexity
+title: A safe approximation of Kolmogorov complexity
+parent: publications
+
 ---
 
 <header>

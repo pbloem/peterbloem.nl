@@ -3,6 +3,8 @@ title: A friendly introduction to Principal Component Analysis
 date: 31-01-2020
 math: true
 code: true
+parent: blog
+
 ---
 <!-- {% raw %} -->
 

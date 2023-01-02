@@ -1,6 +1,7 @@
 ---
 Title: Machine Learning
 Description: Description of my lectures lectures for the Intelligent Systems course.
+parent: teaching
 ---
 
 # Machine Learning

@@ -3,6 +3,8 @@ title: Transformers from scratch
 date: 18-08-2019
 math: true
 code: true
+parent: blog
+
 ---
 <!-- {% raw %} -->
 

@@ -1,5 +1,7 @@
 ---
 title: Large-scale network motif analysis using compression
+parent: publications
+
 ---
 
 <header>

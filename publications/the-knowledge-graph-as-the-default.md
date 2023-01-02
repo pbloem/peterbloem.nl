@@ -1,5 +1,7 @@
 ---
-Title: The knowledge graph as the default data model for learning on heterogeneous knowledge
+title: The knowledge graph as the default data model for learning on heterogeneous knowledge
+parent: publications
+
 ---
 
 <header>
@@ -8,7 +10,7 @@ Title: The knowledge graph as the default data model for learning on heterogeneo
 with 
 <ul class="authors">
   <li>Xander Wilcke</li>
-  <li><a href="http://www.victordeboer.com/">Victor de Boer</a></li>
+  <li>and <a href="http://www.victordeboer.com/">Victor de Boer</a></li>
 </ul>
 </header>
 

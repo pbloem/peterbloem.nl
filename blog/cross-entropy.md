@@ -3,6 +3,8 @@ Title: Loss functions for image VAEs
 Date: 30-03-2020
 Math: true
 Code: false
+parent: blog
+
 ---
 
 <header>

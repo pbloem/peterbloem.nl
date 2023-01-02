@@ -1,6 +1,8 @@
 ---
 Title: Intelligent Systems
 Description: Description of my lectures lectures for the Intelligent Systems course.
+parent: teaching
+
 ---
 
 # Intelligent Systems

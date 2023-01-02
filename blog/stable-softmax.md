@@ -2,6 +2,8 @@
 title: Stable softmax for sparse matrices
 date: 07-07-2019
 math: true
+parent: blog
+
 ---
 
 <!-- {% raw %} -->
