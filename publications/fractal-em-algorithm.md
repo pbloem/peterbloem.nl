@@ -1,6 +1,8 @@
 ---
-Title: An Expectation-Maximization Algorithm for the Fractal Inverse Problem
-Math: true
+title: An Expectation-Maximization Algorithm for the Fractal Inverse Problem
+math: true
+parent: publications
+
 ---
 
 <header>

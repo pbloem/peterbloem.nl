@@ -172,6 +172,24 @@
   <body id="body" class="body {% if page.front %}home{% endif %} ">
 
 	{% if page.article %}
+	{% if page.parent %}
+	  <nav class="top">
+		<ul>
+		  <li><a href="/">home</a></li>
+		  <li><a href="/{{ page.parent }}">{{ page.parent }}</a></li>
+		</ul>
+	  </nav>
+	{% else %}
+	  <nav class="top">
+		<ul>
+		  <li><a href="/">home</a></li>
+		</ul>
+	  </nav>
+	{% endif %}
+	{% endif %}
+
+
+	{% if page.article or page.front %}
 	   <article>
 		 {{ content }}
 	   </article>
@@ -182,13 +200,14 @@
 	{% if page.front %}
 	  <nav>
 		<ul>
+		  <li><a href="about/">about</a></li>
 		  <li><a href="publications/">publications</a></li>
 		  <li><a href="teaching/">teaching</a></li>
 		  <li><a href="blog/">blog</a></li>
 		</ul>
 	  </nav>
 	{% else %}
-		{% if page.article %}
+		{% if page.parent %}
 		  <nav class="title">
 			<a href="./">back</a>
 			<h1> {{page.title}} </h1>
@@ -200,6 +219,6 @@
 		  </nav>
 		{% endif %}
 	{% endif %}
-
+		
 	</body>
 </html>

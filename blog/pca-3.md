@@ -3,6 +3,8 @@ title: Proving the spectral theorem
 date: 31-08-2021
 math: true
 code: true
+parent: blog
+
 ---
 <!-- {% raw %} -->
 

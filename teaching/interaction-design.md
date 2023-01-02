@@ -1,6 +1,8 @@
 ---
 Title: Interaction Design
 Description: Description of my Interaction Design course.
+parent: publications
+
 ---
 
 # Interaction Design

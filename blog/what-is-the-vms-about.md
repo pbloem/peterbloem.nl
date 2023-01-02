@@ -4,6 +4,8 @@ date: 02-09-2017
 math: true
 jquery: true
 script: what-is-the-vms-about
+parent: blog
+
 ---
 
 <header>

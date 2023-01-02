@@ -23,6 +23,10 @@ body {
 	min-height: 100%;
 }
 
+img {
+	width: 100%;
+}
+
 body.home,
 body.publications,
 body.teaching,
@@ -94,9 +98,11 @@ article {
 	#body nav li
 	{ 
 		list-style: none;
-		flex: 1 1 auto;
+		flex: 0 0 auto;
 		height: 100%;
-		margin: 0;
+		margin: 0 1em 0 1em;
+		display: inline;
+		width: auto;
 	}
 
 	#body nav li a 
@@ -184,6 +190,15 @@ article {
 	#body nav.title a {
 		position: relative;
 	}
+	
+	html #body nav.top ul {
+		width: 660px;
+	}
+
+	html #body nav.top ul li {
+		margin: 0 1em 0 0;
+	}
+
 }
 
 h1 {
@@ -395,6 +410,17 @@ nav ul {
 	justify-content: center;
 }
 
+nav.top {
+	width: auto;
+}
+
+nav.top ul {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
 nav ul, nav li {
 	list-style: none;	
 	padding: 0;
@@ -503,6 +529,9 @@ body.blog .content
 	align-items: center;
 	
 	margin-top: auto;
+}
+
+#body.front nav.title {
 	position: relative;
 } 
 
@@ -554,6 +583,44 @@ nav.title h1 {
 	text-overflow: ellipsis;
 	
 	color: #acd373;
+}
+
+#body nav.top {
+	margin: -2px 0 0 0;
+	padding: 0;
+	background: none;
+	font-size: 0.8em;
+}
+
+#body nav.top ul {
+	width: auto;
+	justify-content: flex-start;	
+}
+
+#body nav.top ul li {
+	flex: 0 0 auto;
+	width: auto;
+	margin: 0 1em 0 1em;
+}
+
+#body nav.top ul li::after {
+	content: '/';
+	color: black;
+	display: inline;
+	padding-left: 1em;
+	font-size: 0.8em;
+	color: #999;
+}
+
+#body nav.top ul li a {
+	color: #999;
+	font-family: Georgia, serif;
+	text-transform: none;
+	display: inline;
+}
+
+#body nav.top ul li a:hover {
+	color: #677d00;
 }
 
 ul.links {

@@ -1,5 +1,7 @@
 ---
 Title: Two problems for sophistication
+parent: publications
+
 ---
 
 <header>

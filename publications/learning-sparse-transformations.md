@@ -1,5 +1,7 @@
 ---
-Title: Learning sparse transformations through backpropagation
+title: Learning sparse transformations through backpropagation
+parent: publications
+
 ---
 
 <header>

@@ -3,6 +3,8 @@ title: The Singular Value Decomposition
 date: 07-08-2022
 math: true
 code: true
+parent: blog
+
 ---
 <!-- {% raw %} -->
 

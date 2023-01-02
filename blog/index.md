@@ -2,7 +2,9 @@
 title: Blog
 description: Articles and random thoughts
 article: false 
+
 ---
+
 <!-- {% raw %} -->
 <ul class="nav publications content">
 

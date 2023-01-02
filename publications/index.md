@@ -11,6 +11,39 @@ article: false
 much better at this sort of thing.</p>
 
 <ul class="nav publications content">
+	<li><a href="probing-transformers">
+	  	<h2>Probing the representations of named entities in Transformer-based Language Models</h2>
+	  	with
+  		<ul class="authors">
+	  		<li>Stefan F. Schouten</li>
+	  		<li>Piek Vossen</li>
+	  	</ul>
+	  	<span class="venue">Black box NLP</span>
+	  	<span class="year">2022</span>
+	  	</a>	  	
+  	</li>
+	<li><a href="rgcns-closer-look">
+	  	<h2>Relational graph convolutional networks: a closer look</h2>
+	  	with
+  		<ul class="authors">
+	  		<li>Thiviyan Thanapalasingam</li>
+	  		<li>Paul Groth</li>
+	  	</ul>
+	  	<span class="venue">PeerJ</span>
+	  	</a>	  	
+  	</li>
+	<li><a href="kgbench">
+	  	<h2><code>kgbench</code>: A Collection of Knowledge Graph Datasets for Evaluating Relational and Multimodal Machine Learning</h2>
+	  	with
+  		<ul class="authors">
+ 	  		<li>Xander Wilcke</li>
+	  		<li>Lucas van Berkel</li>
+	  		<li>Victor de Boer</li>
+	  	</ul>
+	  	<span class="venue">ESWC</span>
+	  	</a>	  	
+  	</li>  	  	
+  	
 	<li><a href="compression-for-motifs">
 	  	<h2>Large-Scale Network Motif Learning with Compression</h2>
 	  	with
@@ -114,4 +147,10 @@ much better at this sort of thing.</p>
 	  	<span class="venue">ALT 2014</span>
 	  	</a>
   	</li>
+	 <li><a href="msc-thesis">
+	  <h2>Machine learning and fractal geometry (MSc thesis)</h2>
+	  	<span class="year">2010</span>
+	  	<span class="venue">MSc thesis</span>
+	  	</a>
+  	</li>  	
 </ul>

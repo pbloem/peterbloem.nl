@@ -5,6 +5,10 @@ article: false
 ---
 
 <ul class="nav content">
+	  	<li><a href="./deep-learning">
+	  		  <h2>Deep learning</h2>
+		  	</a>	
+		</li>
 	  	<li><a href="./machine-learning">
 	  		  <h2>Machine learning</h2>
 		  	</a>	

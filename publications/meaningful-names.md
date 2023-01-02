@@ -1,5 +1,7 @@
 ---
-Title: Are names meaningful? Quantifying social meaning on the web
+title: Are names meaningful? Quantifying social meaning on the web
+parent: publications
+
 ---
 
 <header>

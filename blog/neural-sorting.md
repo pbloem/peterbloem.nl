@@ -2,6 +2,8 @@
 Title: Neural sorting. What is it and what's the point?
 Date: 28-06-2019
 Math: true
+parent: blog
+
 ---
 
 <header>
