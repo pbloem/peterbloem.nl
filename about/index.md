@@ -26,7 +26,7 @@ Since then, I have focused more on machine learning. See below for some of my cu
 
 * In my spare time, I occasionally try my hand at writing short stories. It's mostly high-concept science fiction and some flash fiction. You can find them at [profane-tmesis.info](http://profane-tmesis.info).
 * I also occasionally draw. You can find a selection of my drawings and illustrations at [unrefined.info](http://unrefined.info/).
-* I wrote some oblique strategy cards for academia once. You can find them [here](oblique.tips), or [on twitter](http://twitter.com/obliquademia). 
+* I wrote some oblique strategy cards for academia once. You can find them [here](http://oblique.tips), or [on twitter](http://twitter.com/obliquademia). 
 
 
 <figure class="narrow centering">
