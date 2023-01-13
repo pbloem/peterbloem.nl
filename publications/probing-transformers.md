@@ -15,7 +15,7 @@ parent: publications
 
 <ul class="links">
     <li>8 Dec 2022</li>
-	<li>read <a href="probing-transformers.pdf">the article</a></li>
+	<li>read <a href="/files/probing-transformers.pdf">the article</a></li>
 </ul>
 
 ### Abstract
