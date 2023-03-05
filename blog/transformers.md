@@ -211,92 +211,136 @@ In a single self-attention operation, all this information just gets summed toge
 
 <p><strong>Efficient multi-head self-attention.</strong> The simplest way to understand multi-head self-attention is to see it as a small number of copies of the self-attention mechanism applied in parallel, each with their own key, value and query transformation. This works well, but for \(R\) heads, the self-attention operation is \(R\) times as slow.</p>
 
-<p>It turns out we can have our cake and eat it too: there is a way to implement multi-head self-attention so that it is roughly as fast as the single-head version, but we still get the benefit of having different attention matrices in parallel. To accomplish this, we cut each incoming vector into chunks: if the input vector has 256 dimensions, and we have 8 attention heads, we cut it into 8 chunks of 32 dimensions. For each chunk, we generate keys, values and queries of 32 dimensions each. This means that the matrices \(\W_q^\bc{r}\), \(\W_k^\bc{r}\),\(\W_v^\bc{r}\) are all \(32 \times 32\).</p>
+<p>It turns out we can have our cake and eat it too: there is a way to implement multi-head self-attention so that it is roughly as fast as the single-head version, but we still get the benefit of having different self-attention operations in parallel. To accomplish this, each head receives low-dimensional keys queries and values. 
 
-For the sake of simplicity, we'll describe the implementation of the first, more expensive multi-head self-attention below.
+If the input vector has $k=256$ dimensions, and we have $h=4$ attention heads, we multiply the input vectors by a $256 \times 64$ matrix to project them down to a sequence of 64 dimansional vectors. For every head, we do this 3 times: for the keys, the queries and the values. </p>
 
-<aside>To understand in detail how the more efficient, sliced-up version is implemented, see the lecture linked at the top of the post.</aside>
+Here is the whole process illustrated in one image.
+
+<figure class="narrow">
+<img src="/files/transformers/multi-head.svg" alt="A diagram showing the operation of multi-head self-attention." >
+<figcaption>
+The basic idea of multi-head self-attention with 4 heads. To get our <span class="bc">keys</span>, <span class="rc">queries</span> and <span class="gc">values</span>, we project the input down to vector sequences of smaller dimension.
+</figcaption>
+</figure>
+
+This requires $3h$ matrices of size $k$ by $k/h$. In total, this gives us $3hk\frac{k}{h} = 3k^2$ parameters to compute the inputs to the multi-head self-attention: the same as we had for the single-head self-attention.
+
+<aside>
+The only difference is the matrix $W_o$, used at the end of the multi-head self attention. This adds $k^2$ parameters compared to the single-head version. In most transformers, the first thing that happens after each self attention is a feed-forward layer, so this may not be strictly necessary. I've never seen a proper ablation to test whether $W_o$ can be removed.</aside>
+
+We can even implement this with just three $k \times k$ matrix multiplications as in the single-head self-attention. The only extra operation we need is to slice the resulting sequence of vectors into chunks.
+
+<figure class="narrow centering">
+<img src="/files/transformers/kqv-computation.svg" alt="A diagram showing the efficient computation of key query and value matrices in multi-head self-attention." class="three-quarters">
+<figcaption>
+To compute multi-head attention efficiently, we combine the computation of the projections down to a lower dimensional representation and the computations of the keys, queries and values into three $k \times k$ matrices.
+</figcaption>
+</figure>
 
 ### In Pytorch: complete self-attention
 
 Let's now implement a self-attention module with all the bells and whistles. We'll package it into a Pytorch module, so we can reuse it later.
-
-<figure class="right">
-<img src="/files/transformers/heads-matrix.svg" />
-<figcaption>
-Combining three attention heads into one matrix multiplication (for the queries).
-</figcaption>
-</figure>
 
 <pre><code class="python">import torch
 from torch import nn
 import torch.nn.functional as F
 
 class SelfAttention(nn.Module):
-  def __init__(self, k, heads=8):
+    def __init__(self, k, heads=4, mask=False):
+      
     super().__init__()
+    
+    assert k % heads == 0
+    
     self.k, self.heads = k, heads
 </code></pre>
 
-<p>We think of the \(h\) attention heads as \(h\) separate sets of three matrices \(\W^\bc{r}_q\), \(\W^\bc{r}_k\),\(\W^\bc{r}_v\), but it's actually more efficient to combine these for all heads into three single \(k \times hk\) matrices, so that we can compute all the concatenated queries, keys and values in a single matrix multiplication.</p>
+Note the assert: the embedding dimension needs to be divisible by the number of heads.
 
-<pre><code class="python">    # These compute the queries, keys and values for all
-    # heads (as a single concatenated vector)
-    self.tokeys    = nn.Linear(k, k * heads, bias=False)
-    self.toqueries = nn.Linear(k, k * heads, bias=False)
-	self.tovalues  = nn.Linear(k, k * heads, bias=False)
+Next, we set up some linear transformations with `emb` by `emb` matrices. The `nn.Linear` module with the bias disabled gives us such a projection, and provides a reasonable initialization for us.
 
-	# This unifies the outputs of the different heads into
-	# a single k-vector
-	self.unifyheads = nn.Linear(heads * k, k)
+<pre><code class="python">    
+    # These compute the queries, keys and values for all
+    # heads
+    self.tokeys    = nn.Linear(k, k, bias=False)
+    self.toqueries = nn.Linear(k, k, bias=False)
+    self.tovalues  = nn.Linear(k, k, bias=False)
+
+	# This will be applied after the multi-head self-attention operation.
+    self.unifyheads = nn.Linear(k, k)
 </code></pre>
 
-We can now implement the computation of the self-attention (the module's ```forward``` function). First, we compute the queries, keys and values:
+We can now implement the computation of the self-attention (the module's ```forward``` function). First, we compute the queries, keys and values for all heads:
 
 <pre><code class="python">  def forward(self, x):
+
     b, t, k = x.size()
     h = self.heads
 
-    queries = self.toqueries(x).view(b, t, h, k)
-    keys    = self.tokeys(x)   .view(b, t, h, k)
-    values  = self.tovalues(x) .view(b, t, h, k)
+    queries = self.toqueries(x)
+    keys    = self.tokeys(x)   
+    values  = self.tovalues(x)
 </code></pre>
 
-The output of each linear module has size ```(b, t, h*k)```, which we simply reshape to ```(b, t, h, k)``` give each head its own dimension.
+This gives us three vector sequences of the full embedding dimension `k`. As we saw above we can now cut these into `h` chunks. we can do this with a simple view operation:
+
+<pre><code class="python">
+	s = k // h
+
+	keys    = keys.view(b, t, h, s)
+	queries = queries.view(b, t, h, s)
+	values  = values.view(b, t, h, s)
+</code></pre>
+
+This simply reshapes the tensors to add a dimension that iterations over the heads. For a single vector in our sequence you can think of it as reshaping a vector of dimension `k` into a matrix of `h` by `k//h`:
+
+<figure class="narrow">
+<img src="/files/transformers/reshape.svg" >
+</figure>
 
 Next, we need to compute the dot products. This is the same operation for every head, so we fold the heads into the batch dimension. This ensures that we can use ```torch.bmm()``` as before, and the whole collection of keys, queries and values will just be seen as a slightly larger batch.
 
 Since the head and batch dimension are not next to each other, we need to transpose before we reshape. (This is costly, but it seems to be unavoidable.)
 
 <pre><code class="python">    # - fold heads into the batch dimension
-    keys = keys.transpose(1, 2).contiguous().view(b * h, t, k)
-    queries = queries.transpose(1, 2).contiguous().view(b * h, t, k)
-    values = values.transpose(1, 2).contiguous().view(b * h, t, k)
+    keys = keys.transpose(1, 2).contiguous().view(b * h, t, s)
+    queries = queries.transpose(1, 2).contiguous().view(b * h, t, s)
+    values = values.transpose(1, 2).contiguous().view(b * h, t, s)
 </code></pre>
+
+<aside>You can avoid these calls to <code>contiguous()</code> by using <code>reshape()</code> instead of <code>view()</code> but I prefer to make it explicit when we are copying a tensor, and when we are just viewing it. See <a href="https://github.com/mlvu/worksheets/blob/master/Worksheet%205%2C%20Pytorch.ipynb">this notebook</a> for an explanation of the difference.
+</aside>
 
 As before, the dot products can be computed in a single matrix multiplication, but now between the queries and the keys.
 
-Before that, however, we move the scaling of the dot product by \\(\sqrt{k}\\) back and instead scale the keys and queries by \\(\sqrt[4]{k}\\) before multiplying them together. This should save memory for longer sequences.
-<pre><code class="python">    queries = queries / (k ** (1/4))
-    keys    = keys / (k ** (1/4))
+<pre><code class="python">   
+    queries = queries 
+    keys    = keys
 
-    # - get dot product of queries and keys, and scale
+    # Get dot product of queries and keys, and scale
     dot = torch.bmm(queries, keys.transpose(1, 2))
-    # - dot has size (b*h, t, t) containing raw weights
+    # -- dot has size (b*h, t, t) containing raw weights
 
+    # scale the dot product
+    dot = dot / (k ** (1/2))
+	
+    # normalize 
     dot = F.softmax(dot, dim=2)
     # - dot now contains row-wise normalized weights
 </code></pre>
 
-We apply the self attention to the values, giving us the output for each attention head
-<pre><code class="python">    # apply the self attention to the values
-    out = torch.bmm(dot, values).view(b, h, t, k)
+We apply the self attention weights `dot` to the values, giving us the output for each attention head
+<pre><code class="python">    
+    # apply the self attention to the values
+    out = torch.bmm(dot, values).view(b, h, t, s)
 </code></pre>
 
-To unify the attention heads, we transpose again, so that the head dimension and the embedding dimension are next to each other, and reshape to get concatenated vectors of dimension \\(kh\\). We then pass these through the ```unifyheads``` layer to project them back down to \\(k\\) dimensions.
+To unify the attention heads, we transpose again, so that the head dimension and the embedding dimension are next to each other, and reshape to get concatenated vectors of dimension `e`. We then pass these through the ```unifyheads``` layer for a final projection.
 
 <pre><code class="python">    # swap h, t back, unify heads
-    out = out.transpose(1, 2).contiguous().view(b, t, h * k)
+    out = out.transpose(1, 2).contiguous().view(b, t, s * h)
+    
     return self.unifyheads(out)
 </code></pre>
 
@@ -658,8 +702,14 @@ So far, transformers are still primarily seen as a language model. I expect that
 <dl>
 <dt>19 October 2019</dt>
 <dd>Added a section on the difference between wide and narrow self-attention. Thanks to <a href="https://github.com/sidneyaraujomelo">Sidney Melo</a> for <a href="https://github.com/pbloem/former/issues/8">spotting the mistake</a> in the original implementation.</dd>
+
 <dt>9 December 2022</dt>
 <dd>Clarified the example in the section on multi-head attention.</dd>
+
+<dt>4 March 2023</dt>
+<dd>Fixed a persistent mistake in the defintition of multi-head self-attention. Rewrote the final self-attention to be the canonical form (rather than the earlier "wide" variety we used for the sake of simplicity).</dd>
+
 </dl>
+
 
 <!-- {% endraw %} -->
