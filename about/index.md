@@ -8,7 +8,7 @@ article: false
 
 I'm an assistant professor at the [Learning and reasoning group](https://lr.cs.vu.nl/) at the Vrije Universiteit Amsterdam. I specialize in the combination of Machine Learning and Knowledge Representation.
 
-I have a fairly unfocused set of research interests, although I try to stick to general AI and machine learning related topics. My MSs thesis, way back when, was about [the application of fractal geometry to the problems of machine learning](/publications/msc-thesis). 
+I have a fairly unfocused set of research interests, although I try to stick to general AI and machine learning related topics. My MSc thesis, way back when, was about [the application of fractal geometry to the problems of machine learning](/publications/msc-thesis). 
 
 My [PhD thesis](/publications/thesis) dealt with the problems of [computable approximations to Kolmogorov complexity](/publications/safe-approximation), [seperating structure from noise in an objective manner](/publications/two-problems) and, more practically, [finding meaningful subnetworks in large graphs](/publications/compression-for-motifs) using the principle of minimum description length. 
 
