@@ -8,6 +8,12 @@ article: false
 <!-- {% raw %} -->
 <ul class="nav publications content">
 
+	<li><a href="design-thinking">
+	  	<h2>What design can teach us
+	  	</h2>
+	  	<span class="year">2023</span>
+	  	</a>	  	
+	</li>
 	<li><a href="pca-5">
 	  	<h2>Computing the eigendecomposition and the singular value decomposition (PCA 5)
 	  	</h2>

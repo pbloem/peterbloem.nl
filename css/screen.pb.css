@@ -794,6 +794,11 @@ figure.steps figcaption {
 	vertical-align: middle;
 }
 
+#body figure.vspace {
+	margin-top: 1em;
+	margin-bottom: 2em;
+}
+
 #body dl {
 	padding: 0;
 }
@@ -1083,4 +1088,8 @@ div.sample
 .proof-section {
 	text-transform: uppercase;
 	font-size: 0.65em;
+}
+
+.silly {
+	font-family: "Comic Sans MS", "Comic Sans", serif;
 }
