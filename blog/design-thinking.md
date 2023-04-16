@@ -17,7 +17,7 @@ parent: blog
 </ul>
 
 <figure class="narrow centering vspace">
-<img src="/images/design-thinking/popup.png" class="half" >
+<img src="/images/design-thinking/popup.png" class="half" alt="A screenshot of a confirmation dialog in Microsoft Word.">
 </figure>
 
 In a previous life I worked for a bit as a designer. I did some graphic design, but my main interest was always _interaction_ design: not so much what things should look like, but how they should function. Which items should you display on the homepage of a website, what should the structure of the menu be, and so.
@@ -261,7 +261,7 @@ Even before you test the website on users, the act of building it will confront 
 The problem is that it's a lot of work to build a website just to find out the problems with it. For that reason we need a way to build it without building it. This is called **prototyping**. In the case of websites and applications, a prototype usually takes the form of a wireframe.
 
 <figure class="wide">
-<img src="/images/design-thinking/wireframe.png" class="half"><img src="/images/design-thinking/mockup.png" class="half">
+<img src="/images/design-thinking/wireframe.png" class="half" alt="An example of a wireframe."><img src="/images/design-thinking/mockup.png" class="half" alt="An example of a design mockup.">
 <figcaption>A wireframe (left) and a mockup (right). The mockup is is a detailed, pixel-precise representation of what the website is supposed to look like. The wireframe details only its <em>functionality</em>. The style is purposely rough looking.
 </figcaption>
 </figure>
@@ -284,8 +284,8 @@ And, perhaps most importantly, **we can start testing**. You can grab a user and
 
 So that's how it's done in design land. How much of this transfers to academia? Let's start with a simple example: designing a lecture. Here's a picture of one of my early lecture designs.
 
-<figure class="narrwo centering">
-<img src="/images/design-thinking/lecture-planning.jpg" class="half">
+<figure class="narrow centering">
+<img src="/images/design-thinking/lecture-planning.jpg" class="half" alt="A photograph of a lecture planned out in cardboard cards.">
 </figure>
 
 Instead of sitting down at the laptop and drawing my slides one by one, I started with a low-fi prototype: hand drawn sketches on bits of cardboard. First crudely drawn, to see if the larger structure made sense, and then slowly more and more detailed. 
