@@ -2,9 +2,15 @@
 <rss version="2.0">
 <channel>
  <title>peterbloem.nl</title>
- <description>The blog feed on peterbloem.nl. Mostly Machine Learning tutorials.</description>
+ <description>The blog feed on peterbloem.nl. Machine learning tutorials and general thoughts. </description>
  <link>http://peterbloem.nl/blog</link>
  <ttl>1800</ttl>
+
+	<item>
+		<title>What design can teach us</title>
+		<link>http://peterbloem.nl/blog/design-thinking</link>
+		<pubDate>16 Apr 2023 00:00:00 GMT</pubDate>
+	</item>
 
 	<item>
 		<title>Computing the eigendecomposition and the singular value decomposition (PCA 5)</title>
