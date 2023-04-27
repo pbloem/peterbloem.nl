@@ -315,9 +315,6 @@ Since the head and batch dimension are not next to each other, we need to transp
 As before, the dot products can be computed in a single matrix multiplication, but now between the queries and the keys.
 
 <pre><code class="python">   
-    queries = queries 
-    keys    = keys
-
     # Get dot product of queries and keys, and scale
     dot = torch.bmm(queries, keys.transpose(1, 2))
     # -- dot has size (b*h, t, t) containing raw weights
