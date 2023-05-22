@@ -84,7 +84,7 @@ So, what's the main question? What's the first thing you should always ask? For 
 
 These are simple questions, and it may seem childish to ask them explicitly, but a clear picture of who you're actually building for and what you want to help them achieve is the first step in avoiding those nasty shouting matches. The trick to make this useful is to answer them _in detail_.
 
-For instance, who is this conference website for? Well, people who might want to visit the conference, duh. Ok, but what do they want? Well, that depends. When they're thinking about when to submit, they'll want to know what the submission deadline is.
+For instance, who is this conference website for? Well, people who might want to visit the conference, duh. Ok, but what do they want? Well, that depends. When they're thinking about whether to submit a paper, they'll want to know what the submission deadline is.
 
 Let's start there. Ask anybody (in computer science) to think of the last time they looked at a conference website, and what they were looking for. In my experience about 80% will say they were looking for the submission date. 
 
