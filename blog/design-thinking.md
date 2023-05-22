@@ -122,7 +122,7 @@ You don't have to follow this pattern, you can be a bit more free and easy with 
 
 I love user stories. I think they're amazing, and if used correctly they have the potential to change the world. I wish they were taught in high school. If I had to choose whether calculus or user stories were taught in high school I'd prefer them to teach user stories (and I really need my students to know calculus).
 
-Why am I so in love with this simple little trick? Because it solves the main trap that people fall into when they collaborate on anything. The trap that is behind all design by committee, and perhaps behind all organizational disfunction: arguing over solutions.
+Why am I so in love with this simple little trick? Because it solves the main trap that people fall into when they collaborate on anything. The trap that is behind all design by committee, and perhaps behind all organizational dysfunction: arguing over solutions.
 
 Let me give you a simple example.
 
