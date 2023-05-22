@@ -88,7 +88,7 @@ For instance, who is this conference website for? Well, people who might want to
 
 Let's start there. Ask anybody (in computer science) to think of the last time they looked at a conference website, and what they were looking for. In my experience about 80% will say they were looking for the submission date. 
 
-Now go to any conference website, and see how many times you need to click to find the submission date. If you're lucky, there is a menu item called "dates" which will show in one click, albeit nestled among many other dates. If you're unluky, you'll need to hunt around, and you'll eventually find it at the bottom of a long list of submission instructions.
+Now go to any conference website, and see how many times you need to click to find the submission date. If you're lucky, there is a menu item called "dates" which will show it in one click, albeit nestled among many other dates. If you're unlucky, you'll need to hunt around, and you'll eventually find it at the bottom of a long list of submission instructions.
 
 But if it's so important, why still one click in the best circumstances? Why isn't it on the front page? Why is there a news item telling me that the website is now online, but not a little table telling me whether this conference has a deadline I can make?
 
