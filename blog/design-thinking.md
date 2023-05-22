@@ -126,7 +126,7 @@ Why am I so in love with this simple little trick? Because it solves the main tr
 
 Let me give you a simple example.
 
-A design team is creating a document editor. The client demands that before the user closed the editor, a dialog appears, asking the user to save their documents. The designer disagrees: confirmation dialogs are bad practice. For various reasons, they don't really work. The designer suggests saving the document automatically, so that the work is never lost. 
+A design team is creating a document editor. The client demands that before the user closes the editor, a dialog appears, asking the user to save their documents. The designer disagrees: confirmation dialogs are bad practice. For various reasons, they don't really work. The designer suggests saving the document automatically, so that the work is never lost. 
 
 The client isn’t sure: she may not want to save her changes, she may want to discard them instead, going back to the last save. This could also be achieved by having a version history, argues the designer, this would allow them to auto-save the changes, and still let the user go back to a previous version of her document.
 
