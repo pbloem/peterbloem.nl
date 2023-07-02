@@ -27,7 +27,7 @@ Paperback (coming soon)
 <dt markdown="1">
 Kindle  (coming soon)
 </dt>
-<dd>If you have a Kindle, you can buy a specialized version of the book for 2$. You can also load the PDF directly, whatever you prefer. </dd>
+<dd>If you have a Kindle, you can buy a specialized version of the book for 3$, (of which about 1$ goes to me). Nota that this version is not substantially different from the PDF.</dd>
 </dl>
 
 ## License and sources
