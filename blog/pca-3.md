@@ -19,6 +19,7 @@ parent: blog
 		<li><a href="/blog/pca-2">2</a></li>
 		<li><a href="/blog/pca-4">4</a></li>
 		<li><a href="/blog/pca-5">5</a></li>
+		<li><a href="/publications/unraveling-pca">get the book!</a></li>		
 </ul>
 
 When I started this series of blogposts, it was not meant to be a four-parter. I was going for an explanation  of Principal Component Analysis that was simple, but that also didn't skip any steps. I was frustrated with other explanations that leave things out, or require the reader to take things at face value.

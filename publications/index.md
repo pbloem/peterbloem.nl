@@ -11,6 +11,13 @@ article: false
 much better at this sort of thing.</p>
 
 <ul class="nav publications content">
+	<li><a href="unraveling-pca">
+	  	<h2>Unraveling principal component analysis</h2>
+	  	<span class="venue">A long-form mathematics book.</span>
+	  	<span class="year">2023</span>
+	  	</a>	  	
+  	</li>
+
 	<li><a href="probing-transformers">
 	  	<h2>Probing the representations of named entities in Transformer-based Language Models</h2>
 	  	with

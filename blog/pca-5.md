@@ -20,6 +20,7 @@ parent: blog
 		<li><a href="/blog/pca-2">2</a></li>
 		<li><a href="/blog/pca-3">3</a></li>		
 		<li><a href="/blog/pca-4">4</a></li>
+		<li><a href="/publications/unraveling-pca">get the book!</a></li>		
 </ul>
 
 We have looked at what PCA is, at how to understand it, and we have spent a full post on developing the tools necessary to prove the spectral theorem, the particular decomposition that makes it all possible.
