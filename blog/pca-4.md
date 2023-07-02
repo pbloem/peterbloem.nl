@@ -19,6 +19,7 @@ parent: blog
 		<li><a href="/blog/pca-2">2</a></li>
 		<li><a href="/blog/pca-3">3</a></li>
 		<li><a href="/blog/pca-5">5</a></li>
+		<li><a href="/publications/unraveling-pca">get the book!</a></li>		
 </ul>
 
 In the previous parts of this series, we learned that principal components are <em>eigen</em>vectors. Specifically, they are the eigenvectors of the covariance matrix $\bc{\S}$ of our data $\X$.

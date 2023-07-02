@@ -20,6 +20,8 @@ parent: blog
 		<li><a href="/blog/pca-3">3</a></li>
 		<li><a href="/blog/pca-4">4</a></li>
 		<li><a href="/blog/pca-5">5</a></li>
+		<li><a href="/publications/unraveling-pca">get the book!</a></li>
+
 </ul>
 
 <aside>
