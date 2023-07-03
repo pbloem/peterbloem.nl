@@ -25,9 +25,9 @@ Paperback (coming soon)
 <dd> Through Amazon, you can order a print-on-demand copy of the book for 26$. (I make a few dollars off this, but most of the cost goes to the printing).
 </dd>
 <dt markdown="1">
-Kindle  (coming soon)
+[Kindle](https://a.co/d/4VtCh26)
 </dt>
-<dd>If you have a Kindle, you can buy a specialized version of the book for 2$. You can also load the PDF directly, whatever you prefer. </dd>
+<dd>If you have a Kindle, you can buy a specialized version of the book for 3$, (of which about 1$ goes to me). Note that this version is not substantially different from the PDF.</dd>
 </dl>
 
 ## License and sources
