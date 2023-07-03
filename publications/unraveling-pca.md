@@ -20,7 +20,7 @@ Click the cover image above to download the PDF. This version is entirely free a
 
 <dl markdown="1">
 <dt markdown="1">
-Paperback (coming soon)
+[Paperback](https://a.co/d/hQVd5s9)
 </dt>
 <dd> Through Amazon, you can order a print-on-demand copy of the book for 26$. (I make a few dollars off this, but most of the cost goes to the printing).
 </dd>
