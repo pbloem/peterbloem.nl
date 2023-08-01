@@ -662,13 +662,13 @@ Beyond the simple benefit of training transformers with very large sequence leng
 
 ## Going big
 
-The big bottleneck in training transformers is the matrix of dot products in the self attention. For a sequence length \\(t\\), this is a dense matrix containing \\(t^2\\) elements. At standard 32-bit precision, and with \\(t=1000\\) a batch of 16 such matrices takes up about 250Mb of memory. Since we need at least four of them per self attention operation (before and after softmax, plus their gradients), that limits us to at most twelve layers in a standard 12Gb GPU. In practice, we get even less, since the inputs and outputs also take up a lot of memory (although the dot product dominates).
+The big bottleneck in training transformers is the matrix of dot products in the self attention. For a sequence length \\(t\\), this is a dense matrix containing \\(t^2\\) elements. At standard 32-bit precision, and with \\(t=1000\\) a batch of 16 such matrices takes up about 64Mb of memory. Since we need to store at least four of them for each head of each self-attention operation (before and after softmax, plus their gradients), that limits us to at most twelve 4-head layers in a standard 12Gb GPU. In practice, we get even less, since the inputs and outputs also take up a lot of memory (although the dot product dominates).
 
-And yet models reported in the literature contain [sequence lengths of over 12000, with 48 layers](https://openai.com/blog/sparse-transformer/), using dense dot product matrices. These models are trained on clusters, of course, but a single GPU is still required to do a single forward/backward pass. How do we fit such humongous transformers into 12Gb of memory? There are three main tricks:
+And yet models reported in the literature contain much longer sequence lengths, with 48 or more layers, using dense dot product matrices. These models are trained on clusters, of course, but a single GPU is still required to do a single forward/backward pass. How do we fit such humongous transformers into 12Gb of memory? There are three main tricks:
 
 <dl>
 <dt>Half precision</dt><dd>On modern GPUs and on TPUs, tensor computations can be done efficiently on 16-bit float tensors. This isn't quite as simple as just setting the dtype of the tensor to <code>torch.float16</code>. For some parts of the network, like the loss, 32 bit precision is required. But most of this can be handled with relative ease by <a href="https://github.com/NVIDIA/apex">existing libraries</a>. Practically, this doubles your effective memory.</dd>
-<dt>Gradient accumulation</dt><dd>For a large model, we may only be able to perform a forward/backward pass on a single instance. Batch size 1 is not likely to lead to stable learning. Luckily, we can perform a single forward/backward for each instance in a larger batch, and simply sum the gradients we find (this is a consequence of the <a href="https://youtu.be/7mTcWrnexkk?t=195">multivariate chain rule</a>). When we hit the end of the batch, we do a single step of gradient descent, and zero out the gradient. In Pytorch this is particulary easy: you know that <code>optimizer.zero_grad()</code> call in your training loop that seems so superfluous? If you don't make that call, the new gradients are simply added to the old ones. </dd>
+<dt>Gradient accumulation</dt><dd>For a large model, we may only be able to perform a forward/backward pass on a single instance. Batch size 1 is not likely to lead to stable learning. Luckily, we can perform a single forward/backward for each instance in a larger batch, and simply sum the gradients we find (this is a consequence of the <a href="https://mlvu.github.io/lecture07/#slide-024">multivariate chain rule</a>). When we hit the end of the batch, we do a single step of gradient descent, and zero out the gradient. In Pytorch this is particulary easy: you know that <code>optimizer.zero_grad()</code> call in your training loop that seems so superfluous? If you don't make that call, the new gradients are simply added to the old ones. </dd>
 <dt>Gradient checkpointing</dt><dd>If your model is so big that even a single forward/backward won't fit in memory, you can trade off even more computation for memory efficiency. In gradient checkpointing, you separate your model into sections. For each section, you do a separate forward/backward to compute the gradients, without retaining the intermediate values for the rest. Pytorch has <a href="https://pytorch.org/docs/stable/checkpoint.html">special utilities</a> for gradient checkpointng.
 </dd>
 </dl>
@@ -708,6 +708,9 @@ So far, transformers are still primarily seen as a language model. I expect that
 
 <dt>4 March 2023</dt>
 <dd>Fixed a persistent mistake in the defintition of multi-head self-attention. Rewrote the final self-attention to be the canonical form (rather than the earlier "wide" variety we used for the sake of simplicity).</dd>
+
+<dt>1 Aug 2023</dt>
+<dd>Fixed some small mistakes in the section "Going big".</dd>
 
 </dl>
 
