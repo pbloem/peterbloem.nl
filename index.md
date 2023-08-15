@@ -17,8 +17,8 @@ article: false
 <a href="http://orcid.org/0000-0002-0189-5817" class="orcid">orcid.org/0000-0002-0189-5817</a>
 </div>
 
-<p class="intro-text">I'm an assistant professor at the Vrije Universiteit Amsterdam. I specialize in 
-the combination of <strong>Machine Learning</strong> and <strong>Knowledge Representation</strong>.
+<p class="intro-text" markdown="1">I'm an assistant professor at the [Learning & Reasoning Group](https://lr.cs.vu.nl/) at the Vrije Universiteit Amsterdam. I specialize in 
+the combination of Machine Learning and Knowledge Representation.
 </p>
 <p class="intro-text">
 Get in touch  at <a href="mailto:site@peterbloem.nl">p@peterbloem.nl</a>.
