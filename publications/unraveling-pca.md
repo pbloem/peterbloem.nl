@@ -30,7 +30,9 @@ Click the cover image above to download the PDF. This version is entirely free a
 <dd>If you have a Kindle, you can buy a specialized version of the book for 3$, (of which about 1$ goes to me). Note that this version is not substantially different from the PDF.</dd>
 </dl>
 
-## License and sources
+## Version, license and sources
+
+I occasionally update the book when issues are found. The changelog can be found [on its github page](https://github.com/pbloem/pca-book/releases). The current version is v1.1.0. If you have a print copy, you can find the version at the end of the introduction. If it's not there, you have version v1.0.0.
 
 All figures in the book are licensed CC-BY-SA. The textual content is not currently under an open license. Let me know if there's something you'd like to use it for.
 
