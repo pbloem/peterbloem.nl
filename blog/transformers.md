@@ -712,7 +712,7 @@ So far, transformers are still primarily seen as a language model. I expect that
 <dt>1 Aug 2023</dt>
 <dd>Fixed some small mistakes in the section "Going big".</dd>
 
-<dt>7 Aug 2024</dt>
+<dt>7 May 2024</dt>
 <dd>Fixed a mistake in the multi-head self-attention: the rescaling of the parameters should divide by <code>s</code> not <code>k</code>. Thanks to Vivek Harshey for spotting this.</dd>
 </dl>
 
