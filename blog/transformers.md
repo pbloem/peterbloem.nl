@@ -184,7 +184,7 @@ This gives the self-attention layer some controllable parameters, and allows it 
 
 #### 2) Scaling the dot product
 
-The softmax function can be sensitive to very large input values. These kill the gradient, and slow down learning, or cause it to stop altogether. Since the average value of the  dot product grows with the embedding dimension \\(k\\), it helps to scale the dot product back a little to stop the inputs to the softmax function from growing too large:
+The softmax function can be sensitive to very large input values. These kill the gradient, and slow down learning, or cause it to stop altogether. Since the average value of the dot product grows with the embedding dimension \\(k\\), it helps to scale the dot product back a little to stop the inputs to the softmax function from growing too large:
 
 <p>$$
 w'_{\rc{i}\gc{j}} = \frac{{\q_\rc{i}}^T\k_\gc{j}}{\sqrt{k}}
@@ -323,7 +323,7 @@ As before, the dot products can be computed in a single matrix multiplication, b
     # -- dot has size (b*h, t, t) containing raw weights
 
     # scale the dot product
-    dot = dot / (k ** (1/2))
+    dot = dot / (s ** (1/2))
 	
     # normalize 
     dot = F.softmax(dot, dim=2)
@@ -697,7 +697,7 @@ So far, transformers are still primarily seen as a language model. I expect that
 
 [4] <a href="https://datajobs.com/data-science-repo/Recommender-Systems-[Netflix].pdf">Matrix factorization techniques for recommender systems</a> Yehuda Koren et al.
 
-## Updates
+## Updates and corrections
 
 <dl>
 <dt>19 October 2019</dt>
@@ -707,12 +707,13 @@ So far, transformers are still primarily seen as a language model. I expect that
 <dd>Clarified the example in the section on multi-head attention.</dd>
 
 <dt>4 March 2023</dt>
-<dd>Fixed a persistent mistake in the defintition of multi-head self-attention. Rewrote the final self-attention to be the canonical form (rather than the earlier "wide" variety we used for the sake of simplicity).</dd>
+<dd>Fixed a persistent mistake in the definition of multi-head self-attention. Rewrote the final self-attention to be the canonical form (rather than the earlier "wide" variety we used for the sake of simplicity).</dd>
 
 <dt>1 Aug 2023</dt>
 <dd>Fixed some small mistakes in the section "Going big".</dd>
 
+<dt>7 Aug 2024</dt>
+<dd>Fixed a mistake in the multi-head self attention: the rescaling of the parameters should divide by `s` not `k`. Thanks to Vivek Harshey for spotting this.</dd>
 </dl>
-
 
 <!-- {% endraw %} -->
