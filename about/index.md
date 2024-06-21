@@ -27,7 +27,7 @@ Since then, I have focused more on machine learning. See below for some of my cu
 * In my spare time, I occasionally try my hand at writing short stories. It's mostly high-concept science fiction and some flash fiction. You can find them at [profane-tmesis.info](http://profane-tmesis.info).
 * I also occasionally draw. You can find a selection of my drawings and illustrations at [unrefined.info](http://unrefined.info/).
 * I wrote some oblique strategy cards for academia once. You can find them [here](http://oblique.tips), or [on twitter](http://twitter.com/obliquademia).
-* I made the website [cleartxt.info](https://cleartxt.info/), where you can send people if a company emails you your password (they shouldn't).
+* I made the website [cleartxt.info](https://cleartxt.info/), where you can send people if a company emails you your password, and [dontmail.it](https://dontmail.it/) where you can send people if a company emails you a third-party payment link.
 
 <figure class="narrow centering">
 <img src="/images/pca-3/mirrors.png" class="half">
