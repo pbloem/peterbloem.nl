@@ -11,6 +11,14 @@ article: false
 much better at this sort of thing.</p>
 
 <ul class="nav publications content">
+
+	<li><a href="up">
+	  	<h2>Universal pre-training by iterated random computation</h2>
+	  	<span class="venue">pre-print</span>
+	  	<span class="year">2025</span>
+	  	</a>	  	
+  	</li>
+
 	<li><a href="unraveling-pca">
 	  	<h2>Unraveling principal component analysis</h2>
 	  	<span class="venue">A long-form mathematics book.</span>

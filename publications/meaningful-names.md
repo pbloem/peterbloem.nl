@@ -10,9 +10,9 @@ parent: publications
 with 
 <ul class="authors">
   <li>Steven de Rooij</li>
-  <li><a href="http://wouterbeek.github.io/">Wouter Beek</li>
-  <li><a href="http://www.cs.vu.nl/~frankh/">Frank van Harmelen</li>
-  <li><a href="http://www.few.vu.nl/~schlobac/">Stefan Slobach</li>
+  <li><a href="http://wouterbeek.github.io/">Wouter Beek</a></li>
+  <li><a href="http://www.cs.vu.nl/~frankh/">Frank van Harmelen</a></li>
+  <li><a href="http://www.few.vu.nl/~schlobac/">Stefan Slobach</a></li>
 </ul>
 </header>
 
