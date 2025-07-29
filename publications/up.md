@@ -11,6 +11,9 @@ parent: publications
 
 <ul class="links">
 	<li>read <a href="https://arxiv.org/abs/2506.20057">the article</a></li>
+<li>
+download <a href="/files/KCLondon.2025.pdf">the presentation</a>
+</li>
 </ul>
 
 A monkey behind a typewriter will produce the collected works of Shakespeare eventually. But what if we put a monkey behind a computer? 
