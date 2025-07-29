@@ -37,6 +37,13 @@ Three paintings, in increasing information content. A Mondriaan, a Vermeer and a
 
 The Mondriaan can be described very efficiently: it consists of nothing but large blocks of a single color. If we know where these blocks are, and what their colors are, we can already reproduce the painting almost precisely. The Vermeer is trickier, but we have a lot of structure to work with. To begin with, some colors occur more than others, so we can give frequent colors shorter codes. The painting contains many gentle, smooth curves, and patches of almost uniform color. If we go deeper, we could even use a model of human anatomy, and describe the painting as an image of a girl pouring milk. We could even model the way light bounces of a finely plastered wall, or the way cloth drapes off a woman's hips. In theory, all this knowledge could help us to describe the painting efficiently. Pollock did not make things so easy for us. To describe his painting, we have no recourse but to say for each blob of paint exactly where it landed, what shape it took, and what its color was.
 
+<figure>
+<iframe width="660" height="315" src="https://www.youtube.com/embed/-rifN-b9ovo?si=Jp3YKUoN6ViaD4xf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<figcaption>
+A presentation I gave in 2022 at <a href="https://sites.google.com/site/boumedienehamzi/symposium-on-algorithmic-information-theory-and-machine-learning?authuser=0">the AIT & ML symposium</a>. <a href="/files/KCLondon.2022.pdf">Slides here</a>.
+</figcaption>
+</figure>
+
 Thus, going by the Kolmogorov complexity, the Pollock is the most rich in information, followed by the Vermeer, with the Mondriaan containing the least. But which one feels the most rich in information to us? If we forget about the historical context temporarily, the Vermeer clearly represents the kind of image that seems the most rich to us. Technically, the Pollock contains more information, but it's not information that we can do a lot with.
 
 _Sophistication_ is a proposed method to deal with this problem: an approach that hopes to count only the _structural_ information in an object. It attempts to do so by storing the object in a two-part code. It first stores a _model_, and then an _input_ to that model, so that the two parts are sufficient to reconstruct the objects. In the example of the paintings, both the Mondriaan ad the Pollock have very simple models: one which is only capable of drawing large colored rectangles, and one which paints only small blobs of paint. The input to the first is very small, we only need to specify a handful of colored rectangles. The input to the second is huge: for each blob of paint, we must specify the poisition, shape and color. This, we knew already: the descriptive complexity of the Mondriaan is small, and that of the Pollock is huge. But if we use two-part coding, they bothg have relatively small models.
@@ -51,5 +58,3 @@ Our article does not prove that sophistication is fundamentally impossible, but 
  
 
 
-
- 
