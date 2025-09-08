@@ -16,6 +16,9 @@ download <a href="/files/KCLondon.2025.pdf">the presentation</a>
 </li>
 </ul>
 
+<iframe width="660" height="315" src="https://www.youtube.com/embed/3AYAAb7aW2s?si=OwA41L-XcAmBhkYR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
 A monkey behind a typewriter will produce the collected works of Shakespeare eventually. But what if we put a monkey behind a computer? 
 
 <figure class="wide">
