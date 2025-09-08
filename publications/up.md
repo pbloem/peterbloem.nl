@@ -19,7 +19,7 @@ download <a href="/files/KCLondon.2025.pdf">the presentation</a>
 
 A monkey behind a typewriter will produce the collected works of Shakespeare eventually. But what if we put a monkey behind a computer? 
 
-<iframe width="660" height="315" src="https://www.youtube.com/embed/3AYAAb7aW2s?si=OwA41L-XcAmBhkYR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<p><iframe width="660" height="315" src="https://www.youtube.com/embed/3AYAAb7aW2s?si=OwA41L-XcAmBhkYR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
 
 The monkey behind a typewriter needs to be lucky enough to type all characters of all of Shakespeare correctly. The monkey behind the computer only needs to be lucky enough to type a _program_ for Shakespeare. Since human language contains a lot of structure, such a program will be much shorter than the collected works themselves, so the second monkey will get there faster, 
 
