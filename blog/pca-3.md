@@ -340,7 +340,7 @@ But the metaphor of a piece of paper is slightly misleading. When we flip a piec
 
 A better metaphor is a mirror. Imagine standing in front of a mirror and holding up your right hand, palm forward. 
 
-It looks like your twin inside the mirror is holding up their left hand, with the thumb facing in the opposite direction. But if the mirror flips the image left-to-right, why doesn't it flip the image up-side-down as well, even if we rotate the mirror? How does the mirror keep track of which  direction the floor is?
+It looks like your twin inside the mirror is holding up their left hand, with the thumb facing in the opposite direction. But if the mirror flips the image left-to-right, why doesn't it flip the image upside-down as well, even if we rotate the mirror? How does the mirror keep track of which  direction the floor is?
 
 The answer is that the mirror doesn't flip the image left-to-right. It flips it back-to-front. In a manner of speaking, it pulls the back of your hand forward and the front of your hand backwards until the whole hand is flipped. 
 
@@ -650,8 +650,8 @@ If we multiply them, we get
 
 $$\begin{align}
 (\gc{a} + \gc{b}i)(\oc{c} + \oc{d}i) &= \gc{a}\oc{c} + \gc{a}\oc{d}i + \gc{b}i\oc{c} + \gc{b}i\oc{d}i \\
-&= (\gc{a}\oc{d} + \gc{b}\oc{d}\kc{i^2}) + (\gc{a}\oc{d} + \gc{b}\oc{c})i \\
-&= \bc{ad - bd} + \rc{(ad + bc)}i \p
+&= (\gc{a}\oc{c} + \gc{b}\oc{d}\kc{i^2}) + (\gc{a}\oc{d} + \gc{b}\oc{c})i \\
+&= \bc{(ac - bd)} + \rc{(ad + bc)}i \p
 \end{align}$$
 
 That is, one <span class="bc">real-valued number</span>, added to $i$ times another <span class="rc">real-valued number</span>. Note that in the second line, we can use $i^2 = -1$, because we know that $i = \sqrt{-1}$. In short, multiplying or adding any two complex numbers together gives us another complex number. 
@@ -875,7 +875,7 @@ Of course, this is just one polynomial. If we move to complex polynomials, and w
 
 <p>Now, all we need to do is show that this minimum can be expressed by a complex number. To do that, we'll follow the same sort of argument, but with the magnitude going to $0$, so that the lower-order terms dominate.</p>
 
-<p>First, let $z_0$ be the minimum we've just shown must exist. Translate $p$ so that this minimum coincides with the origin, and call the result $q(z)$. Specifically, $q(z) = p(z - z_0)$.</p>
+<p>First, let $z_0$ be the minimum we've just shown must exist. Translate $p$ so that this minimum coincides with the origin, and call the result $q(z)$. Specifically, $q(z) = p(z + z_0)$.</p>
 
 <p>This is another $n$-th order polynomial. We'll call its coefficients $\bc{d_i}$. Note that $q(0)$ has the same value as $p(z_0)$ by construction. What we want to show is that $p(z_0) = 0$.</p>
 
@@ -887,7 +887,7 @@ $$</p>
 
 Where $k$ is the order of the lowest-order, non-constant term.
 
-We'll show that the proportion of the sum contributed by the higher order terms vanishes as we get near zero, so we can take the simpler function $q'(z) = \bc{c_0} + \bc{c_k}z^k$ as a good approximation, that becomes perfect at the origin (note that $q(0) = q'(0)$).
+We'll show that the proportion of the sum contributed by the higher order terms vanishes as we get near zero, so we can take the simpler function $q'(z) = \bc{d_0} + \bc{d_k}z^k$ as a good approximation, that becomes perfect at the origin (note that $q(0) = q'(0)$).
 
 More formally, lets look at the ratio between the higher-order terms and the $k$th-order term:
 
