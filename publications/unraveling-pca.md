@@ -11,7 +11,7 @@ This book collects my writing on principal component analysis. It's a long-form 
 ## PDF version
 
 <figure class="centering half">
-<a href="https://github.com/pbloem/pca-book/releases/download/v1.1.0/unraveling-pca.pdf"><img src="/images/pca-cover.jpg"></a>
+<a href="https://github.com/pbloem/pca-book/releases/download/v.1.2.0/unraveling-pca.pdf"><img src="/images/pca-cover.jpg"></a>
 </figure>
 
 Click the cover image above to download the PDF. This version is entirely free and will always be so.
