@@ -3,7 +3,39 @@
  * #acd373 light green
  * #00327d blue
  */
- 
+
+ @font-face {
+    font-family: charter;
+    font-style: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    src: url('/css/Charter/charter_regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: charter;
+    font-style: italic;
+    font-weight: normal;
+    font-stretch: normal;
+    src: url('/css/Charter/charter_italic.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: charter;
+    font-style: normal;
+    font-weight: bold;
+    font-stretch: normal;
+    src: url('/css/Charter/charter_bold.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: charter;
+    font-style: italic;
+    font-weight: bold;
+    font-stretch: normal;
+    src: url('/css/Charter/charter_bold_italic.woff2') format('woff2');
+}
+
 html, body {
 	margin: 0;
 	
@@ -12,7 +44,7 @@ html, body {
 	font-size: 5vw;
 	line-height: 7vw;
 	
-	font-family: Georgia, sans-serif;
+	font-family: charter, Georgia, Palatino, serif;
 }
 
 html {
