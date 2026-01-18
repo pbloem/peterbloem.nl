@@ -1111,12 +1111,12 @@ a.book-icon {
     display: block;
     padding-top: 1px;
     margin: 0 auto;
+    background: none;
 }
 
 a.book-icon img {
     clip-path: circle(100px at 100px 110px);
     width: 170%;
-    background-position: 30vw 3vw;
     height: min-content;
     margin-top: -10px;
     margin-left: 1px;
