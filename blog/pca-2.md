@@ -34,7 +34,7 @@ I started with the reconstruction error, since it requires fewer assumptions, an
 
 <p>$$
 \;\;\;\;\;\;\;\; \rc{\w_r} = \begin{cases} 
-	&\argmax{\rc{\w}} \sum_\gc{i} \|\x_\gc{i}^T\rc{\w}\rc{\w} - \x_\gc{i}\|^2 \\
+	&\argmin{\rc{\w}} \sum_\gc{i} \|\x_\gc{i}^T\rc{\w}\rc{\w} - \x_\gc{i}\|^2 \\
 	&\;\;\;\;\;\;\text{such that } \rc{\w}^T\rc{\w} = 1, & \bc{\text{(a)}}\\
 	&\;\;\;\;\;\;\text{and } \rc{\w}\perp\rc{\w_j} \text{ for } \rc{j} \in [1 \ldots \rc{r}-1]& \bc{\text{(b)}}
 \end{cases}
