@@ -27,7 +27,7 @@ Click the image above to download the PDF. This version is entirely free and wil
 <dt markdown="1">
 [Paperback](https://a.co/d/hQVd5s9)
 </dt>
-<dd> Through Amazon, you can order a print-on-demand copy of the book for 26$. (I make a few dollars off this, but most of the cost goes to the printing).
+<dd> Through Amazon, you can order a print-on-demand copy of the book for 19.43$ (this is the cost price).
 </dd>
 </dl>
 
