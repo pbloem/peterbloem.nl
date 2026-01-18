@@ -2,6 +2,15 @@
  * #677d00 green
  * #acd373 light green
  * #00327d blue
+ *
+     	["my-red"] = '#b13e26';
+     	["my-light-red"] = '#d38473';
+       	["my-light-blue"] = '#73a7d3';
+       	["my-gray"] = '#999';
+       	["my-orange"] = '#e69500';
+       	["my-light-orange"] = '#ffC353';
+
+ *
  */
 
  @font-face {
@@ -1127,4 +1136,22 @@ div.sample
 
 .silly {
 	font-family: "Comic Sans MS", "Comic Sans", serif;
+}
+
+a.book-icon {
+    width: 200px;
+    height: 200px;
+    overflow: clip;
+    display: block;
+    padding-top: 1px;
+    margin: 0 auto;
+}
+
+a.book-icon img {
+    clip-path: circle(100px at 100px 110px);
+    width: 170%;
+    background-position: 30vw 3vw;
+    height: min-content;
+    margin-top: -10px;
+    margin-left: 1px;
 }
