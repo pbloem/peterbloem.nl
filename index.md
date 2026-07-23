@@ -10,7 +10,7 @@ article: false
 <div class="subtitle">
 <ul class="homepage links">
 <li><a href="https://github.com/pbloem">github</a></li>
-<li><a rel="me" href="https://sigmoid.social/@pbloem">mastodon</a></li>
+<li><a rel="me" href="https://mathstodon.xyz/@pbloem">mastodon</a></li>
 <li><a href="/bluesky">bluesky</a></li>
 <li><a href="https://scholar.google.nl/citations?user=zVntAfQAAAAJ&hl=en">scholar</a></li>
 </ul>
