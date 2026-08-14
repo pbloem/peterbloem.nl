@@ -174,7 +174,6 @@ article {
 	#body p, 
 	#body pre, 
 	#body header,
-	#body aside,
 	#body ul,
 	#body ol,
 	#body dl,
@@ -240,6 +239,12 @@ article {
 		margin: 0 1em 0 0;
 	}
 
+	#body aside,
+	#body aside p {
+    	margin: 0 auto 1em auto;
+    	margin-bottom: 1em;
+    	width: calc(660px - 2em);
+	}
 }
 
 h1 {
@@ -351,7 +356,7 @@ a {
 	color: black;
 	text-decoration: none;
 
-	padding-bottom: 0.9em;
+	padding-bottom: 0.6em;
 	
 	background: url('../images/sketchy.png') repeat-x;
 	background-position: bottom left;
@@ -699,7 +704,7 @@ ul.links {
 }
 
 aside {
-	padding-left: 4em;
+	padding-left: 2em;
 	font-style: italic;
 	line-height: inherit;
 	
@@ -1155,3 +1160,4 @@ a.book-icon img {
     margin-top: -10px;
     margin-left: 1px;
 }
+
