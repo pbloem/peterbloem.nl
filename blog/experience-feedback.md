@@ -234,7 +234,7 @@ In order for universities to remain relevant, we need to look to the art school 
 
 With society in the state that it is in today, I am not hopeful that this can be achieved. The scale at which universities operate is industrial, and that is simply far too ingrained in the culture at this point to change to any model based on intrinsic value. But then, the world is about to change. Many people in AI are in favor of Universal Basic Income, introduced in lockstep with the progress of AI. 
 
-If that happens, we can perhaps envision a world where universities cater to a small contingent of people who would like to develop their skill at understanding deep truths and communicating them effectively to other people. Not to make money, not to generate wealth, but simply because it's something that they can do that they feel has meaning.
+If that happens, we can perhaps envision a world where universities cater to a small contingent of people who would like to develop their skill at understanding deep truths and communicating them effectively to other people. Not to make money, not for job security, but simply because it's something that they can do that they feel has meaning.
 
 <figure class="narrow centering vspace">
 <img src="/images/victory.jpg" class="three-quarters" alt="Victory Boogie Woogie, by Piet Mondrian. A square canvas, mounted at an angle of 45 degrees. Various orthogonal red, blue, yellow and black squares evoke the city grid of New York in an abstract way.">
