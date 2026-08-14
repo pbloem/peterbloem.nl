@@ -8,7 +8,7 @@ article: false
 <!-- {% raw %} -->
 <ul class="nav publications content">
 
-	<li><a href="design-thinking">
+	<li><a href="experience-feedback">
 	  	<h2>The Experience Feedback Loop
 	  	</h2>
 	  	<span class="year">2026</span>
