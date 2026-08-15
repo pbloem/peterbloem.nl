@@ -8,10 +8,15 @@ article: false
 <!-- {% raw %} -->
 <ul class="nav publications content">
 
-	<li><a href="experience-feedback">
-	  	<h2>The Experience Feedback Loop
+	<li><a href="craft-coding">
+	  	<h2>AI coding without the vibes
 	  	</h2>
 	  	<span class="year">2026</span>
+	  	</a>	  	
+	</li>
+	<li><a href="experience-feedback">
+	  	<h2>The experience feedback loop
+	  	</h2>
 	  	</a>	  	
 	</li>
 	<li><a href="design-thinking">
