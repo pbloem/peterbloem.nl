@@ -3,6 +3,8 @@ title: AI coding without the vibes
 image: "https://peterbloem.nl/images/soupcutter.jpg"
 image_alt: "The painting 'La Tailleuse de Soupe' (The soup cutter) two stylized female figures are seated at a dinner table, in front of a pot of steaming soup. The figure to the right is cutting slices from a large loaf of bread."
 summary: "This question---what we should tell students to do with AI---is a good trigger to think about what we ourselves should be doing (which is what this essay is really about). "
+parent: blog
+
 ---
 
 # AI coding without the vibes

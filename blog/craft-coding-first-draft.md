@@ -1,5 +1,7 @@
 ---
-title: AI coding without the vibes
+title: AI coding without the vibes 
+parent: blog
+
 ---
 
 **This is the first draft of the essay [AI coding without the vibes](craft-coding). This is the version I hand wrote, and showed to Fable for feedback. If AI hadn't been available, I probably would have published this as is.
@@ -7,7 +9,7 @@ title: AI coding without the vibes
 Please note that this draft contains false assertions and other statements I don't really stand behind.
 **
 
-# AI coding without the vibes
+# AI coding without the vibes (draft)
 
 We spend a lot of effort these days trying to figure out how to stop students cheating with AI. It's necessary, but it's not the most worthwhile part of the job. Students that want shortcuts around learning are going to find them anyway.
 

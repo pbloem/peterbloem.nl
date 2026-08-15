@@ -3,6 +3,7 @@ title: The Experience Feedback Loop
 image: "https://peterbloem.nl/images/victory.jpg"
 image_alt: "Victory Boogie Woogie, by Piet Mondrian. A square canvas, mounted at an angle of 45 degrees. Various orthogonal red, blue, yellow and black squares evoke the city grid of New York in an abstract way."
 summary: "Hope lies in things that AI cannot do and will never be able to do. It will not do to look to things like novelty, creativity or even intuition. AI can do these things already, and is steadily improving. However, there is one thing that AI still struggles with and, with a bit of luck, will continue to struggle with for a long time. That is _experiencing the world as a human being_. We are odd little creatures and the way we perceive the world is largely made up of little accidents."
+parent: blog
 
 ---
 
