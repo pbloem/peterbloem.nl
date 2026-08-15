@@ -15,7 +15,7 @@ parent: blog
 <ul class="links">
 	<li>18 Aug 2019</li>
 	<li><a class="code" href="https://codeberg.org/pbm/former">code on codeberg</a></li>
-	<li><a class="code" href="https://www.youtube.com/playlist?list=PLIXJ-Sacf8u60G1TwcznBmK6rEL3gmZmV">video lecture</a></li>
+	<li><a class="code" href="https://dlvu.github.io/sa/">video lecture</a></li>
 </ul>
 
 <aside>
