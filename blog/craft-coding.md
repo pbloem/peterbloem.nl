@@ -10,7 +10,7 @@ parent: blog
 # AI coding without the vibes
 
 <figure class="narrow centering">
-<img src="/images/soupcutter.jpg" class="wide" alt="The painting 'La Tailleuse de Soupe' (The soup cutter) two stylized female figures are seated at a dinner table, in front of a pot of steaming soup. The figure to the right is cutting slices from a large loaf of bread.">
+<img src="/images/soupcutter.jpg" class="tile-full" alt="The painting 'La Tailleuse de Soupe' (The soup cutter) two stylized female figures are seated at a dinner table, in front of a pot of steaming soup. The figure to the right is cutting slices from a large loaf of bread.">
 </figure>
 
 We spend a lot of effort these days trying to figure out how to stop students cheating with AI. It's necessary, but it's not the most satisfying part of the job. Students that want shortcuts around learning are going to find them anyway.

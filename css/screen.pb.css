@@ -577,6 +577,7 @@ body.blog .content
 	align-items: center;
 	
 	margin-top: auto;
+	padding: 0;
 }
 
 #body.front nav.title {
@@ -597,6 +598,11 @@ nav.title a {
 	position: absolute;
 	bottom: 0;
 	left: 0;
+}
+
+
+nav.title a.back {
+	position: relative;
 }
 
 nav.title a:before {
@@ -776,6 +782,10 @@ figure.right {
 }
 
 figure.right img {
+	width: 100%;
+}
+
+#body figure .tile-full {
 	width: 100%;
 }
 
