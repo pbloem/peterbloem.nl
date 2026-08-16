@@ -128,6 +128,8 @@ Like I said, this idea of human experience feedback is something that has recent
 
 The first argument I often hear is that humans and AI might collaborate. I fully agree. This provides a human experience in the design process, and could provide the best of both worlds, if it is done carefully.
 
+<aside markdown="1">See [AI coding without the vibes](craft-coding) for one model of careful AI collaboration.</aside>
+
 In the example of the game soundtrack composer, a human could play the game with the AI-composed music and give notes to the machine for the next version. The feedback loop is still not as direct as a human composer working directly on the score, but there are some other benefits. 
 
 <aside>I am entirely ignoring the ethics of how AI is built and what its impact on the creative industries will be. I'm only talking here about what can be achieved, not what we <em>should</em> be doing. I'll leave that to a future essay.
