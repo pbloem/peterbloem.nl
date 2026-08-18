@@ -9,6 +9,10 @@ parent: blog
 
 <h1>The Experience Feedback Loop</h1>
 
+<ul class="links">
+	<li>14 August 2026</li>
+</ul>
+
 <figure class="wide">
 <img src="/images/tadema2.jpg"  alt="The Alma Tadema painting 'A Solicitation'. A young woman sits on a marble bench with a young man lying to her left. The setting is the kind of idealized version of ancient Greece that Tadema was famous for with much marble and clear, bright skies.">
 </figure>

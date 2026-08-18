@@ -9,6 +9,10 @@ parent: blog
 
 # AI coding without the vibes
 
+<ul class="links">
+	<li>16 August 2026</li>
+</ul>
+
 <figure class="narrow centering">
 <img src="/images/soupcutter.jpg" class="tile-full" alt="The painting 'La Tailleuse de Soupe' (The soup cutter) two stylized female figures are seated at a dinner table, in front of a pot of steaming soup. The figure to the right is cutting slices from a large loaf of bread.">
 </figure>
