@@ -178,6 +178,9 @@ If we build AI only on this kind of data, following the terms of the license, pe
 
 ### Issues with the Common Pile
 
+
+#### Releasing the model
+
 Of course, if we use `CC BY-SA` data to train a model, and we want to be strict about following the spirit of the law, we must take a conservative reading. `CC BY-SA` says that anything we produce and distribute, must be distributed also under `CC BY-SA`. In short, that means attributing what data we used, and allowing everybody also to re-use it under those terms.
 
 Here, the distinction between model and output becomes important. If we train a model, and we consider that a derivative work, then it should be `CC BY-SA` licensed. However, if we don't _distribute_ the model, then there is no such obligation. If we just host a ChatGPT-style bot, then all we should be worried about are the outputs. The things that the bot comes out with. If those outputs are derived from Wikipedia data, then the bot should reference the relevant Wikipedia page and license its own output under `CC BY-SA`.
@@ -187,9 +190,11 @@ Both paths lead us into hairy territory. If we train a large model on multiple s
 <aside markdown="1">For the models trained on the Common Pile, this issue is wholly ignored. The developers remain agnostic on whether the model is a derivative work, and release it under an Apache License incompatible with `CC BY-SA`. I don't think this is an entirely coherent position, but given what is happening in the rest of the AI community, the issue is perhaps academic. 
 </aside>
 
-This mostly means that if we want to release the model, and we want to be properly ethical and legal, we should be even more careful about licensing than the creators of the common pile were. Wikipedia and StackExchange are both `CC BY-SA`, so that should probably be the backbone. For the code, the papers and the other sources, anything incompatible with that should be excluded. This still leaves things like MIT licenses and public domain sources, so the order of magnitude of data that we have available probably won't change. 
+This mostly means that if we want to release the model, and we want to be properly ethical and legal, we should be even more careful about licensing than the creators of the Common Pile were. Wikipedia and StackExchange are both `CC BY-SA`, so that should probably be the backbone. For the code, the papers and the other sources, anything incompatible with that should be excluded. This still leaves things like MIT licenses and public domain sources, so the order of magnitude of data that we have available probably won't change. 
 
-For the model outputs: the way AI models like these are trained, there is no way to attribute a certain utterance to any specific part of the training data. It's unlikely that we will ever be able to do this cleanly.
+#### Licensing model outputs
+
+The way AI models like these are trained, there is no way to attribute a certain utterance to any specific part of the training data. It's unlikely that we will ever be able to do this cleanly.
 
 Here, a good option, I think, is to offer a best-effort, post-hoc attribution. You can store the training data in some sort of neural or vector database and query, for every response the chatbot makes, whether it is substantially similar to some part of the training data. If so, you can add some text to the output with attributions. This kind of fingerprinting is already used on platforms like YouTube to detect copyrighted content, so it seems like a reasonable way to operationalize copyright compliance at scale.
 
