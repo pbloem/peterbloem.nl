@@ -416,11 +416,9 @@ The companies that have received certification so far can be found [on their web
 
 So can we fix the data issues with AI? We can get to a certain size---the size that OpenAI had at the launch of ChatGPT. From that to the frontier, we have a real gap, but some promising lines of research, or other creative options:
 
-**Pre-training** <br/>
-For the **data gap**, synthetic data and self-improvement. For the **knowledge gap**, in-context learning and possibly data laundering.   
+**Pre-training** For the *data gap*, synthetic data and self-improvement. For the *knowledge gap*, in-context learning and possibly data laundering.   
 
-**Fine-tuning** <br/>
-We can lean on crowd-sourcing to close the gap. It's technically feasible, but the current culture doesn't support it, and we'd need to create the same kind of feedback loop between using the product and contributing to it that Wikipedia has. 
+**Fine-tuning** We can lean on crowd-sourcing to close the gap. It's technically feasible, but the current culture doesn't support it, and we'd need to create the same kind of feedback loop between using the product and contributing to it that Wikipedia has. 
 
 I hope I've made the case that there is some hope to narrowing the gap, at least partway. At the very, very least, there are some serious research questions worth investigating. We spent billions in public research funding getting us to this point, why not make the extra push to get us from functioning to ethical AI? 
 
