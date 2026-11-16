@@ -106,11 +106,11 @@ In the US, there is a _fair use_ doctrine that allows a variety of uses of copyr
 <aside>There are many other countries, each with their own copyright law, but these are the two main flavours: a fair use clause or no fair use, but separate exceptions for various use cases. 
 </aside>
 
-This is how search engine indices are justified, and how companies are attempting to justify the training of AI models. In US-style jurisdictions, the attempted justification is fair use. In Europe-style jurisdictions, it is in principle not allowed, but it is common for carve-outs to be created for emerging technologies. 
+This is how search engine indices are justified, and how companies are attempting to justify the training of AI models. In US-style jurisdictions, the attempted justification is fair use. In European-style jurisdictions, it is in principle not allowed, but it is common for carve-outs to be created for emerging technologies. 
 
 This shows how important our question---whether AI can be fixed---really is. If we cannot build AI without this kind of copyright infringement, and we agree that we need AI, then we find ourselves exactly where we were at the start of the world wide web: we need a carve-out or we can't have the technology. Or more realistically, we need a carve-out or we are forced to rely on US companies. 
 
-If, however, AI can be built ethically, without copyright infringement, then we don't need a carve out, and indeed, we can require US companies to train models without copyright infringement if they want to deploy them in Europe. The key question is whether the copyrighted data is a key ingredient. We need to know that before we can make an informed decision on what the law should look like. 
+If, however, AI can be built ethically, without copyright infringement, then we don't need a carve out, and indeed, we can require US companies to train models without copyright infringement if they want to deploy them in Europe. The central question is whether the copyrighted data is a _key_ ingredient. We need to know that before we can make an informed decision on what the law should look like. 
 
 ### Copyright of outputs
 
