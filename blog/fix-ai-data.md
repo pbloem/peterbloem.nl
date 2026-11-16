@@ -130,7 +130,7 @@ The question of this post is whether we can build AI without that sense of betra
 
 ### The Common Pile
 
-A very clear starting point here is [the Common Pile](https://arxiv.org/abs/2506.05209): a collection of almost every source of text content on the web that is licensed under something permissive, usually a Creative Commons license or a public domain license. These include:
+A very clear starting point here is [the Common Pile](https://arxiv.org/abs/2506.05209): a collection of almost every source of text content on the web that is either in the public domain or under a permissive license, (usually some form of Creative Commons). It includes:
 
 * All Wikimedia projects. Wikipedia, Wikibooks, Wiktionary, etc. Not just their content, but also their talk pages and community pages.
 * All StackExchange content.
