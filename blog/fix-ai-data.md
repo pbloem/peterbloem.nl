@@ -229,7 +229,7 @@ Tokens are the unit of text that transformer models operate in (one word takes o
 
 There are several guidelines for how large a model you should train with a given amount of training data. Following the well-established [Chinchilla regime](https://en.wikipedia.org/wiki/Chinchilla_(language_model)), a trillion tokens corresponds to a model of roughly 50B parameters. That means we should be able to train a 50B parameter model on the filtered data, and maybe up to 100B if we repeat some data and mix less aggressively. 
 
-For reference, GPT3 was 175B parameters. In retrospect, however, it was a bit bigger than it needed to be for the data volume, so the Common Pile probably gets us to about the level of GPT3. Not "frontier AI", but only about one order of magnitude off.
+For reference, GPT-3 was 175B parameters. In retrospect, however, it was a bit bigger than it needed to be for the data volume, so the Common Pile probably gets us to about the level of GPT-3. Not "frontier AI", but only about one order of magnitude off.
 
 So, if we limit ourselves to open data, there will be a gap between us and the current frontier models. What options to we have to make up the difference?
 
@@ -278,7 +278,7 @@ All we need for this is a difficult question. We don't even need the answer. We 
 
 This is an example of a _self-improvement operator_. These were first introduced (or at least popularized) in AlphaGo Zero: the followup to AlphaGo that learned to play top-level Go only through self-play. The idea is that if you have a policy---some program that looks at the board and suggests a move--- then you can use that policy to search the game tree. After a bit of search, you can come up with a move that is always at least as good as than the one that the policy originally suggested. So, game tree search is a policy-improvement operator. You don't actually need to self play, you just see what move your current neural network suggests, use your policy-improvement operator to search for a better move and train the neural network to make that move instead. All you need is an interesting board position to start from.
 
-This is a philosophy that we can follow to close the gap. We train from publicly licensed data, augmented with synthetic data to get to a model that is GPT3-equivalent. We finetune for instruction following and reasoning traces.
+This is a philosophy that we can follow to close the gap. We train from publicly licensed data, augmented with synthetic data to get to a model that is GPT-3-equivalent. We finetune for instruction following and reasoning traces.
 
 Then, we deploy reinforcement learning and self-improvement operators to go from there. The open data may not be enough to get us to the level of a frontier model, but it is definitely enough to get to a model that can do reasoning traces. From that point on, reinforcement learning and self-play should go a long way to bridging the gap to frontier models.
 
