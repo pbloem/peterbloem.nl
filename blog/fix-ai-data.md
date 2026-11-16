@@ -173,7 +173,7 @@ You may argue that not all Wikipedians or StackExchange contributors are happy f
 
 If we build AI only on this kind of data, following the terms of the license, people should no longer be able to legitimately claim that it was built on stolen content, or even on content that was taken in bad faith. It was taken and used following both the letter and the spirit of the law.
 
-<aside markdown="1">If you feel that training AI models violates the _spirit_ of `CC BY-SA`, I don't think I agree. For me, the spirit was always: do what you like (under the terms), and the net result will be positive. That was the culture before AI. Of course, the emergence of AI may have changed the picture for many people, but to me, that was the risk we took when we consented to the open license. 
+<aside markdown="1">If you feel that training AI models violates the _spirit_ of `CC BY-SA`, I can't agree. For me, the spirit was always that we accept that _everybody_, good or bad can use it for any purpose they like (under the terms), and the net result will be positive. That was the culture before AI. Of course, the emergence of AI may have changed the picture for many people, but I don't see how we can do anything else than work with the data as it was licensed _at the time_.  
 </aside>
 
 ### Issues with the Common Pile
