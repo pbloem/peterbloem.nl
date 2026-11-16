@@ -124,7 +124,7 @@ All of this is useful to understand, but it glosses over perhaps the most import
 
 That's the _ethical question_. If it is legal to do all this, that's mostly because the technology didn't yet exist when the law was established. We're still figuring out what the law says about search engines exactly. If it's legal, it's because of a technicality.
 
-The question of this post is whether we can build AI without that sense of betrayal, regardless of its legal status. Can we build AI using only data that was freely and gladly given for any use? 
+The question of this post is whether we can build AI without that sense of betrayal, regardless of its legal status. For this part of the series: can we build AI using only data that was freely and gladly given for any use? 
 
 <aside>There is obviously a big gray area here, especially when we do this at scale. Let's see what we can easily do and, and then review.</aside>
 
