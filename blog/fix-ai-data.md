@@ -219,12 +219,10 @@ It may feel overkill to do build all this purely for the sake of compliance with
 
 The second point to bear in mind is that we can make the false positive/false negative tradeoff very much towards false positives without any real cost. That is, if the system misattributes, saying "this response may contain content from the following Wikipedia page: ...", there is very little harm done.
 
-<aside>Unless the list becomes so long that the exercise becomes meaningless. Even then, with some clever UI design, you can put the more likely sources front and center and, and the unlikely ones behind an extra click.
-</aside>
-
 Finally, note again that in a well-functioning AI, _this should happen very rarely_. The AI should always generalize. And if this doesn't happen naturally, we now have a system that detects failures. That means that the system itself could be used to help train the AI to move away from copyright infringement.
 
-This requires some care, or the finetuning will simply latch on to the weaknesses in the plagiarism detector, rather than actually writing original prose. The good news is that if we work on open data, we can also have _external_ auditing. Independent parties can test chatbots using secret processes to establish and compare their attribution rates.
+<aside>This requires some care, or the finetuning will simply latch on to the weaknesses in the plagiarism detector, rather than actually writing original prose. The good news is that if we work on open data, we can also have _external_ auditing. Independent parties can test chatbots using secret processes to establish and compare their attribution rates.
+</aside>aside>
 
 ## Closing the data gap 
 
@@ -250,8 +248,6 @@ After training, the model is shown a first example of real-world table, with som
 
 In [recent work](/publications/up), we showed that this can be applied to GPT-style models as well. We can sample random sequences of symbols that are rich in computational structure. Training a model on such data teaches it to recognize computational patterns---say the character $ is always followed by a T or a \_. The specifics differ from one sample to the next, but the overarching idea that patterns can help predict a sequence is universal.
 
--- image
-
 The trick with synthetic data, then, is not to model your target domain as carefully as possible, but to invest in compute. The generator of your synthetic data can do what it likes, nothing needs to be realistic, but the more it computes, the richer the data will be and the more the model will learn.
 
 When we pre-train a model on lots and lots of data, we're teaching it to do two things. First, we're training it to be a pattern recognizer: it recognizes any pattern in its input, and continues it. This could be natural language, but it could also be matching brackets or valid computer code. Second, we're training it to ingest _world knowledge_: where the Eiffel tower is, who directed Jaws, and so on.
@@ -275,7 +271,9 @@ That is where _reinforcement learning_ (RL) comes in. This is a more expensive f
 
 Reinforcement learning became a lot more revelant when _reasoning traces_ were invented. A reasoning trace has the model generate a bunch of outputs that are specifically flagged as being not the final output. Usually they are placed between tags like `<think>`. The model generates a sequence of these. They could be a kind of draft of what the output might be, but they could also take the form of a kind of inner monologue, like&nbsp; ```<think>The user has asked for a vegetarian restaurant. I should consult the web to make sure I only suggest real vegetarian restaurants.</think>```
 
-Only after generating a bunch of these does the model generate its final output that is shown to the user. Most chatbots show some of their reasoning traces, or a summary, but the details are hidden to the user. The basic reasoning behavior can already be elicited after the pre-training stage. Reinforcement Learning can then be used to make the reasoning traces longer, deeper and more powerful.
+Only after generating a bunch of these does the model generate its final output that is shown to the user. 
+
+The basic reasoning behavior can already be elicited after the pre-training stage. Reinforcement Learning can then be used to make the reasoning traces longer, deeper and more powerful.
 
 This picture suggests another way we can bridge the gap to frontier models. We can of course use reinforcement learning to reward solved tasks and punish unsolved ones, but if we know that a longer reasoning trace gives a better answer than a short one, we can also take the answer that the model gives after a long trace (regardless of whether it's right or wrong) and train the model to give that answer after a shorter trace. That is, we use the long-thinking model as an example for the short thinking model.
 
@@ -313,18 +311,18 @@ An open source effort could make this process transparent, at least. Perhaps tha
 
 I don't know. I suspect many people would still say "I don't want _any_ AI". But maybe, enough people would contribute. The early Wikipedia was built by a core of hundreds of dedicated volunteers, together with a much larger number of infrequent contributors. If we can generate that amount of interest, there is a chance.
 
-<aside>Wikipedia benefited from a direct feedback loop. People read an article, spot a mistake, and fix it immediately. The dedicated core picks up from there and cleans things up. Our set-up would somehow need to create a similar trigger to contribute. Perhaps from an observed problem with the chatbot, directly to the fine tuning data. It's a harder problem to solve, but not hopeless, I think. 
+<aside>Wikipedia benefited from a direct feedback loop. People read an article, spot a mistake, and fix it immediately, if sloppily. The dedicated core picks up from there and cleans things up and standardizes them. Our set-up would somehow need to create a similar trigger to contribute. Perhaps from an observed problem with the chatbot, directly to the fine tuning data. It's a harder problem to solve, but not hopeless, I think. 
 </aside>
 
 ## Closing the knowledge gap
 
-Our hypothesis is that tokens are good for two things. First, to teach the model a kind of general-purpose learning and to teach it real-world knowledge. As argued above, there is every indication that we can train models to do this from synthetic data, mixed with the 2TB or so of freely licensed data.
+Our hypothesis is that tokens are good for two things. First, to teach the model a kind of general-purpose learning and to teach it real-world knowledge. As argued above, there is every indication that we can train models to do this from synthetic data, mixed with the 8TB or so of freely licensed data.
 
 The second thing that we get from training tokens is real-world knowledge. There is a lot of this in Wikimedia and StackExchange, but there is a lot more in the copyrighted part of the data.
 
 For example, imagine asking an LLM a technical question about home-made Kombucha. The Cooking StackExchange has [20 questions in that category](https://cooking.stackexchange.com/questions/tagged/kombucha), which probably cover some basic ground, together with the Wikipedia article on the subject, and some CC licensed papers.   
 
-Compare that, however, to all cookbooks ever written, including several dedicated to the topic and many deeply researched reference works on fermentation in general. Add to that all scientific literature on the topic, much of it behind paywalls. In terms of tokens, the difference may not be so great. 
+Compare that, however, to all cookbooks ever written, including several dedicated purely to Kombucha and many deeply researched reference works on fermentation in general. Add to that all scientific literature on the topic, much of it behind paywalls. In terms of tokens, the difference may not be so great. 
 
 Let's say a book corpus adds 1T tokens to the corpus that already consists of 2T tokens of open data. That bumps the model size estimate up from 100B parameters to 150B parameters, which isn't much in terms of data volume. In terms of the _knowledge_ locked away in that part of the data, however, it's invaluable in making the bot useful on a variety of tasks. 
 
