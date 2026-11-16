@@ -150,14 +150,14 @@ Putting all this together results in 8TB of text data. Most likely, this is clos
 
 Wikipedia and StackExchange are both licensed under a Creative Commons Share-alike (`CC BY-SA`) license. Roughly, that means you are allowed to redistribute and create derivative works, but in both cases the license needs to stay the same. 
 
-<aside>The Common Pile is not _guarenteed_ clean. There are issues like license laundering that may well cause some unlicensed code and text to end up in the data. The authors made some efforts to clean this up, but at this scale, mostly clean is probably the best we can do. 
+<aside markdown="1">The Common Pile is not _guaranteed_ clean. There are issues like license laundering that may well cause some unlicensed code and text to end up in the data. The authors made some efforts to clean this up, but at this scale, mostly clean is probably the best we can do. 
 </aside>
 
 This leads us to our first research question.
 
 **RQ 0** Can we train an AI model on the Common Pile that performs as well as an equivalent model does on general web data?
 
-This question has already been partly answered by the people that composed the Common Pile. When you train a medium-sized model on this data, then on some tasks it performs better than the models that use data without regard to its copyright. On others, it does a little worse, but on balance, the model is entirely competitive with models of a similar size trained on similar amounts of data.
+This question has already been partly answered by the people that composed the Common Pile. When you train a medium-sized model on this data, then on some tasks it performs better than the models that use data without regard to its copyright. On others, it does a little worse, but on balance, the model is entirely competitive with models of a similar size trained on similar amounts of data with a similar amount of compute.
 
 <figure class="wide breathe">
 <img src="/images/fixai/common-pile-performance.svg" class="own-width">
