@@ -374,7 +374,7 @@ However, note the following differences to the way things are currently done.
 
 **It allows us to measure exactly how reliant we are on copyrighted data.** Train the model with and without. For research purposes, you could even do a training run with the raw copyrighted data, to see how much you "lose in the wash", so to speak.
 
-**It provides safeguards against leaking copyrighted content** Filtering against facts that are only asserted once or twice should not harm the value of the data, and will likely make it more reliable. It also ensures that fiction enters the data in plot-distilled form. Plenty of sources will assert that Frodo travelled with Sam to Mordor, but the exact text of Tolkien will not enter the data, except perhaps for certain passages that are quoted often enough. But then again, if we prompt explicitly for stated facts, this will be unlikely to leak. 
+**It provides safeguards against leaking copyrighted content** Filtering against facts that are only asserted once or twice should not harm the value of the data, and will likely make it more reliable. It also ensures that fiction enters the data in plot-distilled form. Plenty of sources will assert that Frodo travelled with Sam to Mordor, but the exact text of Tolkien will not enter the data, except perhaps for certain passages that are quoted often enough.
 
 **The dataset becomes a public good.** Instead of buying up millions of books with VC money and destroying them while keeping the result a secret, the result is offered as a public resource. A database of facts together with proper citations has many other uses than just training AI. 
 
