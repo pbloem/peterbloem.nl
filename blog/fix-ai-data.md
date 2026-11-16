@@ -52,9 +52,6 @@ To make things concrete, let's focus on the motivating example: AI that can do a
 <aside>This task is broad enough that if the answer is positive, yes we can build ethical AI, it will likely be positive for other tasks and domains as well.
 </aside>
 
-[//]: # ()
-[//]: # (Many people I know will tune out at the very question. They will say that AI is inherently morally corrupt. Some might throw around terms like "techno-fascist" to dismiss the whole enterprise. If that's you, consider this is a methodical step-by-step evaluation of your claim. If you stand by it, that should not upset you. If you disagree with my conclusion, we should at least be able to pin down the specific aspects of AI production that are most likely to be insurmountable. )
-
 That is the plan: to go through all the things that people object to in modern AI, as she is practiced today, and to see to what extent each is inherent to the technology---_required_ to make it work---or simply an artifact of the hyper-capitalist race to the cliff edge that we find ourselves engaged in. 
 
 In my naïveté, I briefly thought of this as a single blog post, but it is of course a bigger project than that. In this first part, we will focus on the issue of using copyrighted data to train LLMs without consent, and save other issues for future posts.
@@ -118,8 +115,6 @@ If, however, AI can be built ethically, without copyright infringement, then we 
 ### Copyright of outputs
 
 The picture changes when we look at the _output_ of AI models. Not too long ago, you could ask ChatGPT for the lyrics to _Don't Cry for Me Argentina_, and it would produce them faithfully. This is a clear, unauthorized, public republishing of copyrighted data. Moreover, it still occurs if we consider the collection and use of the training allowed. If you claim fair use---or if Europe introduces an exception for AI training---then OpenAI still commits the copyright violation at the moment their model produces the lyrics and sends them to me.
-
-[//]: # (There is a clear precedent for this in Google's search index. They used to provide cached versions of webpages from their index, that you could consult if the website itself was offline. They took this option away, because according to EU law, it was not crucial to the use for which they had an exception. In the US, you could argue that this is insufficiently transformative for fair use. This is the situation an AI company may find itself in: training the AI is transformative, but having the AI distribute copyrighted data isn't.)
 
 In short, a company that can legally train an AI on copyrighted data, may still be liable if the model decides to spit out verbatim copies of that data when it's hosting the model. Given the shaky reliability of AI guardrails at the moment, this should cause AI companies some headaches.  
 
@@ -223,14 +218,6 @@ The second point to bear in mind is that we can make the false positive/false ne
 Finally, note again that in a well-functioning AI, _this should happen very rarely_. The AI should always generalize. And if this doesn't happen naturally, we now have a system that detects failures. That means that the system itself could be used to help train the AI to move away from copyright infringement.
 
 This requires some care, or the finetuning will simply latch on to the weaknesses in the plagiarism detector, rather than actually writing original prose. The good news is that if we work on open data, we can also have _external_ auditing. Independent parties can test chatbots using secret processes to establish and compare their attribution rates.
-
-[//]: # (### Incompatible licenses)
-
-[//]: # ()
-[//]: # (Not everything in the Common pile is CC BY-SA. Some of it is public domain, some of it is CC by or CC-NC &#40;non-commercial&#41;. Not all of these licenses may be compatible, which means you cannot distribute a derivative work like a model that was on all of them. This is not a problem for the model outputs if we have an automatic derivative-work-detector as described above. It's more of a problem if we want to distribute the model.)
-
-[//]: # ()
-[//]: # (Luckily, the main sources of data: Wikimedia, StackExchange and Gutenberg are CC BY-SA and public domain, so these are compatible. For sources like ArXiv we can sub-select only the compatible licenses. Most likely, if we make a careful subselection of the Common Pile, we will not lose a substantial amount of quality data.)
 
 ## Closing the data gap 
 
