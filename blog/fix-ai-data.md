@@ -114,7 +114,7 @@ If, however, AI can be built ethically, without copyright infringement, then we 
 
 ### Copyright of outputs
 
-The picture changes when we look at the _output_ of AI models. Not too long ago, you could ask ChatGPT for the lyrics to _Don't Cry for Me Argentina_, and it would produce them faithfully. This is a clear, unauthorized, public republishing of copyrighted data. Moreover, it still occurs if we consider the collection and use of the training allowed. If you claim fair use---or if Europe introduces an exception for AI training---then OpenAI still commits the copyright violation at the moment their model produces the lyrics and sends them to me.
+The picture changes when we look at the _output_ of AI models. Not too long ago, you could ask ChatGPT for the lyrics to _Don't Cry for Me Argentina_, and it would produce them faithfully. This is a clear, unauthorized, public republishing of copyrighted data. Moreover, it still occurs if we allow the collection and use of the training data. If you claim fair use---or if Europe introduces an exception for AI training---then OpenAI still commits the copyright violation at the moment their model produces the lyrics and sends them to me.
 
 In short, a company that can legally train an AI on copyrighted data, may still be liable if the model decides to spit out verbatim copies of that data when it's hosting the model. Given the shaky reliability of AI guardrails at the moment, this should cause AI companies some headaches.  
 
