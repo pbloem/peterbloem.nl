@@ -9,9 +9,14 @@ article: false
 <ul class="nav publications content">
 
 	<li><a href="craft-coding">
-	  	<h2>AI coding without the vibes
+	  	<h2>Can we fix AI?
 	  	</h2>
 	  	<span class="year">2026</span>
+	  	</a>	  	
+	</li>
+	<li><a href="craft-coding">
+	  	<h2>AI coding without the vibes
+	  	</h2>
 	  	</a>	  	
 	</li>
 	<li><a href="experience-feedback">
