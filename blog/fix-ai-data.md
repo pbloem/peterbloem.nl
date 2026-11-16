@@ -215,7 +215,7 @@ You may counter that this will always be best-effort. That there will always be 
 
 My first response to that is that best-effort is a lot better than what we have now. I would much prefer a world where we can at least try this and see how well we can do it, to what we are doing at the moment. It gives people a means of redress if they feel that their content should be cited.
 
-It may feel overkill to do this purely for the sake of compliance to the Creative Commons license, but there is also the issue of license laundering. Unlicensed data could end up in the training data despite our best efforts. Imagine an AI that, instead of hiding its training data, points specifically to places where its output overlaps with the data, and allows users to get it removed. I think that would do a lot to rebuild some of the missing trust in AI.  
+It may feel overkill to do build all this purely for the sake of compliance with Creative Commons attribution requirements, but there is also the issue of license laundering. Unlicensed data could end up in the training data despite our best efforts. Imagine an AI that, instead of hiding its training data, points specifically to places where its output overlaps with the data, and allows users to get it removed. I think that would do a lot to rebuild some of the missing trust in AI.  
 
 The second point to bear in mind is that we can make the false positive/false negative tradeoff very much towards false positives without any real cost. That is, if the system misattributes, saying "this response may contain content from the following Wikipedia page: ...", there is very little harm done.
 
