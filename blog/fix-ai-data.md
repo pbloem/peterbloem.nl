@@ -322,11 +322,9 @@ The second thing that we get from training tokens is real-world knowledge. There
 
 For example, imagine asking an LLM a technical question about home-made Kombucha. The Cooking StackExchange has [20 questions in that category](https://cooking.stackexchange.com/questions/tagged/kombucha), which probably cover some basic ground, together with the Wikipedia article on the subject, and some CC licensed papers.   
 
-Compare that, however, to all cookbooks ever written, including several dedicated purely to Kombucha and many deeply researched reference works on fermentation in general. Add to that all scientific literature on the topic, much of it behind paywalls. In terms of tokens, the difference may not be so great. 
+Compare that, however, to all cookbooks ever written, including several dedicated purely to Kombucha and many deeply researched reference works on fermentation in general. Add to that all scientific literature on the topic, much of it behind paywalls. 
 
-Let's say a book corpus adds 1T tokens to the corpus that already consists of 2T tokens of open data. That bumps the model size estimate up from 100B parameters to 150B parameters, which isn't much in terms of data volume. In terms of the _knowledge_ locked away in that part of the data, however, it's invaluable in making the bot useful on a variety of tasks. 
-
-Knowledge itself isn't copyrighted. Wikipedia is filled with knowledge from other sources: distilled, rewritten and of course, properly cited. After all that, Wikipedia gets to license their content from scratch, without being bound to the licenses of the original sources.  
+Let's say a book corpus adds 1T tokens to the corpus that already consists of 2T tokens of open data. That bumps the optimistic model size estimate up from 100B parameters to 150B parameters, which isn't much in terms of data volume. In terms of the _knowledge_ locked away in that part of the data, however, it's invaluable in making the bot useful on a variety of tasks. 
 
 ### In-context learning
 
@@ -342,7 +340,7 @@ In-context learning works remarkably well, but there are two problems. First, th
 </aside>
 
 
-The long context-problem is an issue for AI in general, and it's being hotly researched. It requires models than can actually consume long contexts without exorbitant resource use and models that can then actually retain information over such long contexts. It's problem for all of AI, but it's a little more urgent for the ethical AI picture that we're painting here. There are some promising leads, and there is every reason to think that we will crack it soon, but right now, it's still a research question, and the constraints that we've set ourselves above won't help.
+The long context-problem is being hotly researched. It requires models than can actually consume long contexts without exorbitant resource use and models that can then actually retain information over such long contexts. It's problem for all of AI, but it's a little more urgent for the ethical AI picture that we're painting here. There are some promising leads, and there is every reason to think that we will crack it soon, but right now, it's still a research question, and the constraints that we've set ourselves above won't help.
 
 **RQ 3** Can we solve the long context problem, under the constraints of ethical AI?    
 
