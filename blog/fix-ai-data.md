@@ -161,7 +161,7 @@ This question has already been partly answered by the people that composed the C
 
 <figure class="wide breathe">
 <img src="/images/fixai/common-pile-performance.svg" class="own-width">
-<figcaption markdown="1"> Performance of an 7B parameter model (Comma) trained on the Common Pile and tested on various benchmarks, compared to models of similar sizes. By [Kandpal (2025)](#Kandpal2025)].
+<figcaption markdown="1"> Performance of an 7B parameter model (Comma) trained on the Common Pile and tested on various benchmarks, compared to models of similar sizes. By [Kandpal (2025)](#Kandpal2025).
 </figcaption>
 </figure>
 
