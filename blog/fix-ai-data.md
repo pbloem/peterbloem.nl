@@ -198,7 +198,7 @@ The way AI models like these are trained, there is no way to attribute a certain
 
 Here, a good option, I think, is to offer a best-effort, post-hoc attribution. You can store the training data in some sort of neural or vector database and query, for every response the chatbot makes, whether it is substantially similar to some part of the training data. If so, you can add some text to the output with attributions. This kind of fingerprinting is already used on platforms like YouTube to detect copyrighted content, so it seems like a reasonable way to operationalize copyright compliance at scale.
 
-The other side of the license is that the output should then be CC BY-SA licensed. This conflicts with current content policies of chatbots, which generally confer the copyright to the user. Having to tell the user: don't re-use use this specific piece of text unless you're licensing it such and so is a tricky thing to convey in a simple UI.
+The other side of the license is that the output should then be `CC BY-SA` licensed. This conflicts with current content policies of chatbots, which generally confer the copyright to the user. Having to tell the user: don't re-use use this specific piece of text unless you're licensing it such and so is a tricky thing to convey in a simple UI.
 
 However, I think this is a minimal issue. For a well-functioning chatbot, all the output should be clearly and demonstrably legally distinct from any part of the training data. If that is the case, a user will almost never see the warning that the current answer is CC BY-SA copyrighted.
 
@@ -214,6 +214,8 @@ The good news is that LLMs can represent documents at high semantic levels, inde
 You may counter that this will always be best-effort. That there will always be false negatives, where the system produces something that is derivative without flagging it. 
 
 My first response to that is that best-effort is a lot better than what we have now. I would much prefer a world where we can at least try this and see how well we can do it, to what we are doing at the moment. It gives people a means of redress if they feel that their content should be cited.
+
+It may feel overkill to do this purely for the sake of compliance to the Creative Commons license, but there is also the issue of license laundering. Unlicensed data could end up in the training data despite our best efforts. Imagine an AI that, instead of hiding its training data, points specifically to places where its output overlaps with the data, and allows users to get it removed. I think that would do a lot to rebuild some of the missing trust in AI.  
 
 The second point to bear in mind is that we can make the false positive/false negative tradeoff very much towards false positives without any real cost. That is, if the system misattributes, saying "this response may contain content from the following Wikipedia page: ...", there is very little harm done.
 
