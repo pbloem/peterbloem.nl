@@ -8,7 +8,7 @@ article: false
 <!-- {% raw %} -->
 <ul class="nav publications content">
 
-	<li><a href="craft-coding">
+	<li><a href="fix-ai-data">
 	  	<h2>Can we fix AI?
 	  	</h2>
 	  	<span class="year">2026</span>
