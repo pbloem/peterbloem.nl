@@ -355,9 +355,9 @@ The idea is to bootstrap from our ethical AI to _extract_ the knowledge from cop
 1. Build an LLM only on the openly licensed and synthetic data. Call this the "clean-room LLM". 
 2. Take a comprehensive library of scanned books, like Anthropic's, or Google's. I'd prefer the latter, since they scanned the books non-destructively, but either would work. (Most likely, the project would need to be reproduced yet again.)
 3. Store the books, but don't distribute them (that's not allowed). Storage is legally contentious, but the data could be deleted or archived afterwards to emphasize the transformative aspect.
-4Encode the books in a large neural database, so that texts on similar topics can be easily found.
-5Use our clean-room LLM together with a clever search algorithm to find passages in books that assert the same or similar facts. Note that this is _inference only_, the model is never trained on this data.
-6For every fact found in, say, 3--5 sources, prompt the clean-room LLM for a legally distinct summary of the fact, and store it together with references to the source works. Have it reason over the result to ensure that the summary is legally distinct from the sources.
+4. Encode the books in a large neural database, so that texts on similar topics can be easily found.
+5. Use our clean-room LLM together with a clever search algorithm to find passages in books that assert the same or similar facts. Note that this is _inference only_, the model is never trained on this data.
+6. For every fact found in, say, 3--5 sources, prompt the clean-room LLM for a legally distinct summary of the fact, and store it together with references to the source works. Have it reason over the result to ensure that the summary is legally distinct from the sources.
 7. Publish the dataset of facts found and summarized. A kind of LLM-generated Wikipedia (or Wikidata), but more fine-grained. Invite public scrutiny on this dataset to ensure that we can claim that it is not a derivative work of any of the sources. 
 8. Add this to our training data and re-train. Optionally, GOTO (1).
 
